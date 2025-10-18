@@ -7,21 +7,34 @@ import {
   View,
 } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import transaccionesMackup from "../mackups/transactionsMockup";
 import Card from "./Card";
 
-const TransactionsCard: React.FC = () => {
+interface Transaction {
+  id: number;
+  categoria: string;
+  monto: number;
+  fecha: string;
+  imagen: string;
+}
+
+interface TransactionsCardProps {
+  transactions: Transaction[];
+}
+
+const TransactionsCard: React.FC<TransactionsCardProps> = ({
+  transactions,
+}) => {
   return (
     <View>
       <View style={styles.header}>
-        <Text style={styles.headerText}>{"Gastos e Ingresos (3)"}</Text>
+        <Text style={styles.headerText}>{`Gastos e Ingresos (${transactions.length})`}</Text>
       </View>
-      {transaccionesMackup.map((item, index) => (
+      {transactions.map((item, index) => (
         <Card
           key={item.id}
           style={[
             styles.row16,
-            index === transaccionesMackup.length - 1
+            index === transactions.length - 1
               ? {}
               : { marginBottom: verticalScale(24) },
           ]}

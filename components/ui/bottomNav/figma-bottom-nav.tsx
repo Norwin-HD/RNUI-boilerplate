@@ -3,11 +3,11 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { scale, verticalScale } from "react-native-size-matters";
-import ClockIcon from "./BottomBarImg/ClockIcon";
-import HomeIcon from "./BottomBarImg/HomeIcon";
-import PlusIcon from "./BottomBarImg/PlusIcon";
-import SearchIcon from "./BottomBarImg/SearchIcon";
-import UserIcon from "./BottomBarImg/UserIcon";
+import ClockIcon from "./BottomBarSvg/ClockIcon";
+import HomeIcon from "./BottomBarSvg/HomeIcon";
+import PlusIcon from "./BottomBarSvg/PlusIcon";
+import SearchIcon from "./BottomBarSvg/SearchIcon";
+import UserIcon from "./BottomBarSvg/UserIcon";
 
 const FIGMA = {
   primary: "#1662f3",

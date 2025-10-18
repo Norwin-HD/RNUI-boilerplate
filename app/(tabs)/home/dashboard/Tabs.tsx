@@ -8,7 +8,7 @@ interface TabsProps {
 }
 
 const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
-  const tabs = ["Todas", "Transacciones", "Metas"];
+  const tabs = ["Todas", "Transacciones", "Metas", ];
 
   return (
     <View style={styles.container}>
