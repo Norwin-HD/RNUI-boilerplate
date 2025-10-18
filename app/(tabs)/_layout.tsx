@@ -1,44 +1,35 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import React from "react";
 
-import { HapticTab } from '@/components/haptic-tab';
-import FigmaBottomNav from '@/components/ui/figma-bottom-nav';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { HapticTab } from "@/components/haptic-tab";
+import FigmaBottomNav from "@/components/ui/bottomNav/figma-bottom-nav";
+import { IconSymbol } from "@/components/ui/icon-symbol";
+import { Colors } from "@/src/constants/theme";
+import { useColorScheme } from "@/src/hooks/use-color-scheme";
 
 // Adapter to convert react-navigation bottom tab props to our BottomNav items
 function FigmaNavAdapter(props: any) {
   const { state, navigation } = props;
 
-  const routeNames = state.routes.map((r: any) => r.name);
+  const handleSelect = (index: number) => {
+    const route = state.routes[index];
+    if (!route) return;
 
-  const findRoute = (preferred: string) => (routeNames.includes(preferred) ? preferred : 'index');
+    const isFocused = state.index === index;
 
-  const items = [
-    {
-      key: 'inicio',
-      label: 'Inicio',
-      onPress: () => navigation.navigate(findRoute('index')),
-    },
-    {
-      key: 'transacciones',
-      label: 'Transacciones',
-      onPress: () => navigation.navigate(findRoute('explore')),
-    },
-    {
-      key: 'metas',
-      label: 'Metas',
-      onPress: () => navigation.navigate(findRoute('metas')),
-    },
-    {
-      key: 'reportes',
-      label: 'Reportes',
-      onPress: () => navigation.navigate(findRoute('reportes')),
-    },
-  ];
+    const event = navigation.emit({
+      type: "tabPress",
+      target: route.key,
+      canPreventDefault: true,
+    });
 
-  return <FigmaBottomNav selectedIndex={state.index} onSelect={(i) => items[i]?.onPress?.()} />;
+    if (!isFocused && !event.defaultPrevented) {
+      // usar navigation.navigate para delegar la resolución de rutas al navigator
+      navigation.navigate(route.name);
+    }
+  };
+
+  return <FigmaBottomNav selectedIndex={state.index} onSelect={handleSelect} />;
 }
 
 export default function TabLayout() {
@@ -48,22 +39,45 @@ export default function TabLayout() {
     <Tabs
       tabBar={(props: any) => <FigmaNavAdapter {...props} />}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
         tabBarButton: HapticTab,
-      }}>
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="home/index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Inicio",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="house.fill" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="transacciones/index"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Transacciones",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="paperplane.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="metas/index"
+        options={{
+          title: "Metas",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="star.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="reportes/index"
+        options={{
+          title: "Reportes",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="chart.bar.fill" color={color} />
+          ),
         }}
       />
     </Tabs>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 interface CardProps {
   children: React.ReactNode;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Card: React.FC<CardProps> = ({ children, style }) => {

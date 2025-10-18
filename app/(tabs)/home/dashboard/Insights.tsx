@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         paddingVertical: verticalScale(16),
         marginBottom: verticalScale(25),
         shadowColor: "#000000",
+        boxShadow: "0 0 0 2px #000 inset, 4px 4px 0 0 #000",
         shadowOpacity: 1.0,
     },
     row17: {
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     text29: {
         color: "#FFFFFF",
         fontSize: moderateScale(16),
-        fontWeight: "bold",
+        fontFamily: "Montserrat_600SemiBold",
     },
     text30: {
         color: "#FFFFFF",
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginLeft: scale(8),
-        marginBottom: verticalScale(100),
+        marginBottom: verticalScale(70),
     },
     text31: {
         color: "#000000",

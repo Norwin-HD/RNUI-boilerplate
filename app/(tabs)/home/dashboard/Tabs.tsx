@@ -2,27 +2,29 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
-const Tabs: React.FC = () => {
+interface TabsProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+
+const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
+  const tabs = ["Todas", "Transacciones", "Metas"];
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.buttonMain}
-        onPress={() => alert("Pressed!")}
-      >
-        <Text style={styles.textMain}>{"Todas"}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonSecond}
-        onPress={() => alert("Pressed!")}
-      >
-        <Text style={styles.textSecond}>{"Transacciones"}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonSecond}
-        onPress={() => alert("Pressed!")}
-      >
-        <Text style={styles.textSecond}>{"Metas"}</Text>
-      </TouchableOpacity>
+      {tabs.map((tab) => (
+        <TouchableOpacity
+          key={tab}
+          style={activeTab === tab ? styles.buttonMain : styles.buttonSecond}
+          onPress={() => setActiveTab(tab)}
+        >
+          <Text
+            style={activeTab === tab ? styles.textMain : styles.textSecond}
+          >
+            {tab}
+          </Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
   textMain: {
     color: "#FFFFFF",
     fontSize: moderateScale(16),
-    fontFamily: "Montserrat_600SemiBold",
+    fontFamily: "Montserrat_500Medium",
   },
   buttonSecond: {
     backgroundColor: "#E1EBFD",
@@ -55,12 +57,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingVertical: verticalScale(4),
     paddingHorizontal: scale(12),
-    marginRight: scale(15),
+    marginRight: scale(10),
   },
   textSecond: {
     color: "#3476F4",
     fontSize: moderateScale(15),
-    fontFamily: "Montserrat_700Bold",
+    fontFamily: "Montserrat_600SemiBold",
   },
 });
 

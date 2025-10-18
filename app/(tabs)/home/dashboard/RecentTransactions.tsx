@@ -7,6 +7,7 @@ import {
   View,
 } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import transaccionesMackup from "../Mackups/transaccionesMackup";
 import Card from "./Card";
 
 const RecentTransactions: React.FC = () => {
@@ -24,82 +25,58 @@ const RecentTransactions: React.FC = () => {
           />
         </TouchableOpacity>
       </View>
-      <Card style={styles.row16}>
-        <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
-          }}
-          resizeMode={"stretch"}
-          style={styles.iconOne}
-        />
-        <View style={styles.row3}>
-          <View style={styles.column12}>
-            <Text style={styles.textHeaderCard}>{"Comida"}</Text>
-            <View style={styles.row12}>
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/owykmtoc_expires_30_days.png",
-                }}
-                resizeMode={"stretch"}
-                style={styles.image10}
-              />
-              <Text style={styles.textTime}>{"hace 1 día"}</Text>
-            </View>
-          </View>
-          <View>
-            <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
-              <View style={styles.view4}>
+      {transaccionesMackup.map((item, index) => (
+        <Card
+          key={item.id}
+          style={[
+            styles.row16,
+            index === transaccionesMackup.length - 1
+              ? {}
+              : { marginBottom: verticalScale(24) },
+          ]}
+        >
+          <Image
+            source={{
+              uri: item.imagen,
+            }}
+            resizeMode={"stretch"}
+            style={styles.iconOne}
+          />
+          <View style={styles.row3}>
+            <View style={styles.column12}>
+              <Text style={styles.textHeaderCard}>{item.categoria}</Text>
+              <View style={styles.row12}>
                 <Image
                   source={{
-                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/0s8o6qbm_expires_30_days.png",
+                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/owykmtoc_expires_30_days.png",
                   }}
                   resizeMode={"stretch"}
-                  style={styles.iconArrow}
+                  style={styles.image10}
                 />
+                <Text style={styles.textTime}>{item.fecha}</Text>
               </View>
-            </TouchableOpacity>
-            <Text style={styles.text26}>{"+ $400 "}</Text>
-          </View>
-        </View>
-      </Card>
-      <Card style={styles.row13}>
-        <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
-          }}
-          resizeMode={"stretch"}
-          style={styles.iconOne}
-        />
-        <View style={styles.row3}>
-          <View style={styles.column12}>
-            <Text style={styles.text27}>{"Transporte"}</Text>
-            <View style={styles.row12}>
-              <Image
-                source={{
-                  uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/mw5bhkwn_expires_30_days.png",
-                }}
-                resizeMode={"stretch"}
-                style={styles.image10}
-              />
-              <Text style={styles.textTime}>{"hace 2 días"}</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
+                <View style={styles.view4}>
+                  <Image
+                    source={{
+                      uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/0s8o6qbm_expires_30_days.png",
+                    }}
+                    resizeMode={"stretch"}
+                    style={styles.iconArrow}
+                  />
+                </View>
+              </TouchableOpacity>
+              <Text
+                style={item.monto > 0 ? styles.text26 : styles.text28}
+              >{`${item.monto > 0 ? "+" : "-"} $${Math.abs(
+                item.monto
+              )} `}</Text>
             </View>
           </View>
-          <View>
-            <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
-              <View style={styles.view4}>
-                <Image
-                  source={{
-                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/x7cjd1xn_expires_30_days.png",
-                  }}
-                  resizeMode={"stretch"}
-                  style={styles.iconArrow}
-                />
-              </View>
-            </TouchableOpacity>
-            <Text style={styles.text28}>{"- $400 "}</Text>
-          </View>
-        </View>
-      </Card>
+        </Card>
+      ))}
     </View>
   );
 };

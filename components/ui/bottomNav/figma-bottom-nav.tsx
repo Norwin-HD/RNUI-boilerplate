@@ -1,4 +1,4 @@
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useColorScheme } from "@/src/hooks/use-color-scheme";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -33,23 +33,23 @@ export default function FigmaBottomNav({
 
   const items = [
     {
-      key: "inicio",
+      key: "(home)",
       label: "Inicio",
       icon: HomeIcon,
     },
     {
-      key: "transacciones",
+      key: "(transacciones)",
       label: "Transacciones",
       icon: SearchIcon,
     },
-    { key: "metas", label: "", icon: PlusIcon },
+    { key: "(agregar)", label: "Agregar", icon: PlusIcon },
     {
-      key: "metasIndex",
+      key: "(metas)",
       label: "Metas",
       icon: ClockIcon,
     },
     {
-      key: "reportes",
+      key: "(reportes)",
       label: "Reportes",
       icon: UserIcon,
     },

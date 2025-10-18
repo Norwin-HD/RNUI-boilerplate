@@ -2,14 +2,16 @@ import {
   Montserrat_500Medium,
   Montserrat_600SemiBold,
   Montserrat_700Bold,
+  Montserrat_400Regular
 } from '@expo-google-fonts/montserrat';
+
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import './global.css';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/src/hooks/use-color-scheme';
 import { useFonts } from 'expo-font';
 
 // Load Poppins from Google Fonts repository (raw github URLs). These are remote URIs and
@@ -19,6 +21,7 @@ const FONT_MAP = {
   Montserrat_500Medium,
   Montserrat_600SemiBold,
   Montserrat_700Bold,
+  Montserrat_400Regular
 };
 
 export const unstable_settings = {
