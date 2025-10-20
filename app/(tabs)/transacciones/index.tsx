@@ -1,24 +1,25 @@
 import { useTransactions } from "@/app/(tabs)/transacciones/hooks/use-transactions";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
-  Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
 } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import Expenses from "./components/Expenses";
-import Header from "./components/Header";
-import Tabs from "./components/Tabs";
-import TransactionsCard from "./components/TrasaccionsCard";
+import Expenses from "./components/transactions/Expenses";
+import Header from "./components/transactions/Header";
+import Tabs from "./components/transactions/Tabs";
+import TransactionsCard from "./components/transactions/TrasaccionsCard";
 
 const TransaccionesScreen: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("Todas");
   const { filteredTransactions } = useTransactions(activeTab);
+  const router = useRouter();
 
   const handleFilterPress = () => {
-    Alert.alert("Filter button pressed!");
+    router.push("/transacciones/filterScreen");
   };
 
   return (

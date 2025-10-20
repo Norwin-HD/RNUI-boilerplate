@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
-import FilterList from "../svgTransactions/filter-list";
+import FilterList from "../../svgTransactions/filter-list";
 
 interface TabsProps {
   activeTab: string;

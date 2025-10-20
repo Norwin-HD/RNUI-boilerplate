@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import ArrowCircleDown from "../svgTransactions/arrow-circle-down";
-import ArrowCircleUp from "../svgTransactions/arrow-circle-up";
+import ArrowCircleDown from "@/app/(tabs)/transacciones/svgTransactions/arrow-circle-down";
+import ArrowCircleUp from "@/app/(tabs)/transacciones/svgTransactions/arrow-circle-up";
 
 const IncomeExpenses: React.FC = () => {
   return (

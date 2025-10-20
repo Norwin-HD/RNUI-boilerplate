@@ -1,3 +1,4 @@
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Tabs } from "expo-router";
 import React from "react";
 
@@ -10,6 +11,17 @@ import { useColorScheme } from "@/src/hooks/use-color-scheme";
 // Adapter to convert react-navigation bottom tab props to our BottomNav items
 function FigmaNavAdapter(props: any) {
   const { state, navigation } = props;
+
+  // Get the route object for the currently active tab
+  const route = state.routes[state.index];
+
+  // Get the name of the screen that is focused inside the current tab's navigator
+  const routeName = getFocusedRouteNameFromRoute(route);
+
+  // If the focused screen is 'filterScreen', we don't render the tab bar.
+  if (routeName === "filterScreen") {
+    return null;
+  }
 
   const handleSelect = (index: number) => {
     const route = state.routes[index];
@@ -54,9 +66,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="transacciones/index"
+        name="transacciones"
         options={{
           title: "Transacciones",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),
