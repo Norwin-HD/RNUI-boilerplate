@@ -1,0 +1,201 @@
+import React, { useEffect, useState } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  moderateScale,
+  scale,
+} from "react-native-size-matters";
+import { SvgXml } from "react-native-svg";
+
+interface CategoriaCardProps {
+  imageUri: string;
+  title: string;
+  transactions: string;
+  active?: boolean;
+}
+
+function useRemoteSvg(uri: string) {
+  const [svg, setSvg] = useState<string | null>(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    if (!uri) return;
+    setLoading(true);
+    setError(false);
+    fetch(uri)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response not ok");
+        return res.text();
+      })
+      .then((text) => {
+        if (!mounted) return;
+        setSvg(text);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setError(true);
+      })
+      .finally(() => {
+        if (!mounted) return;
+        setLoading(false);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [uri]);
+
+  return { svg, error, loading };
+}
+
+const CategoriaCard: React.FC<CategoriaCardProps> = ({
+  imageUri,
+  title,
+  transactions,
+  active = false,
+}) => {
+  const { svg, error, loading } = useRemoteSvg(imageUri);
+
+  return (
+    <View style={[styles.card, !active && styles.inactiveCard]}>
+      <View style={styles.cardContent}>
+        <View style={styles.iconContainer}>
+          {loading ? (
+            <View style={{ width: scale(35), height: scale(35) }} />
+          ) : svg && !error ? (
+            <SvgXml xml={svg} width={scale(35)} height={scale(35)} />
+          ) : (
+            <Image source={{ uri: imageUri }} style={styles.icon} />
+          )}
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.transactions}>{transactions}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+function CategoriesHeader() {
+  return (
+    <View style={styles.headerContainer}>
+      <Text style={styles.headerTitle}>{"Categorías"}</Text>
+      <View style={styles.arrowContainer}>
+        <Text style={styles.headerAction}>{"Ver todo"}</Text>
+        <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
+          <Image
+            source={{
+              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/bfp1jzo4_expires_30_days.png",
+            }}
+            resizeMode={"stretch"}
+            style={styles.iconArrow}
+          />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+export default function TarjetasDeCategoria() {
+  return (
+    <View>
+      <CategoriesHeader />
+      <View style={styles.container}>
+        <CategoriaCard
+          imageUri="https://www.svgrepo.com/svg/535633/shopping-cart.svg"
+          title="Supermercado"
+          transactions="10 transacciones hasta ahora"
+          active={true}
+        />
+        <CategoriaCard
+          imageUri="https://www.svgrepo.com/show/493826/food-and-restaurant.svg"
+          title="Comida"
+          transactions="6 transacciones hasta ahora"
+        />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: moderateScale(16),
+    marginBottom: moderateScale(12),
+  },
+  arrowContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerTitle: {
+    fontFamily: "Montserrat_500Medium",
+    fontSize: moderateScale(16),
+    color: "#0b1b2b",
+  },
+  headerAction: {
+    fontFamily: "Montserrat_400Regular",
+    fontSize: moderateScale(12),
+  },
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: moderateScale(36),
+    marginTop: moderateScale(8),
+    paddingHorizontal: moderateScale(8),
+  },
+  iconArrow: {
+    width: moderateScale(24),
+    height: moderateScale(24),
+  },
+  card: {
+    backgroundColor: "#e1ebfd",
+    borderWidth: 1,
+    borderColor: "#0b4fd0",
+    height: scale(170),
+    borderRadius: moderateScale(18),
+    width: scale(208),
+    boxShadow: "0 2px 5px 1px rgba(0, 0, 0, 0.25)",
+  },
+  inactiveCard: {
+    opacity: 0.7,
+  },
+  cardContent: {
+    flex: 1,
+    justifyContent: "space-between",
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScale(20),
+  },
+  iconContainer: {
+    backgroundColor: "#c2caf2",
+    borderWidth: 1,
+    borderColor: "#8590c8",
+    borderRadius: 999,
+    width: scale(60),
+    height: scale(60),
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  icon: {
+    width: scale(35),
+    height: scale(35),
+  },
+  textContainer: {
+    gap: moderateScale(8),
+  },
+  title: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: moderateScale(16),
+    lineHeight: moderateScale(24),
+    color: "black",
+  },
+  transactions: {
+    fontFamily: "Montserrat_500Medium",
+    fontSize: moderateScale(12),
+    lineHeight: moderateScale(18),
+    color: "black",
+  },
+});
