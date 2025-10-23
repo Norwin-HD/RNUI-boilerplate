@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
+import categories from "../../mackups/categories-filter";
 
 interface CategoriaCardProps {
   title: string;
@@ -10,7 +11,7 @@ interface CategoriaCardProps {
 }
 
 function handlePress() {
-  router.push("/transacciones/screens/categorieFilterScreen");
+  router.push("/(tabs)/transacciones/screens/categorieFilterScreen");
 }
 
 const CategoriaCard: React.FC<CategoriaCardProps> = ({
@@ -52,19 +53,19 @@ function CategoriesHeader() {
 }
 
 export default function TarjetasDeCategoria() {
+  const preview = categories.slice(0, 2);
   return (
     <View>
       <CategoriesHeader />
       <View style={styles.container}>
-        <CategoriaCard
-          title="Supermercado"
-          transactions="10 transacciones hasta ahora"
-          active={true}
-        />
-        <CategoriaCard
-          title="Comida"
-          transactions="6 transacciones hasta ahora"
-        />
+        {preview.map((c, idx) => (
+          <CategoriaCard
+            key={c.title + idx}
+            title={c.title}
+            transactions={c.transactions}
+            active={idx === 0 || c.active}
+          />
+        ))}
       </View>
     </View>
   );
