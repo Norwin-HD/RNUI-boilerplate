@@ -1,32 +1,51 @@
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import Header from "./components/filterScreen/Header";
-import Tabs from "./components/filterScreen/Tabs";
-import TabRangeTime from "./components/filterScreen/TabRangeTime";
 import Categories from "./components/filterScreen/Categories";
-import InputCalendar  from "./components/filterScreen/inputCalendary";
+import Header from "./components/filterScreen/Header";
+import InputCalendar from "./components/filterScreen/inputCalendary";
+import RangePrice from "./components/filterScreen/selectRangeMoney";
+import TabRangeTime from "./components/filterScreen/TabRangeTime";
+import Tabs from "./components/filterScreen/Tabs";
+import Footer from "./components/filterScreen/footer";
 
 const filterScreen: React.FC = () => {
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.column3}>
-          <Header />
-          <Tabs
-            activeTab={"Todas"}
-            setActiveTab={(tab: string) => {}}
-            onFilterPress={() => {}}
-          />
-          <Categories />
-          <TabRangeTime
-            activeTab={"Hoy"}
-            setActiveTab={(tab: string) => {}}
-            onFilterPress={() => {}}
-          />
-          <InputCalendar />
-        </View>
-      </ScrollView>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.column3}>
+            <Header />
+            <Tabs
+              activeTab={"Todas"}
+              setActiveTab={(tab: string) => {}}
+              onFilterPress={() => {}}
+            />
+            <Categories />
+            <TabRangeTime
+              activeTab={"Hoy"}
+              setActiveTab={(tab: string) => {}}
+              onFilterPress={() => {}}
+            />
+            <InputCalendar />
+            <RangePrice />
+            <Footer />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

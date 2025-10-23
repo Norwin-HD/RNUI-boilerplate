@@ -1,73 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
   moderateScale,
   scale,
 } from "react-native-size-matters";
-import { SvgXml } from "react-native-svg";
 
 interface CategoriaCardProps {
-  imageUri: string;
   title: string;
   transactions: string;
   active?: boolean;
 }
 
-function useRemoteSvg(uri: string) {
-  const [svg, setSvg] = useState<string | null>(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    let mounted = true;
-    if (!uri) return;
-    setLoading(true);
-    setError(false);
-    fetch(uri)
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response not ok");
-        return res.text();
-      })
-      .then((text) => {
-        if (!mounted) return;
-        setSvg(text);
-      })
-      .catch(() => {
-        if (!mounted) return;
-        setError(true);
-      })
-      .finally(() => {
-        if (!mounted) return;
-        setLoading(false);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, [uri]);
-
-  return { svg, error, loading };
-}
-
 const CategoriaCard: React.FC<CategoriaCardProps> = ({
-  imageUri,
   title,
   transactions,
   active = false,
 }) => {
-  const { svg, error, loading } = useRemoteSvg(imageUri);
-
   return (
     <View style={[styles.card, !active && styles.inactiveCard]}>
       <View style={styles.cardContent}>
         <View style={styles.iconContainer}>
-          {loading ? (
-            <View style={{ width: scale(35), height: scale(35) }} />
-          ) : svg && !error ? (
-            <SvgXml xml={svg} width={scale(35)} height={scale(35)} />
-          ) : (
-            <Image source={{ uri: imageUri }} style={styles.icon} />
-          )}
+          {/* Icono eliminado */}
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
@@ -104,13 +57,11 @@ export default function TarjetasDeCategoria() {
       <CategoriesHeader />
       <View style={styles.container}>
         <CategoriaCard
-          imageUri="https://www.svgrepo.com/svg/535633/shopping-cart.svg"
           title="Supermercado"
           transactions="10 transacciones hasta ahora"
           active={true}
         />
         <CategoriaCard
-          imageUri="https://www.svgrepo.com/show/493826/food-and-restaurant.svg"
           title="Comida"
           transactions="6 transacciones hasta ahora"
         />
@@ -143,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    gap: moderateScale(36),
+    gap: moderateScale(25),
     marginTop: moderateScale(8),
     paddingHorizontal: moderateScale(8),
   },
@@ -152,12 +103,10 @@ const styles = StyleSheet.create({
     height: moderateScale(24),
   },
   card: {
-    backgroundColor: "#e1ebfd",
-    borderWidth: 1,
-    borderColor: "#0b4fd0",
+    backgroundColor: "#E1EBFD",
     height: scale(170),
     borderRadius: moderateScale(18),
-    width: scale(208),
+    width: scale(200),
     boxShadow: "0 2px 5px 1px rgba(0, 0, 0, 0.25)",
   },
   inactiveCard: {
@@ -174,8 +123,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#8590c8",
     borderRadius: 999,
-    width: scale(60),
-    height: scale(60),
+    width: scale(50),
+    height: scale(50),
     alignItems: "center",
     justifyContent: "center",
   },
@@ -189,13 +138,13 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Montserrat_600SemiBold",
     fontSize: moderateScale(16),
-    lineHeight: moderateScale(24),
+    lineHeight: moderateScale(40),
     color: "black",
   },
   transactions: {
-    fontFamily: "Montserrat_500Medium",
+    fontFamily: "Montserrat_400Regular",
     fontSize: moderateScale(12),
-    lineHeight: moderateScale(18),
+    lineHeight: moderateScale(14),
     color: "black",
   },
 });

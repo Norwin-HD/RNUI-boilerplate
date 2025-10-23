@@ -11,7 +11,6 @@ interface TabsProps {
 const TabRangeTime: React.FC<TabsProps> = ({
   activeTab,
   setActiveTab,
-  onFilterPress,
 }) => {
   const tabs = ["Hoy", "Ultima semana", "Este mes"];
 

@@ -5,6 +5,7 @@ const transaccionesMackup = [
     monto: 400,
     fecha: "hace 1 día",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
+    type: "income",
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ const transaccionesMackup = [
     monto: -400,
     fecha: "hace 2 días",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ const transaccionesMackup = [
     monto: -400,
     fecha: "hace 2 días",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ const transaccionesMackup = [
     monto: 3000,
     fecha: "hace 3 días",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
+    type: "income",
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ const transaccionesMackup = [
     monto: -150,
     fecha: "hace 3 días",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ const transaccionesMackup = [
     monto: -75,
     fecha: "hace 4 días",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 7,
@@ -47,6 +53,7 @@ const transaccionesMackup = [
     monto: -200,
     fecha: "hace 5 días",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 8,
@@ -54,6 +61,7 @@ const transaccionesMackup = [
     monto: 1000,
     fecha: "hace 1 semana",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
+    type: "income",
   },
   {
     id: 9,
@@ -61,6 +69,7 @@ const transaccionesMackup = [
     monto: -500,
     fecha: "hace 1 semana",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 10,
@@ -68,6 +77,7 @@ const transaccionesMackup = [
     monto: -1200,
     fecha: "hace 2 semanas",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 11,
@@ -75,6 +85,7 @@ const transaccionesMackup = [
     monto: -50,
     fecha: "hace 2 semanas",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 12,
@@ -82,6 +93,7 @@ const transaccionesMackup = [
     monto: -15,
     fecha: "hace 3 semanas",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 13,
@@ -89,6 +101,7 @@ const transaccionesMackup = [
     monto: -120,
     fecha: "hace 3 semanas",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 14,
@@ -96,6 +109,7 @@ const transaccionesMackup = [
     monto: -300,
     fecha: "hace 1 mes",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 15,
@@ -103,6 +117,7 @@ const transaccionesMackup = [
     monto: -80,
     fecha: "hace 1 mes",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 16,
@@ -110,6 +125,7 @@ const transaccionesMackup = [
     monto: 750,
     fecha: "hace 1 mes",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
+    type: "income",
   },
   {
     id: 17,
@@ -117,6 +133,7 @@ const transaccionesMackup = [
     monto: -250,
     fecha: "hace 1 mes",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
   {
     id: 18,
@@ -124,6 +141,7 @@ const transaccionesMackup = [
     monto: -25,
     fecha: "hace 1 mes",
     imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    type: "expense",
   },
 ];
 export default transaccionesMackup;

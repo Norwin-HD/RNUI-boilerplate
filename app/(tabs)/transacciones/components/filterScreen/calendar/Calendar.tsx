@@ -7,7 +7,7 @@ import DateTimePicker, {
   useDefaultStyles,
 } from "react-native-ui-datepicker";
 
-export function Calendar() {
+export function Calendar({ onApply }: { onApply?: (r: { startDate?: Date; endDate?: Date }) => void }) {
   const defaultStyles = useDefaultStyles();
   type RangeDate = { startDate?: DateType; endDate?: DateType };
   const [selected, setSelected] = useState<RangeDate | undefined>();
@@ -24,7 +24,6 @@ export function Calendar() {
   const stylesOverride = {
     days: {
       ...(defaultStyles.days as object),
-      transitionDelay: "1000ms",
     },
     day_cell: {
       ...(defaultStyles.day_cell as object),
@@ -130,7 +129,9 @@ export function Calendar() {
         <TouchableOpacity
           style={styles.applyRow}
           onPress={() => {
-            /* action: apply */
+            const start = selected?.startDate ? new Date(selected.startDate as any) : undefined;
+            const end = selected?.endDate ? new Date(selected.endDate as any) : undefined;
+            onApply?.({ startDate: start, endDate: end });
           }}
         >
           <Ionicons name="checkmark" size={25} color={COLORS.textPrimary} />
@@ -178,9 +179,9 @@ export function Calendar() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingRight: moderateScale(16),
-    paddingBottom: moderateScale(17),
-    paddingLeft: moderateScale(16),
+    paddingRight: moderateScale(4),
+    paddingBottom: moderateScale(0),
+    paddingLeft: moderateScale(4),
     borderRadius: moderateScale(24),
   },
   headerRow: {

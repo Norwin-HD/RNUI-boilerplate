@@ -1,37 +1,52 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, Pressable, View } from "react-native";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-//agregue esta dependencia por el swipper del modal
+import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
-import Calendar from "./calendar/Calendar";
-import { scale } from "react-native-size-matters";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { moderateScale, scale } from "react-native-size-matters";
+import { useCalendarModal } from "../../hooks/use-calendar-modal";
+import { Calendar } from "./calendar/Calendar";
 
 const InputCalendar = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const {
+    modalVisible,
+    setModalVisible,
+    showContent,
+    setShowContent,
+    handleApplyDate,
+    formattedDateRange,
+  } = useCalendarModal();
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.centeredView}>
         <Modal
           isVisible={modalVisible}
-          onModalShow={() => setModalVisible(true)}
-          onModalHide={() => setModalVisible(false)}
+          onModalShow={() => setShowContent(true)}
+          onModalHide={() => setShowContent(false)}
           onSwipeComplete={() => setModalVisible(false)}
           swipeDirection="down"
           propagateSwipe={true}
+          animationInTiming={100}
+          animationOutTiming={200}
           style={styles.modalContainer}
         >
           <View style={styles.modalView}>
             <View style={styles.dragIndicator} />
-            <Calendar />
+            {showContent && <Calendar onApply={handleApplyDate} />}
           </View>
         </Modal>
 
         <Pressable
-          style={[styles.button, styles.buttonOpen]}
+          style={[styles.buttonOpen]}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={styles.textStyle}>Mostrar calendario</Text>
+          <Text style={styles.textStyle}>{formattedDateRange}</Text>
+          <Ionicons
+            name="calendar-outline"
+            size={moderateScale(20)}
+            color="#374957"
+          />
         </Pressable>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -41,8 +56,7 @@ const InputCalendar = () => {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
+    marginHorizontal: scale(3),
   },
   modalContainer: {
     justifyContent: "flex-end",
@@ -67,18 +81,22 @@ const styles = StyleSheet.create({
     borderRadius: scale(5),
     marginBottom: scale(10),
   },
-  button: {
-    borderRadius: scale(20),
-    padding: scale(10),
-    marginTop: scale(10),
-  },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    marginTop: scale(20),
+    gap: scale(10),
+    padding: scale(10),
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#C0C3DC",
+    borderRadius: scale(10),
+    backgroundColor: "#F5F5F5",
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
+    color: "black",
     textAlign: "center",
+    fontFamily: "Montserrat_400Regular",
   },
 });
 
