@@ -8,10 +8,10 @@ import {
   View,
 } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import Expenses from "./components/transactions/Expenses";
-import Header from "./components/transactions/Header";
-import Tabs from "./components/transactions/Tabs";
-import TransactionsCard from "./components/transactions/TrasaccionsCard";
+import Expenses from "../components/transactions/Expenses";
+import Header from "../components/transactions/Header";
+import Tabs from "../components/transactions/Tabs";
+import TransactionsCard from "../components/transactions/TrasaccionsCard";
 
 const TransaccionesScreen: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("Todas");
@@ -19,7 +19,8 @@ const TransaccionesScreen: React.FC = () => {
   const router = useRouter();
 
   const handleFilterPress = () => {
-    router.push("/transacciones/filterScreen");
+    // Navega al nuevo screen dentro de la carpeta `screens`
+    router.push("/(tabs)/transacciones/screens/filterScreen");
   };
 
   return (

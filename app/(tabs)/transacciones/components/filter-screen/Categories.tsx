@@ -1,14 +1,16 @@
+import { router } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import {
-  moderateScale,
-  scale,
-} from "react-native-size-matters";
+import { moderateScale, scale } from "react-native-size-matters";
 
 interface CategoriaCardProps {
   title: string;
   transactions: string;
   active?: boolean;
+}
+
+function handlePress() {
+  router.push("/transacciones/screens/categorieFilterScreen");
 }
 
 const CategoriaCard: React.FC<CategoriaCardProps> = ({
@@ -19,9 +21,7 @@ const CategoriaCard: React.FC<CategoriaCardProps> = ({
   return (
     <View style={[styles.card, !active && styles.inactiveCard]}>
       <View style={styles.cardContent}>
-        <View style={styles.iconContainer}>
-          {/* Icono eliminado */}
-        </View>
+        <View style={styles.iconContainer}>{/* Icono eliminado */}</View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.transactions}>{transactions}</Text>
@@ -37,7 +37,7 @@ function CategoriesHeader() {
       <Text style={styles.headerTitle}>{"Categorías"}</Text>
       <View style={styles.arrowContainer}>
         <Text style={styles.headerAction}>{"Ver todo"}</Text>
-        <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
+        <TouchableOpacity onPress={() => handlePress()}>
           <Image
             source={{
               uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/bfp1jzo4_expires_30_days.png",

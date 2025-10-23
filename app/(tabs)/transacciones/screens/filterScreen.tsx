@@ -7,13 +7,13 @@ import {
   View,
 } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import Categories from "./components/filterScreen/Categories";
-import Header from "./components/filterScreen/Header";
-import InputCalendar from "./components/filterScreen/inputCalendary";
-import RangePrice from "./components/filterScreen/selectRangeMoney";
-import TabRangeTime from "./components/filterScreen/TabRangeTime";
-import Tabs from "./components/filterScreen/Tabs";
-import Footer from "./components/filterScreen/footer";
+import Categories from "../components/filter-screen/Categories";
+import Footer from "../components/filter-screen/footer";
+import Header from "../components/filter-screen/Header";
+import InputCalendar from "../components/filter-screen/inputCalendary";
+import RangePrice from "../components/filter-screen/selectRangeMoney";
+import TabRangeTime from "../components/filter-screen/TabRangeTime";
+import Tabs from "../components/filter-screen/Tabs";
 
 const filterScreen: React.FC = () => {
   return (

@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import ArrowSmallLeft from "../../svgTransactions/arrow-small-left";
+import ArrowSmallLeft from "../../svg/arrow-small-left";
 
 const Header: React.FC = () => {
   const router = useRouter();

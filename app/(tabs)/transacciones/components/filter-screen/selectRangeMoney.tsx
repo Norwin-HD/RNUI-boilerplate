@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import UsdCircleIcon from "./svg/usd-cirlcle";
+import UsdCircleIcon from "../../svg/usd-cirlcle";
 
 const SelectRangeMoney: React.FC = () => {
   const [minPrice, setMinPrice] = useState("");

@@ -18,8 +18,12 @@ function FigmaNavAdapter(props: any) {
   // Get the name of the screen that is focused inside the current tab's navigator
   const routeName = getFocusedRouteNameFromRoute(route);
 
-  // If the focused screen is 'filterScreen', we don't render the tab bar.
-  if (routeName === "filterScreen") {
+  // Oculta la tab bar cuando el foco está en la pantalla de filtro
+  if (
+    routeName === "filterScreen" ||
+    routeName === "screens/filterScreen" ||
+    routeName === "screens/categorieFilterScreen"
+  ) {
     return null;
   }
 
