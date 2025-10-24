@@ -1,6 +1,8 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
+import { useCategoryContext } from "../../contexts/contexts-category/dataContext";
+import CheckIcon from "../../svg/check-icon";
 
 type Category = {
   imageUri?: string;
@@ -13,22 +15,51 @@ type Props = {
   categories: Category[];
 };
 
-const selectCategories: React.FC<Props> = ({ categories }) => {
+const SelectCategories: React.FC<Props> = ({ categories }) => {
+  const { selectedCategories, toggleCategory } = useCategoryContext();
+
   return (
     <View>
       <Text style={styles.textHeader}>Selecciona una categoría</Text>
       <View style={styles.list}>
-        {categories.map((c, idx) => (
-          <View key={c.title + idx} style={styles.item}>
-            {!!c.imageUri && (
-              <Image source={{ uri: c.imageUri }} style={styles.avatar} />
-            )}
-            <View style={styles.itemText}>
-              <Text style={styles.itemTitle}>{c.title}</Text>
-              <Text style={styles.itemSub}>{c.transactions}</Text>
-            </View>
-          </View>
-        ))}
+        {categories.map((c, idx) => {
+          const isSelected = selectedCategories.includes(c.title);
+          return (
+            <TouchableOpacity
+              key={c.title + idx}
+              onPress={() => toggleCategory(c.title)}
+            >
+              <View style={[styles.item, isSelected && styles.itemSelected]}>
+                {!!c.imageUri && (
+                  <Image source={{ uri: c.imageUri }} style={styles.avatar} />
+                )}
+                <View style={styles.itemText}>
+                  <Text
+                    style={[
+                      styles.itemTitle,
+                      isSelected && styles.itemTitleSelected,
+                    ]}
+                  >
+                    {c.title}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.itemSub,
+                      isSelected && styles.itemSubSelected,
+                    ]}
+                  >
+                    {c.transactions}
+                  </Text>
+                </View>
+                {isSelected && (
+                  <View style={styles.checkIconContainer}>
+                    <CheckIcon color="#000000" size={30} />
+                  </View>
+                )}
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     </View>
   );
@@ -49,11 +80,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: moderateScale(12),
-    paddingVertical: verticalScale(20),
+    paddingVertical: verticalScale(15),
     borderWidth: 1,
     borderRadius: moderateScale(18),
-    boxShadow: "0 2px 5px 1px rgba(0, 0, 0, 0.25)",
     backgroundColor: "#E1EBFD",
+    paddingRight: moderateScale(15),
+  },
+  itemSelected: {
+    boxShadow: "0 2px 5px 1px rgba(0, 0, 0, 0.25)",
   },
   avatar: {
     marginLeft: moderateScale(10),
@@ -72,11 +106,16 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(15),
     color: "#0b1b2b",
   },
+  itemTitleSelected: {},
   itemSub: {
     fontFamily: "Montserrat_400Regular",
     fontSize: moderateScale(12),
     color: "#555",
   },
+  itemSubSelected: {},
+  checkIconContainer: {
+    marginRight: moderateScale(15),
+  },
 });
 
-export default selectCategories;
+export default SelectCategories;

@@ -2,7 +2,9 @@ import { router } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
+import { useCategoryContext } from "../../contexts/contexts-category/dataContext";
 import categories from "../../mackups/categories-filter";
+
 
 interface CategoriaCardProps {
   title: string;
@@ -53,7 +55,14 @@ function CategoriesHeader() {
 }
 
 export default function TarjetasDeCategoria() {
-  const preview = categories.slice(0, 2);
+  const { selectedCategories } = useCategoryContext();
+
+  //Configuracion para que solamente se muestren las categorias seleccionadas o las dos primeras por defecto
+  // y no sobrecargar la pantalla principal con muchas tarjetas
+  const preview =
+    selectedCategories.length > 0
+      ? categories.filter((c) => selectedCategories.includes(c.title))
+      : categories.slice(0, 2);
   return (
     <View>
       <CategoriesHeader />
@@ -63,7 +72,7 @@ export default function TarjetasDeCategoria() {
             key={c.title + idx}
             title={c.title}
             transactions={c.transactions}
-            active={idx === 0 || c.active}
+            active={c.active}
           />
         ))}
       </View>

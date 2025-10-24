@@ -6,7 +6,6 @@ import InputSearch from "../components/categories-components/input-search";
 import SelectCategories from "../components/categories-components/select-categories";
 import { useCategories } from "../hooks/hooks-filter-category/use-search";
 
-
 const CategoriaFilterScreen: React.FC = () => {
   const { filteredCategories, setQuery } = useCategories();
 

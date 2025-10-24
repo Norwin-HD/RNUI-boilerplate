@@ -1,11 +1,16 @@
+import { useRouter } from "expo-router";
 import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 
 const Footer: React.FC = () => {
+  const router = useRouter();
   return (
     <View style={styles.quickButtonsRow}>
-      <TouchableOpacity style={styles.quickButtonPrimary}>
+      <TouchableOpacity
+        style={styles.quickButtonPrimary}
+        onPress={() => router.back()}
+      >
         <Text style={styles.quickButtonPrimaryText}>Aceptar</Text>
       </TouchableOpacity>
     </View>
