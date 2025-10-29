@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -15,7 +16,14 @@ import RangePrice from "../components/filter-screen/selectRangeMoney";
 import TabRangeTime from "../components/filter-screen/TabRangeTime";
 import Tabs from "../components/filter-screen/Tabs";
 
-const filterScreen: React.FC = () => {
+//HOOKS
+import useRangeTime from "../hooks/hooks-filter/use-range-time";
+import { useTransactions } from "../hooks/use-transactions";
+
+const FilterScreen: React.FC = () => {
+  const [activeRangeTimeTab, setActiveRangeTimeTab] = useState("Hoy");
+  const { FilteredRangeTime } = useRangeTime(activeRangeTimeTab);
+  const { filteredTransactions } = useTransactions("Todas");
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -36,8 +44,8 @@ const filterScreen: React.FC = () => {
             />
             <Categories />
             <TabRangeTime
-              activeTab={"Hoy"}
-              setActiveTab={(tab: string) => {}}
+              activeTab={FilteredRangeTime}
+              setActiveTab={setActiveRangeTimeTab}
               onFilterPress={() => {}}
             />
             <InputCalendar />
@@ -50,7 +58,7 @@ const filterScreen: React.FC = () => {
   );
 };
 
-export default filterScreen;
+export default FilterScreen;
 
 const styles = StyleSheet.create({
   container: {

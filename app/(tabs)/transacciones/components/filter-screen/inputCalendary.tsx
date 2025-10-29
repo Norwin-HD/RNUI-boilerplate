@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale } from "react-native-size-matters";
-import { useCalendarModal } from "../../hooks/use-calendar-modal";
+import { useCalendarModal } from "../../hooks/hooks-filter/use-calendar-modal";
 import { Calendar } from "./Calendar";
 
 const InputCalendar = () => {

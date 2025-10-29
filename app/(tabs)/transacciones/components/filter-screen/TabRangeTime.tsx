@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
 interface TabsProps {
-  activeTab: string;
+  activeTab: Date | string;
   setActiveTab: (tab: string) => void;
   onFilterPress: () => void;
 }
