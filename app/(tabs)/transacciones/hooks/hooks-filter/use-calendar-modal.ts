@@ -1,31 +1,44 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-export const useCalendarModal = () => {
+const formatDateRange = (dates: [Date, Date] | null): string => {
+  if (!dates) {
+    return "Seleccionar una fecha";
+  }
+  const [startDate, endDate] = dates;
+
+  const start = startDate.toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+  const end = endDate.toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+
+  return start === end ? start : `${start} - ${end}`;
+};
+
+export const useCalendarModal = (
+  setDates: (dates: [Date, Date] | null) => void
+) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [dateRange, setDateRange] = useState<{
-    startDate?: Date;
-    endDate?: Date;
-  } | null>(null);
+  const [displayedDate, setDisplayedDate] = useState(formatDateRange(null));
 
-  const handleApplyDate = (dates: { startDate?: Date; endDate?: Date }) => {
-    setDateRange(dates);
-    setModalVisible(false);
-  };
+  const handleApplyDate = useCallback(
+    (newDates: [Date, Date] | null) => {
+      setDates(newDates);
+      setDisplayedDate(formatDateRange(newDates));
+      setModalVisible(false);
+    },
+    [setDates]
+  );
 
-  const formatDate = (date?: Date) => {
-    if (!date) return "";
-    return date.toLocaleDateString("es-ES", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  };
-
-  const formattedDateRange =
-    dateRange?.startDate && dateRange?.endDate
-      ? `${formatDate(dateRange.startDate)} - ${formatDate(dateRange.endDate)}`
-      : "Seleccionar una fecha";
+  const updateDisplayedDates = useCallback((newDates: [Date, Date] | null) => {
+    setDisplayedDate(formatDateRange(newDates));
+  }, []);
 
   return {
     modalVisible,
@@ -33,6 +46,7 @@ export const useCalendarModal = () => {
     showContent,
     setShowContent,
     handleApplyDate,
-    formattedDateRange,
+    displayedDate,
+    updateDisplayedDates,
   };
 };

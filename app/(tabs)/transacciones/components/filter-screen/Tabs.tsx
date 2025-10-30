@@ -2,18 +2,18 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
+type TabType = "Todas" | "Ingresos" | "Gastos";
+
 interface TabsProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  onFilterPress: () => void;
+  activeTab: TabType;
+  setActiveTab: (tab: TabType) => void;
 }
 
 const Tabs: React.FC<TabsProps> = ({
   activeTab,
   setActiveTab,
-  onFilterPress,
 }) => {
-  const tabs = ["Todas", "Ingresos", "Gastos"];
+  const tabs: TabType[] = ["Todas", "Ingresos", "Gastos"];
 
   return (
     <View style={styles.container}>

@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -7,15 +7,25 @@ import { moderateScale, scale } from "react-native-size-matters";
 import { useCalendarModal } from "../../hooks/hooks-filter/use-calendar-modal";
 import { Calendar } from "./Calendar";
 
-const InputCalendar = () => {
+interface InputCalendarProps {
+  dates: [Date, Date] | null;
+  setDates: (dates: [Date, Date] | null) => void;
+}
+
+const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
   const {
     modalVisible,
     setModalVisible,
     showContent,
     setShowContent,
     handleApplyDate,
-    formattedDateRange,
-  } = useCalendarModal();
+    displayedDate,
+    updateDisplayedDates,
+  } = useCalendarModal(setDates);
+
+  useEffect(() => {
+    updateDisplayedDates(dates);
+  }, [dates, updateDisplayedDates]);
 
   return (
     <SafeAreaProvider>
@@ -33,7 +43,7 @@ const InputCalendar = () => {
         >
           <View style={styles.modalView}>
             <View style={styles.dragIndicator} />
-            {showContent && <Calendar onApply={handleApplyDate} />}
+            {showContent && <Calendar onApply={({ startDate, endDate }) => handleApplyDate(startDate && endDate ? [startDate, endDate] : null)} />}
           </View>
         </Modal>
 
@@ -41,7 +51,7 @@ const InputCalendar = () => {
           style={[styles.buttonOpen]}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={styles.textStyle}>{formattedDateRange}</Text>
+          <Text style={styles.textStyle}>{displayedDate}</Text>
           <Ionicons
             name="calendar-outline"
             size={moderateScale(20)}

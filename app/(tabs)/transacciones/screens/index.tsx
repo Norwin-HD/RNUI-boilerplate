@@ -1,7 +1,8 @@
 import { useTransactions } from "@/app/(tabs)/transacciones/hooks/use-transactions";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useMemo } from "react";
 import {
+  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -12,10 +13,47 @@ import Expenses from "../components/transactions/Expenses";
 import Header from "../components/transactions/Header";
 import Tabs from "../components/transactions/Tabs";
 import TransactionsCard from "../components/transactions/TrasaccionsCard";
+import { useFilter } from "../contexts/context-filter-transaction/FilterContext";
 
 const TransaccionesScreen: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("Todas");
-  const { filteredTransactions } = useTransactions(activeTab);
+  const { appliedFilters } = useFilter();
+  const { filteredTransactions: allFilteredTransactions } = useTransactions(activeTab);
+
+  const filteredTransactions = useMemo(() => {
+    if (appliedFilters.type === 'all' && !appliedFilters.dates) {
+      return allFilteredTransactions;
+    }
+    
+    return allFilteredTransactions.filter(transaction => {
+      // Filter by type
+      if (appliedFilters.type === 'income' && transaction.type !== 'income') {
+        return false;
+      }
+      if (appliedFilters.type === 'expense' && transaction.type !== 'expense') {
+        return false;
+      }
+
+      // Filter by date
+      if (appliedFilters.dates) {
+        const [startDate, endDate] = appliedFilters.dates;
+        const transactionDate = new Date(transaction.fecha);
+        
+        const filterStartDate = new Date(startDate);
+        filterStartDate.setHours(0, 0, 0, 0);
+
+        const filterEndDate = new Date(endDate);
+        filterEndDate.setHours(23, 59, 59, 999);
+        
+        if (transactionDate < filterStartDate || transactionDate > filterEndDate) {
+          return false;
+        }
+      }
+      
+      return true;
+    });
+  }, [appliedFilters, allFilteredTransactions]);
+
   const router = useRouter();
 
   const handleFilterPress = () => {
@@ -25,19 +63,20 @@ const TransaccionesScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.column3}>
-          <Header />
-
-          <Tabs
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            onFilterPress={handleFilterPress}
-          />
-          <Expenses />
-          <TransactionsCard transactions={filteredTransactions} />
-        </View>
-      </ScrollView>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.column3}>
+            <Header />
+            <Tabs
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              onFilterPress={handleFilterPress}
+            />
+            <Expenses />
+            <TransactionsCard transactions={filteredTransactions} />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

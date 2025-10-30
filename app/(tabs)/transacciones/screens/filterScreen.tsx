@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -15,15 +15,39 @@ import InputCalendar from "../components/filter-screen/inputCalendary";
 import RangePrice from "../components/filter-screen/selectRangeMoney";
 import TabRangeTime from "../components/filter-screen/TabRangeTime";
 import Tabs from "../components/filter-screen/Tabs";
+import { FilterType } from "../contexts/context-filter-transaction/FilterContext";
+import { useFilterScreen } from "../hooks/hooks-filter/use-filter-screen";
 
-//HOOKS
-import useRangeTime from "../hooks/hooks-filter/use-range-time";
-import { useTransactions } from "../hooks/use-transactions";
+type TabType = "Todas" | "Ingresos" | "Gastos";
+
+const typeMap: Record<TabType, FilterType> = {
+  Todas: "all",
+  Ingresos: "income",
+  Gastos: "expense",
+};
+
+const reverseTypeMap: Record<FilterType, TabType> = {
+  all: "Todas",
+  income: "Ingresos",
+  expense: "Gastos",
+};
 
 const FilterScreen: React.FC = () => {
-  const [activeRangeTimeTab, setActiveRangeTimeTab] = useState("Hoy");
-  const { FilteredRangeTime } = useRangeTime(activeRangeTimeTab);
-  const { filteredTransactions } = useTransactions("Todas");
+  const {
+    activeTypeTab,
+    setActiveTypeTab,
+    activeRangeTimeTab,
+    setActiveRangeTimeTab,
+    rangeDate,
+    setRangeDate,
+    handleApplyFilters,
+    handleClearFilters,
+  } = useFilterScreen();
+
+  const handleSetActiveTypeTab = (tab: TabType) => {
+    setActiveTypeTab(typeMap[tab]);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -38,19 +62,17 @@ const FilterScreen: React.FC = () => {
           <View style={styles.column3}>
             <Header />
             <Tabs
-              activeTab={"Todas"}
-              setActiveTab={(tab: string) => {}}
-              onFilterPress={() => {}}
+              activeTab={reverseTypeMap[activeTypeTab]}
+              setActiveTab={handleSetActiveTypeTab}
             />
             <Categories />
             <TabRangeTime
-              activeTab={FilteredRangeTime}
+              activeTab={activeRangeTimeTab}
               setActiveTab={setActiveRangeTimeTab}
-              onFilterPress={() => {}}
             />
-            <InputCalendar />
+            <InputCalendar dates={rangeDate} setDates={setRangeDate} />
             <RangePrice />
-            <Footer />
+            <Footer onApply={handleApplyFilters} onClear={handleClearFilters} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

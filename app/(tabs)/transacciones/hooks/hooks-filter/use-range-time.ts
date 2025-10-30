@@ -1,33 +1,24 @@
-import { useEffect, useState } from "react";
-
-const useRangeTime = (activeTab: string) => {
-  const [FilteredRangeTime, setFilteredRangeTime] = useState("Hoy");
-  const [dates, setDates] = useState<{ startDate?: Date; endDate?: Date }>({});
-
-  useEffect(() => {
-    const today = new Date();
-    if (activeTab === "Ultima semana") {
+export const getRangeTime = (range: string): [Date, Date] | null => {
+  const today = new Date();
+  switch (range) {
+    case "Hoy":
+      today.setHours(0, 0, 0, 0);
+      return [today, today];
+    case "Ultima semana": {
       const lastWeek = new Date();
       lastWeek.setDate(today.getDate() - 7);
-
-      setDates({ startDate: lastWeek, endDate: today });
-      setFilteredRangeTime("Ultima semana");
-    } else if (activeTab === "Este mes") {
+      return [lastWeek, today];
+    }
+    case "Este mes": {
       const firstDayOfMonth = new Date(
         today.getFullYear(),
         today.getMonth(),
         1
       );
-      setDates({ startDate: firstDayOfMonth, endDate: today });
-      setFilteredRangeTime("Este mes");
-    } else {
-      today.setHours(0, 0, 0, 0);
-      setDates({ startDate: today, endDate: today });
-      setFilteredRangeTime("Hoy");
+      return [firstDayOfMonth, today];
     }
-  }, [activeTab]);
-
-  return { FilteredRangeTime, dates };
+    case "all":
+    default:
+      return null;
+  }
 };
-
-export default useRangeTime;

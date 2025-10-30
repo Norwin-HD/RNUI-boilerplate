@@ -3,9 +3,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
 interface TabsProps {
-  activeTab: Date | string;
+  activeTab: string;
   setActiveTab: (tab: string) => void;
-  onFilterPress: () => void;
 }
 
 const TabRangeTime: React.FC<TabsProps> = ({

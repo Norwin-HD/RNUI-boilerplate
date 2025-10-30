@@ -1,14 +1,19 @@
 import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onApply: () => void;
+  onClear: () => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onApply, onClear }) => {
   return (
     <View style={styles.quickButtonsRow}>
-      <TouchableOpacity style={styles.quickButtonLight}>
+      <TouchableOpacity style={styles.quickButtonLight} onPress={onClear}>
         <Text style={styles.quickButtonLightText}>Limpiar todo</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.quickButtonPrimary}>
+      <TouchableOpacity style={styles.quickButtonPrimary} onPress={onApply}>
         <Text style={styles.quickButtonPrimaryText}>Aplicar filtros</Text>
       </TouchableOpacity>
     </View>

@@ -13,7 +13,7 @@ interface Transaction {
   id: number;
   categoria: string;
   monto: number;
-  fecha: string;
+  fecha: Date;
   imagen: string;
 }
 
@@ -24,6 +24,20 @@ interface TransactionsCardProps {
 const TransactionsCard: React.FC<TransactionsCardProps> = ({
   transactions,
 }) => {
+  const formatRelativeDate = (date: Date) => {
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    const diffInDays = Math.floor(diffInSeconds / 86400);
+
+    if (diffInDays === 0) return "Hoy";
+    if (diffInDays === 1) return "hace 1 día";
+    if (diffInDays < 7) return `hace ${diffInDays} días`;
+    if (diffInDays < 14) return "hace 1 semana";
+    if (diffInDays < 30) return `hace ${Math.floor(diffInDays / 7)} semanas`;
+    if (diffInDays < 60) return "hace 1 mes";
+    return `hace ${Math.floor(diffInDays / 30)} meses`;
+  };
+
   return (
     <View>
       <View style={styles.header}>
@@ -57,7 +71,7 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
                   resizeMode={"stretch"}
                   style={styles.image10}
                 />
-                <Text style={styles.textTime}>{item.fecha}</Text>
+                <Text style={styles.textTime}>{formatRelativeDate(item.fecha)}</Text>
               </View>
             </View>
             <View>
