@@ -5,11 +5,13 @@ import Modal from "react-native-modal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale } from "react-native-size-matters";
 import { useCalendarModal } from "../../hooks/hooks-filter/use-calendar-modal";
-import { Calendar } from "./Calendar";
+import  {Calendar}  from "./Calendar";
+
+type DateRange = [Date, Date] | null;
 
 interface InputCalendarProps {
-  dates: [Date, Date] | null;
-  setDates: (dates: [Date, Date] | null) => void;
+  dates: DateRange;
+  setDates: (dates: DateRange) => void;
 }
 
 const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
@@ -43,7 +45,15 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
         >
           <View style={styles.modalView}>
             <View style={styles.dragIndicator} />
-            {showContent && <Calendar onApply={({ startDate, endDate }) => handleApplyDate(startDate && endDate ? [startDate, endDate] : null)} />}
+            {showContent && (
+              <Calendar
+                onApply={({ startDate, endDate }) =>
+                  handleApplyDate(
+                    startDate && endDate ? [startDate, endDate] : null
+                  )
+                }
+              />
+            )}
           </View>
         </Modal>
 

@@ -4,7 +4,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
-const IncomeExpenses: React.FC = () => {
+const IncomeExpenses = () => {
   return (
     <View style={styles.container}>
       <View style={styles.gastosIngresosContainer}>

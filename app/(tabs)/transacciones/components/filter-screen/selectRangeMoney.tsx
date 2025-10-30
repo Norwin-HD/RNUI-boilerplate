@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import UsdCircleIcon from "../../svg/usd-cirlcle";
 
-const SelectRangeMoney: React.FC = () => {
+const SelectRangeMoney = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 

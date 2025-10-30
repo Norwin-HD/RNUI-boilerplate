@@ -7,7 +7,11 @@ import DateTimePicker, {
   useDefaultStyles,
 } from "react-native-ui-datepicker";
 
-export function Calendar({ onApply }: { onApply?: (r: { startDate?: Date; endDate?: Date }) => void }) {
+interface CalendarProps {
+  onApply?: (r: { startDate?: Date; endDate?: Date }) => void;
+}
+
+export function Calendar({ onApply }: CalendarProps) {
   const defaultStyles = useDefaultStyles();
   type RangeDate = { startDate?: DateType; endDate?: DateType };
   const [selected, setSelected] = useState<RangeDate | undefined>();
@@ -41,7 +45,7 @@ export function Calendar({ onApply }: { onApply?: (r: { startDate?: Date; endDat
       fontFamily: "Montserrat_500Medium",
       lineHeight: moderateScale(30),
     },
-    
+
     weekday_label: {
       ...(defaultStyles.weekday_label as object),
       fontFamily: "Montserrat_600SemiBold",
@@ -129,8 +133,12 @@ export function Calendar({ onApply }: { onApply?: (r: { startDate?: Date; endDat
         <TouchableOpacity
           style={styles.applyRow}
           onPress={() => {
-            const start = selected?.startDate ? new Date(selected.startDate as any) : undefined;
-            const end = selected?.endDate ? new Date(selected.endDate as any) : undefined;
+            const start = selected?.startDate
+              ? new Date(selected.startDate as any)
+              : undefined;
+            const end = selected?.endDate
+              ? new Date(selected.endDate as any)
+              : undefined;
             onApply?.({ startDate: start, endDate: end });
           }}
         >
@@ -191,8 +199,8 @@ const styles = StyleSheet.create({
     marginBottom: moderateScale(6),
     paddingVertical: moderateScale(12),
     paddingHorizontal: moderateScale(4),
-    backgroundColor: 'transparent',
-    shadowColor: '#000',
+    backgroundColor: "transparent",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,

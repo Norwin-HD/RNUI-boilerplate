@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-const Header: React.FC = () => {
+const Header = () => {
   return (
     <View style={styles.column}>
         <Text style={styles.text}>{"Transacciones"}</Text>

@@ -9,10 +9,7 @@ interface TabsProps {
   setActiveTab: (tab: TabType) => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({
-  activeTab,
-  setActiveTab,
-}) => {
+const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
   const tabs: TabType[] = ["Todas", "Ingresos", "Gastos"];
 
   return (

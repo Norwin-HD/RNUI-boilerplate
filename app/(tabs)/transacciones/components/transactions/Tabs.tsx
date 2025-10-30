@@ -10,11 +10,8 @@ interface TabsProps {
   onFilterPress: () => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({
-  activeTab,
-  setActiveTab,
-  onFilterPress,
-}) => {
+const Tabs = ({ activeTab, onFilterPress, setActiveTab }: TabsProps) => {
+  
   const tabs = ["Todas", "Ingresos", "Gastos"];
 
   return (

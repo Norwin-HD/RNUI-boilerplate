@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 
-const Footer: React.FC = () => {
+const Footer = () => {
   const router = useRouter();
   return (
     <View style={styles.quickButtonsRow}>

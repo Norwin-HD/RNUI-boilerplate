@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Card from "./Card";
 
@@ -21,9 +15,8 @@ interface TransactionsCardProps {
   transactions: Transaction[];
 }
 
-const TransactionsCard: React.FC<TransactionsCardProps> = ({
-  transactions,
-}) => {
+const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
+  
   const formatRelativeDate = (date: Date) => {
     const now = new Date();
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
@@ -41,7 +34,9 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
   return (
     <View>
       <View style={styles.header}>
-        <Text style={styles.headerText}>{`Gastos e Ingresos (${transactions.length})`}</Text>
+        <Text
+          style={styles.headerText}
+        >{`Gastos e Ingresos (${transactions.length})`}</Text>
       </View>
       {transactions.map((item, index) => (
         <Card
@@ -71,7 +66,9 @@ const TransactionsCard: React.FC<TransactionsCardProps> = ({
                   resizeMode={"stretch"}
                   style={styles.image10}
                 />
-                <Text style={styles.textTime}>{formatRelativeDate(item.fecha)}</Text>
+                <Text style={styles.textTime}>
+                  {formatRelativeDate(item.fecha)}
+                </Text>
               </View>
             </View>
             <View>

@@ -7,82 +7,80 @@ interface TabsProps {
   setActiveTab: (tab: string) => void;
 }
 
-const TabRangeTime: React.FC<TabsProps> = ({
-  activeTab,
-  setActiveTab,
-}) => {
-  const tabs = ["Hoy", "Ultima semana", "Este mes"];
+const TabRangeTime = ({ activeTab, setActiveTab }: TabsProps) => {
+  const tabs = ["Hoy", "Última semana", "Este mes"];
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textHeader}>{"Rango de fechas"}</Text>
-      <View style={styles.tabsContainer}>
-        {tabs.map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            style={activeTab === tab ? styles.buttonMain : styles.buttonSecond}
-            onPress={() => setActiveTab(tab)}
-          >
-            <Text
-              style={activeTab === tab ? styles.textMain : styles.textSecond}
+      <Text style={styles.header}>Rango de fechas</Text>
+      <View style={styles.tabs}>
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab;
+          return (
+            <TouchableOpacity
+              key={tab}
+              style={[
+                styles.button,
+                isActive ? styles.buttonActive : styles.buttonInactive,
+              ]}
+              onPress={() => setActiveTab(tab)}
             >
-              {tab}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Text
+                style={[
+                  styles.text,
+                  isActive ? styles.textActive : styles.textInactive,
+                ]}
+              >
+                {tab}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     </View>
   );
 };
 
+export default TabRangeTime;
+
 const styles = StyleSheet.create({
   container: {
     marginVertical: verticalScale(20),
-    height: verticalScale(48),
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignSelf: "stretch",
     gap: verticalScale(20),
   },
-  tabsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: scale(10),
-  },
-  buttonMain: {
-    backgroundColor: "#3476F4",
-    borderRadius: 9999,
-    paddingVertical: verticalScale(3),
-    paddingHorizontal: scale(12),
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  textHeader: {
+  header: {
     color: "#454A53",
     fontSize: moderateScale(16),
     fontFamily: "Montserrat_500Medium",
   },
-
-  textMain: {
-    color: "#FFFFFF",
-    fontSize: moderateScale(14),
-    fontFamily: "Montserrat_500Medium",
+  tabs: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: scale(10),
   },
-  buttonSecond: {
-    backgroundColor: "#E1EBFD",
-    borderColor: "#9FBFFA",
+  button: {
     borderRadius: 9999,
-    borderWidth: 1,
     paddingVertical: verticalScale(3),
     paddingHorizontal: scale(12),
     justifyContent: "center",
     alignItems: "center",
   },
-  textSecond: {
-    color: "#3476F4",
+  buttonActive: {
+    backgroundColor: "#3476F4",
+  },
+  buttonInactive: {
+    backgroundColor: "#E1EBFD",
+    borderColor: "#9FBFFA",
+    borderWidth: 1,
+  },
+  text: {
     fontSize: moderateScale(14),
     fontFamily: "Montserrat_500Medium",
   },
+  textActive: {
+    color: "#FFFFFF",
+  },
+  textInactive: {
+    color: "#3476F4",
+  },
 });
-
-export default  TabRangeTime;

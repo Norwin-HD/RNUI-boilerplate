@@ -8,7 +8,7 @@ type InputSearchProps = {
   onChangeText?: (text: string) => void;
 };
 
-const InputSearch: React.FC<InputSearchProps> = ({ value, onChangeText }) => {
+const InputSearch = ({ value, onChangeText }: InputSearchProps) => {
 
   return (
     <View style={styles.containerInput}>

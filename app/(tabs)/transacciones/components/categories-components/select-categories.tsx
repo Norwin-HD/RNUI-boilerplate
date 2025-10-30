@@ -15,7 +15,7 @@ type Props = {
   categories: Category[];
 };
 
-const SelectCategories: React.FC<Props> = ({ categories }) => {
+const SelectCategories = ({ categories }: Props) => {
   const { selectedCategories, toggleCategory } = useCategoryContext();
 
   return (

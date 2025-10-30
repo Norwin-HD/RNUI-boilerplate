@@ -7,7 +7,7 @@ interface FooterProps {
   onClear: () => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ onApply, onClear }) => {
+const Footer = ({ onApply, onClear }: FooterProps) => {
   return (
     <View style={styles.quickButtonsRow}>
       <TouchableOpacity style={styles.quickButtonLight} onPress={onClear}>
