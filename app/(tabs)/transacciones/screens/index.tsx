@@ -18,19 +18,20 @@ import { useFilter } from "../contexts/context-filter-transaction/FilterContext"
 const TransaccionesScreen: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("Todas");
   const { appliedFilters } = useFilter();
-  const { filteredTransactions: allFilteredTransactions } = useTransactions(activeTab);
+  const { filteredTransactions: allFilteredTransactions } =
+    useTransactions(activeTab);
 
   const filteredTransactions = useMemo(() => {
-    if (appliedFilters.type === 'all' && !appliedFilters.dates) {
+    if (appliedFilters.type === "all" && !appliedFilters.dates) {
       return allFilteredTransactions;
     }
-    
-    return allFilteredTransactions.filter(transaction => {
+
+    return allFilteredTransactions.filter((transaction) => {
       // Filter by type
-      if (appliedFilters.type === 'income' && transaction.type !== 'income') {
+      if (appliedFilters.type === "income" && transaction.type !== "income") {
         return false;
       }
-      if (appliedFilters.type === 'expense' && transaction.type !== 'expense') {
+      if (appliedFilters.type === "expense" && transaction.type !== "expense") {
         return false;
       }
 
@@ -38,18 +39,21 @@ const TransaccionesScreen: React.FC = () => {
       if (appliedFilters.dates) {
         const [startDate, endDate] = appliedFilters.dates;
         const transactionDate = new Date(transaction.fecha);
-        
+
         const filterStartDate = new Date(startDate);
         filterStartDate.setHours(0, 0, 0, 0);
 
         const filterEndDate = new Date(endDate);
         filterEndDate.setHours(23, 59, 59, 999);
-        
-        if (transactionDate < filterStartDate || transactionDate > filterEndDate) {
+
+        if (
+          transactionDate < filterStartDate ||
+          transactionDate > filterEndDate
+        ) {
           return false;
         }
       }
-      
+
       return true;
     });
   }, [appliedFilters, allFilteredTransactions]);
@@ -64,9 +68,9 @@ const TransaccionesScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        <Header />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.column3}>
-            <Header />
             <Tabs
               activeTab={activeTab}
               setActiveTab={setActiveTab}

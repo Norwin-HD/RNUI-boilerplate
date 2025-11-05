@@ -1,9 +1,7 @@
 
-import { router } from "expo-router";
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity} from "react-native";
+import { View, StyleSheet, Text} from "react-native";
 import { moderateScale, scale, verticalScale} from "react-native-size-matters";
-import ArrowSmallLeft from "../../transacciones/svg/arrow-small-left";
 
 const Header = () => {
 
@@ -11,9 +9,6 @@ const Header = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => router.back()} style={styles.button}>
-        <ArrowSmallLeft width={24} height={24} color="#000" />
-      </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
     </View>
   );
@@ -26,12 +21,9 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(20),
     backgroundColor: "#FFFFFF",
   },
-  button: {
-    padding: scale(5),
-  },
   title: {
     color: "#454A53",
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(22),
     fontFamily: "Montserrat_700Bold",
     marginLeft: scale(15),
   },

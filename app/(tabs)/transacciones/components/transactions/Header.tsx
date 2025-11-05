@@ -14,6 +14,7 @@ const Header = () => {
 const styles = StyleSheet.create({
     column: {
         backgroundColor: "#FFFFFF",
+        left: moderateScale(15),
         marginBottom: moderateScale(20),
     },
     text: {

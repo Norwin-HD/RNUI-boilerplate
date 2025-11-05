@@ -30,10 +30,12 @@ function FigmaNavAdapter(props: any) {
   }
 
   const handleSelect = (index: number) => {
-    const route = state.routes[index];
+    // Map bottom nav indices to route indices, skipping the FAB at index 2
+    const routeIndex = index > 2 ? index - 1 : index;
+    const route = state.routes[routeIndex];
     if (!route) return;
 
-    const isFocused = state.index === index;
+    const isFocused = state.index === routeIndex;
 
     const event = navigation.emit({
       type: "tabPress",
@@ -47,7 +49,10 @@ function FigmaNavAdapter(props: any) {
     }
   };
 
-  return <FigmaBottomNav selectedIndex={state.index} onSelect={handleSelect} />;
+  // Map route index to bottom nav index (inserting FAB at position 2)
+  const bottomNavIndex = state.index < 2 ? state.index : state.index + 1;
+
+  return <FigmaBottomNav selectedIndex={bottomNavIndex} onSelect={handleSelect} />;
 }
 
 export default function TabLayout() {
@@ -87,6 +92,7 @@ export default function TabLayout() {
             name="metas"
             options={{
               title: "Metas",
+              headerShown: false,
               tabBarIcon: ({ color }) => (
                 <IconSymbol size={28} name="star.fill" color={color} />
               ),

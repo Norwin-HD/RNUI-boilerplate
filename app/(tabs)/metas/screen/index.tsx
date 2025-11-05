@@ -1,13 +1,21 @@
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import Header from "../components/header";
+import SelectionCard from "../components/selectionCard";
+import TotalAhorradoYMetalTotal from "../components/totalSection";
+import ProgressBar from "../components/progressBar";
 
-const MetasScreen: React.FC = () => {
+
+const MetasScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
       <ScrollView style={styles.scrollView}>
-        <View style={styles.column3}></View>
+        <View style={styles.column3}>
+          <SelectionCard />
+          <TotalAhorradoYMetalTotal savingAll={5050.17} allGoal={8000.17} />
+          <ProgressBar savingAll={5050.17} allGoal={8000.17} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -27,6 +35,6 @@ const styles = StyleSheet.create({
   },
   column3: {
     marginBottom: verticalScale(29),
-    marginHorizontal: moderateScale(20),
+    marginHorizontal: moderateScale(14),
   },
 });
