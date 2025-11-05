@@ -1,5 +1,5 @@
 import { useState } from "react";
-import categories from "../../mackups/categories-filter";
+import categories from "../../../../mackups/categories-filter";
 
 export const useSelectCategorie = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);

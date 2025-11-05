@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import transaccionesMackup from "../mackups/transactionsMockup";
+import transaccionesMackup from "../../../mackups/transactionsMockup";
 
 export const useTransactions = (activeTab: string) => {
   const [filteredTransactions, setFilteredTransactions] = useState(transaccionesMackup);

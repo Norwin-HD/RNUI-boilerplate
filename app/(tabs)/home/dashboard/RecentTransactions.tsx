@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from 'date-fns';
+import { es } from 'date-fns/locale';
 import React from "react";
 import {
   Image,
@@ -7,8 +9,17 @@ import {
   View,
 } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import transaccionesMackup from "../Mackups/transaccionesMackup";
+import transaccionesMackup from "../../../mackups/transactionsMockup";
 import Card from "./Card";
+
+/**
+ * Formatea una fecha para mostrar el tiempo relativo transcurrido hasta ahora.
+ * @param date La fecha a formatear.
+ * @returns Una cadena de texto con el tiempo relativo (ej. "hace 2 dias").
+ */
+const formatRelativeDate = (date: Date) => {
+  return formatDistanceToNow(date, { addSuffix: true, locale: es });
+}
 
 const RecentTransactions: React.FC = () => {
   return (
@@ -53,7 +64,8 @@ const RecentTransactions: React.FC = () => {
                   resizeMode={"stretch"}
                   style={styles.image10}
                 />
-                <Text style={styles.textTime}>{item.fecha}</Text>
+                {/* Se utiliza la función formatRelativeDate para mostrar la fecha de la transacción */}
+                <Text style={styles.textTime}>{formatRelativeDate(item.fecha)}</Text>
               </View>
             </View>
             <View>

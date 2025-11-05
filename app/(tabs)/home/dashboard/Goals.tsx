@@ -1,15 +1,12 @@
 import React from "react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import Card from "./Card";
+import { metasMackup } from "../../../mackups/metas-mackup";
+import MainGoalCard from "./MainGoalCard";
+import SecondaryGoalCard from "./SecondaryGoalCard";
 
 const Goals = () => {
+  const { mainGoal } = metasMackup;
   return (
     <View style={styles.container}>
       <View style={styles.arrowContainer}>
@@ -24,67 +21,19 @@ const Goals = () => {
           />
         </TouchableOpacity>
       </View>
-      <Card style={styles.containerCard}>
-        <View style={styles.CardOne}>
-          <View style={styles.cardHeader}>
-            <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/k5nj3t2l_expires_30_days.png",
-              }}
-              resizeMode={"stretch"}
-              style={styles.iconCardOne}
-            />
-            <Text style={styles.textHeader}>{"Meta"}</Text>
-          </View>
-          <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
-            <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hkb0naka_expires_30_days.png",
-              }}
-              resizeMode={"stretch"}
-              style={styles.iconArrow}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.middleContainer}>
-          <Text style={styles.middleText}>{"Vacaciones Europa"}</Text>
-          <Text style={styles.timeText}>{"dic, 2025"}</Text>
-        </View>
-        <View style={styles.porcentaje}>
-          <View style={styles.containerPorcentaje}>
-            <View style={styles.box}></View>
-          </View>
-          <View style={styles.footerCardOne}>
-            <Text style={styles.textFooter}>{"$165 de $5,000"}</Text>
-            <Text style={styles.timeText}>{"65% completado"}</Text>
-          </View>
-        </View>
-      </Card>
-      <Card style={styles.row13}>
-        <Image
-          source={{
-            uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/gk7orci1_expires_30_days.png",
-          }}
-          resizeMode={"stretch"}
-          style={styles.iconHome}
-        />
-        <View style={styles.row14}>
-          <View style={styles.column12}>
-            <Text style={styles.textHeaderCardTwo}>{"Casa"}</Text>
-            <Text style={styles.monto}>{"$100 de $500"}</Text>
-          </View>
-          <View style={styles.column13}>
-            <Image
-              source={{
-                uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/4b16t5c0_expires_30_days.png",
-              }}
-              resizeMode={"stretch"}
-              style={styles.image9}
-            />
-            <Text style={styles.textRestante}>{"$400 restante"}</Text>
-          </View>
-        </View>
-      </Card>
+      <MainGoalCard
+        title={mainGoal.title}
+        deadline={mainGoal.deadline}
+        currentAmount={mainGoal.currentAmount}
+        totalAmount={mainGoal.totalAmount}
+        onPress={() => alert("Navigate to goals!")}
+      />
+      <SecondaryGoalCard
+        title="Casa"
+        currentAmount={100}
+        totalAmount={500}
+        iconUri="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/gk7orci1_expires_30_days.png"
+      />
     </View>
   );
 };
@@ -216,11 +165,13 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(12),
     fontFamily: "Montserrat_500Medium",
   },
-  column13: { // IGNORE
+  column13: {
+    // IGNORE
     flex: 1,
     alignItems: "flex-end",
   },
-  image9: { // IGNORE
+  image9: {
+    // IGNORE
     width: moderateScale(24),
     height: moderateScale(24),
     marginBottom: verticalScale(16),

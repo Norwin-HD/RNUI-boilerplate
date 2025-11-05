@@ -1,9 +1,9 @@
+import { router } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { router } from "expo-router";
 import { moderateScale, scale } from "react-native-size-matters";
+import categories from "../../../../mackups/categories-filter";
 import { useCategoryContext } from "../../contexts/contexts-category/dataContext";
-import categories from "../../mackups/categories-filter";
 
 type Categoria = {
   title: string;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import categories from "../../mackups/categories-filter";
+import categories from "../../../../mackups/categories-filter";
 
 // Hook para buscar
 export const useCategories = () => {
