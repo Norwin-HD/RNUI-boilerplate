@@ -84,7 +84,7 @@ export default function TabLayout() {
             }}
           />
           <Tabs.Screen
-            name="metas/index"
+            name="metas"
             options={{
               title: "Metas",
               tabBarIcon: ({ color }) => (

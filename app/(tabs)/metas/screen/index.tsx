@@ -1,13 +1,13 @@
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
+import Header from "../components/header";
 
 const MetasScreen: React.FC = () => {
-
   return (
     <SafeAreaView style={styles.container}>
+      <Header />
       <ScrollView style={styles.scrollView}>
-        <View style={styles.column3}>
-        </View>
+        <View style={styles.column3}></View>
       </ScrollView>
     </SafeAreaView>
   );
