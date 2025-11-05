@@ -6,11 +6,19 @@ export const useSelectCategorie = () => {
 
   const toggleCategory = (categoryTitle: string) => {
     const newSelectedCategories = selectedCategories.includes(categoryTitle)
-      ? selectedCategories.filter((item) => item !== categoryTitle)
-      : [...selectedCategories, categoryTitle];
+
+      ? selectedCategories.filter((item) => item !== categoryTitle) // Remover
+
+      : [...selectedCategories, categoryTitle]; // Agregar
+      
     setSelectedCategories(newSelectedCategories);
     console.log("Categorías seleccionadas:", newSelectedCategories);
   };
 
-  return { selectedCategories, toggleCategory, categories, setSelectedCategories };
+  return {
+    selectedCategories,
+    toggleCategory,
+    categories,
+    setSelectedCategories,
+  };
 };

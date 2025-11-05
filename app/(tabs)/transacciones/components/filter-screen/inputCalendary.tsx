@@ -5,9 +5,10 @@ import Modal from "react-native-modal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale } from "react-native-size-matters";
 import { useCalendarModal } from "../../hooks/hooks-filter/use-calendar-modal";
-import  {Calendar}  from "./Calendar";
+import { Calendar } from "./Calendar";
 
 type DateRange = [Date, Date] | null;
+
 
 interface InputCalendarProps {
   dates: DateRange;

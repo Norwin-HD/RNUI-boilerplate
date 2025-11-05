@@ -11,24 +11,32 @@ export interface AppliedFilters {
 interface FilterContextType {
   appliedFilters: AppliedFilters;
   applyFilters: (filters: AppliedFilters) => void;
+  clearFilters: () => void;
 }
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
+const initialState: AppliedFilters = {
+  type: "all",
+  range: "all",
+  dates: null,
+};
+
 export const FilterProvider = ({ children }: { children: ReactNode }) => {
-  const [appliedFilters, setAppliedFilters] = useState<AppliedFilters>({
-    type: "all",
-    range: "all",
-    dates: null,
-  });
+  const [appliedFilters, setAppliedFilters] =
+    useState<AppliedFilters>(initialState);
 
   const applyFilters = (filters: AppliedFilters) => {
     setAppliedFilters(filters);
   };
 
+  const clearFilters = () => {
+    setAppliedFilters(initialState);
+  };
+
   return (
     <FilterContext.Provider
-      value={{ appliedFilters, applyFilters }}
+      value={{ appliedFilters, applyFilters, clearFilters }}
     >
       {children}
     </FilterContext.Provider>
