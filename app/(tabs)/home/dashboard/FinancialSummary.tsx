@@ -5,11 +5,11 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 import BalanceCard from './BalanceCard';
 import ExpensesCard from './ExpensesCard';
 
-const FinancialSummary: React.FC = () => {
+const FinancialSummary = () => {
   return (
     <View style={styles.column4}>
-      <BalanceCard />
-      <ExpensesCard />
+      <BalanceCard balance={200.10} percentageChange={5.2} period="vs. el mes pasado" />
+      <ExpensesCard spent={1600} budget={4000} />
     </View>
   );
 };

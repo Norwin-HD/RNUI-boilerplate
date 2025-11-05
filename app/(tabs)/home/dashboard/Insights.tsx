@@ -1,85 +1,95 @@
 
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const Insights: React.FC = () => {
+interface InsightsProps {
+  insightText: string;
+  onConfigureAlerts: () => void;
+}
+
+const Insights = ({ insightText, onConfigureAlerts }: InsightsProps) => {
   return (
     <View>
-      <View style={styles.column14}>
-        <View style={styles.row17}>
+      <View style={styles.card}>
+        <View style={styles.header}>
           <Image
             source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/03z6e7zv_expires_30_days.png" }}
             resizeMode={"stretch"}
-            style={styles.image11}
+            style={styles.icon}
           />
-          <Text style={styles.text29}>{"Insight del mes"}</Text>
+          <Text style={styles.title}>{"Insight del mes"}</Text>
         </View>
-        <Text style={styles.text30}>
-          {"Tus gastos en comidas fuera subieron 20% este mes. 🌮 Considera cocinar más en casa para ahorrar."}
-        </Text>
+        <Text style={styles.bodyText}>{insightText}</Text>
       </View>
-      <View style={styles.row18}>
-        <Text style={styles.text31}>{"Configurar alertas"}</Text>
+      <TouchableOpacity style={styles.configureButton} onPress={onConfigureAlerts}>
+        <Text style={styles.configureButtonText}>{"Configurar alertas"}</Text>
         <Image
           source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/eoj7bu7f_expires_30_days.png" }}
           resizeMode={"stretch"}
-          style={styles.image4}
+          style={styles.arrowIcon}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
+// Using the component with mock data for demonstration
+const InsightsContainer = () => {
+    const mockInsight = "Tus gastos en comidas fuera subieron 20% este mes. 🌮 Considera cocinar más en casa para ahorrar.";
+    const handleConfigureAlerts = () => alert("Navigate to alert configuration!");
+
+    return <Insights insightText={mockInsight} onConfigureAlerts={handleConfigureAlerts} />;
+}
+
 const styles = StyleSheet.create({
-    column14: {
+    card: {
         backgroundColor: "#3476F4",
         borderRadius: moderateScale(18),
         paddingVertical: verticalScale(16),
         marginBottom: verticalScale(25),
-        shadowColor: "#000000",
+        // The boxShadow property is not standard in React Native, but I'm keeping it
+        // as it was in the code you provided. It might be supported by a library in your project.
         boxShadow: "0 0 0 2px #000 inset, 4px 4px 0 0 #000",
-        shadowOpacity: 1.0,
     },
-    row17: {
-        alignSelf: "flex-start",
+    header: {
         flexDirection: "row",
         alignItems: "center",
         marginBottom: verticalScale(16),
         marginLeft: scale(16),
     },
-    image11: {
+    icon: {
         width: moderateScale(30),
         height: moderateScale(30),
         marginRight: scale(8),
     },
-    text29: {
+    title: {
         color: "#FFFFFF",
         fontSize: moderateScale(16),
         fontFamily: "Montserrat_600SemiBold",
     },
-    text30: {
+    bodyText: {
         color: "#FFFFFF",
         fontSize: moderateScale(14),
         marginHorizontal: scale(16),
+        fontFamily: "Montserrat_500Medium",
     },
-    row18: {
-        alignSelf: "flex-start",
+    configureButton: {
         flexDirection: "row",
         alignItems: "center",
         marginLeft: scale(8),
         marginBottom: verticalScale(70),
     },
-    text31: {
+    configureButtonText: {
         color: "#000000",
         fontSize: moderateScale(18),
         marginRight: scale(12),
         fontFamily: "Montserrat_500Medium",
     },
-    image4: {
+    arrowIcon: {
         width: moderateScale(24),
         height: moderateScale(24),
     },
 });
 
-export default Insights;
+export default InsightsContainer;

@@ -9,7 +9,7 @@ import {
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Card from "./Card";
 
-const Goals: React.FC = () => {
+const Goals = () => {
   return (
     <View style={styles.container}>
       <View style={styles.arrowContainer}>

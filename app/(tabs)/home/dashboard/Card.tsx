@@ -7,7 +7,7 @@ interface CardProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const Card: React.FC<CardProps> = ({ children, style }) => {
+const Card = ({ children, style } : CardProps) => {
   return <View style={[styles.card, style]}>{children}</View>;
 };
 

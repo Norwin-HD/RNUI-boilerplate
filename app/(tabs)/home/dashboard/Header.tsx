@@ -1,97 +1,83 @@
 
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { moderateScale, scale } from 'react-native-size-matters';
 
+interface User {
+    name: string;
+    email: string;
+    avatarUrl: string;
+}
+
+// Mock data for demonstration
+const mockUser: User = {
+    name: "Aarón Portobanco",
+    email: "aaronportobanco@gmail.com",
+    avatarUrl: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/1v0qoj99_expires_30_days.png",
+};
+
 const Header: React.FC = () => {
+  const { user, onNotificationsPress } = { user: mockUser, onNotificationsPress: () => alert('Notifications pressed!') };
+
   return (
-    <View style={styles.column}>
-      {/* <View style={styles.row}>
+    <View style={styles.container}>
+      <View style={styles.userInfoContainer}>
         <Image
-          source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/8zwj1rf6_expires_30_days.png" }}
+          source={{ uri: user.avatarUrl }}
           resizeMode={"stretch"}
-          style={styles.image}
+          style={styles.avatar}
         />
-        <Image
-          source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/t4eqchy9_expires_30_days.png" }}
-          resizeMode={"stretch"}
-          style={styles.image2}
-        />
-      </View> */}
-      <View style={styles.row2}>
-        <View style={styles.row3}>
-          <Image
-            source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/1v0qoj99_expires_30_days.png" }}
-            resizeMode={"stretch"}
-            style={styles.image3}
-          />
-          <View style={styles.column2}>
-            <Text style={styles.text}>{"Aarón Portobanco"}</Text>
-            <Text style={styles.text2}>{"aaronportobanco@gmail.com"}</Text>
-          </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.userName}>{user.name}</Text>
+          <Text style={styles.userEmail}>{user.email}</Text>
         </View>
+      </View>
+      <TouchableOpacity onPress={onNotificationsPress}>
         <Image
           source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/1z1wxrrc_expires_30_days.png" }}
           resizeMode={"stretch"}
-          style={styles.image4}
+          style={styles.notificationIcon}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    column: {
-        backgroundColor: "#FFFFFF",
-        marginBottom: moderateScale(20),
-    },
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        backgroundColor: "#FFFFFF",
-        paddingVertical: moderateScale(12),
-        marginBottom: moderateScale(17),
-    },
-    image: {
-        width: scale(61),
-        height: moderateScale(18),
-        marginLeft: scale(18),
-    },
-    image2: {
-        width: scale(114),
-        height: moderateScale(18),
-        marginRight: scale(19),
-    },
-    row2: {
+    container: {
         flexDirection: "row",
         alignItems: "center",
-        marginHorizontal: scale(20),
+        backgroundColor: "#FFFFFF",
+        paddingVertical: moderateScale(12),
+        paddingHorizontal: scale(20),
+        marginBottom: moderateScale(20),
     },
-    row3: {
+    userInfoContainer: {
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
         marginRight: scale(12),
     },
-    image3: {
+    avatar: {
         width: moderateScale(32),
         height: moderateScale(32),
         marginRight: scale(12),
+        borderRadius: moderateScale(16), // To make it a circle
     },
-    column2: {
+    textContainer: {
         flex: 1,
     },
-    text: {
+    userName: {
         color: "#454A53",
         fontSize: moderateScale(14),
         fontFamily: "Montserrat_600SemiBold",
     },
-    text2: {
+    userEmail: {
         color: "#9EA2AD",
         fontSize: moderateScale(12),
         fontFamily: "Montserrat_600SemiBold",
     },
-    image4: {
+    notificationIcon: {
         width: moderateScale(24),
         height: moderateScale(24),
     },

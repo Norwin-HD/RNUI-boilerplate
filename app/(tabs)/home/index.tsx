@@ -18,7 +18,7 @@ const HomeScreen: React.FC = () => {
         <Header />
         <View style={styles.column3}>
           <FinancialSummary />
-          <IncomeExpenses />
+          <IncomeExpenses income={110.17} expenses={110.17} />
           <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
           {activeTab === "Todas" && (
             <>

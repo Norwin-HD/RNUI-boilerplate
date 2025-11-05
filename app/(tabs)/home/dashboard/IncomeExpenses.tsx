@@ -3,33 +3,46 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const IncomeExpenses: React.FC = () => {
+interface InfoCardProps {
+    type: 'income' | 'expense';
+    amount: number;
+}
+
+const InfoCard: React.FC<InfoCardProps> = ({ type, amount }) => {
+    const isIncome = type === 'income';
+    const title = isIncome ? "Ingresos" : "Gastos";
+    const iconUri = isIncome
+        ? "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/ef73o05t_expires_30_days.png" // Green up arrow
+        : "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/4p9gt8wl_expires_30_days.png"; // Red down arrow
+
+    return (
+        <View style={styles.cardContainer}>
+            <Image
+                source={{ uri: iconUri }}
+                resizeMode={"stretch"}
+                style={styles.icon}
+            />
+            <View>
+                <Text style={styles.cardTitle}>{title}</Text>
+                <Text style={styles.cardAmount}>{`$${amount.toFixed(2)}`}</Text>
+            </View>
+        </View>
+    );
+};
+
+
+interface IncomeExpensesProps {
+    income: number;
+    expenses: number;
+}
+
+const IncomeExpenses: React.FC<IncomeExpensesProps> = ({ income, expenses }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>{"Gastos e Ingresos"}</Text>
-      <View style={styles.gastosIngresosContainer}>
-        <View style={styles.gastosContainer}>
-          <Image
-            source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/4p9gt8wl_expires_30_days.png" }}
-            resizeMode={"stretch"}
-            style={styles.iconArrow}
-          />
-          <View style={styles.containerText}>
-            <Text style={styles.mainText}>{"Gastos"}</Text>
-            <Text style={styles.secondText}>{"$110.17"}</Text>
-          </View>
-        </View>
-        <View style={styles.IngresosContainer}>
-          <Image
-            source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/ef73o05t_expires_30_days.png" }}
-            resizeMode={"stretch"}
-            style={styles.iconArrow}
-          />
-          <View style={styles.containerText}>
-            <Text style={styles.mainText}>{"Ingresos"}</Text>
-            <Text style={styles.secondText}>{"$110.17"}</Text>
-          </View>
-        </View>
+      <View style={styles.cardsWrapper}>
+        <InfoCard type="expense" amount={expenses} />
+        <InfoCard type="income" amount={income} />
       </View>
     </View>
   );
@@ -37,6 +50,7 @@ const IncomeExpenses: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
+        paddingHorizontal: scale(16),
         paddingBottom: verticalScale(16),
         marginBottom: verticalScale(32),
     },
@@ -46,43 +60,33 @@ const styles = StyleSheet.create({
         marginBottom: verticalScale(28),
         fontFamily: "Montserrat_500Medium",
     },
-    gastosIngresosContainer: {
+    cardsWrapper: {
         flexDirection: "row",
+        justifyContent: 'space-around',
         gap: scale(26),
-        borderRadius: moderateScale(18),
-        paddingRight: scale(12),
-        marginHorizontal: scale(10),
     },
-    gastosContainer: {
+    cardContainer: {
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
     },
-    iconArrow: {
+    icon: {
         width: moderateScale(45),
         height: moderateScale(45),
         marginRight: scale(12),
     },
-    containerText: {
-        marginRight: scale(3),
-    },
-    mainText: {
+    cardTitle: {
         color: "#181A2A",
         lineHeight: verticalScale(18),
         fontSize: moderateScale(12),
         fontFamily: "Montserrat_500Medium",
         marginBottom: verticalScale(10),
     },
-    secondText: {
+    cardAmount: {
         color: "#181A2A",
         fontSize: moderateScale(20),
         lineHeight: verticalScale(24),
         fontFamily: "Montserrat_600SemiBold",
-    },
-    IngresosContainer: {
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
     },
 });
 
