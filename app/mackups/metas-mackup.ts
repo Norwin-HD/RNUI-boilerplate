@@ -1,8 +1,60 @@
 export const metasMackup = {
-    mainGoal: {
-        title: "Viaje a la playa",
-        deadline: "20 de Dic, 2024",
-        currentAmount: 1500,
-        totalAmount: 2000,
-    }
+  goals: [
+    {
+      id: 1,
+      title: "Viaje a la playa",
+      deadline: "20 de Dic, 2024",
+      currentAmount: 1500,
+      totalAmount: 2000,
+    },
+    {
+      id: 2,
+      title: "Fondo de emergencias",
+      deadline: "15 de Mar, 2025",
+      currentAmount: 2500,
+      totalAmount: 5000,
+    },
+    {
+      id: 3,
+      title: "Compra de auto nuevo",
+      deadline: "30 de Jun, 2025",
+      currentAmount: 8000,
+      totalAmount: 15000,
+    },
+    {
+      id: 4,
+      title: "Educación universitaria",
+      deadline: "1 de Sep, 2026",
+      currentAmount: 12000,
+      totalAmount: 25000,
+    },
+    {
+      id: 5,
+      title: "Enganche casa propia",
+      deadline: "31 de Dic, 2026",
+      currentAmount: 35000,
+      totalAmount: 80000,
+    },
+    {
+      id: 6,
+      title: "Vacaciones familiares",
+      deadline: "15 de Jul, 2025",
+      currentAmount: 3200,
+      totalAmount: 6000,
+    },
+    {
+      id: 7,
+      title: "Renovación cocina",
+      deadline: "28 de Feb, 2025",
+      currentAmount: 1800,
+      totalAmount: 4000,
+    },
+    {
+      id: 8,
+      title: "Equipo de gimnasio",
+      deadline: "10 de Abr, 2025",
+      currentAmount: 450,
+      totalAmount: 1200,
+    },
+  ],
 };

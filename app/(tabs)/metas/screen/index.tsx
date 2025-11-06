@@ -4,7 +4,7 @@ import Header from "../components/header";
 import SelectionCard from "../components/selectionCard";
 import TotalAhorradoYMetalTotal from "../components/totalSection";
 import ProgressBar from "../components/progressBar";
-
+import Goals from "../components/goals";
 
 const MetasScreen = () => {
   return (
@@ -15,6 +15,7 @@ const MetasScreen = () => {
           <SelectionCard />
           <TotalAhorradoYMetalTotal savingAll={5050.17} allGoal={8000.17} />
           <ProgressBar savingAll={5050.17} allGoal={8000.17} />
+          <Goals />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: verticalScale(40),
+    paddingBottom: verticalScale(45),
     backgroundColor: "#FFFFFF",
   },
   scrollView: {

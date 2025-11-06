@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
@@ -15,22 +17,16 @@ interface TransactionsCardProps {
   transactions: Transaction[];
 }
 
+/**
+ * Formatea una fecha a un formato corto (ej. "5 nov").
+ * @param date La fecha a formatear.
+ * @returns Una cadena de texto con la fecha corta.
+ */
+const formatShortDate = (date: Date) => {
+  return format(date, "d MMM", { locale: es });
+};
+
 const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
-  
-  const formatRelativeDate = (date: Date) => {
-    const now = new Date();
-    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-    const diffInDays = Math.floor(diffInSeconds / 86400);
-
-    if (diffInDays === 0) return "Hoy";
-    if (diffInDays === 1) return "hace 1 día";
-    if (diffInDays < 7) return `hace ${diffInDays} días`;
-    if (diffInDays < 14) return "hace 1 semana";
-    if (diffInDays < 30) return `hace ${Math.floor(diffInDays / 7)} semanas`;
-    if (diffInDays < 60) return "hace 1 mes";
-    return `hace ${Math.floor(diffInDays / 30)} meses`;
-  };
-
   return (
     <View>
       <View style={styles.header}>
@@ -66,8 +62,9 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
                   resizeMode={"stretch"}
                   style={styles.image10}
                 />
+                {/* Se utiliza la función formatShortDate para mostrar la fecha de la transacción */}
                 <Text style={styles.textTime}>
-                  {formatRelativeDate(item.fecha)}
+                  {formatShortDate(item.fecha)}
                 </Text>
               </View>
             </View>

@@ -2,11 +2,18 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { metasMackup } from "../../../mackups/metas-mackup";
+import { presupuestosMackup } from "../../../mackups/presupuestos-mackup";
 import MainGoalCard from "./MainGoalCard";
 import SecondaryGoalCard from "./SecondaryGoalCard";
 
 const Goals = () => {
-  const { mainGoal } = metasMackup;
+  const { goals } = metasMackup;
+  const { budgets } = presupuestosMackup;
+
+  // Usar la primera meta como meta principal y el primer presupuesto como meta secundaria
+  const mainGoal = goals[0];
+  const secondaryGoal = budgets[0];
+
   return (
     <View style={styles.container}>
       <View style={styles.arrowContainer}>
@@ -28,12 +35,14 @@ const Goals = () => {
         totalAmount={mainGoal.totalAmount}
         onPress={() => alert("Navigate to goals!")}
       />
-      <SecondaryGoalCard
-        title="Casa"
-        currentAmount={100}
-        totalAmount={500}
-        iconUri="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/gk7orci1_expires_30_days.png"
-      />
+      {secondaryGoal && (
+        <SecondaryGoalCard
+          title={secondaryGoal.title}
+          currentAmount={secondaryGoal.currentAmount}
+          totalAmount={secondaryGoal.totalAmount}
+          iconUri="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/gk7orci1_expires_30_days.png"
+        />
+      )}
     </View>
   );
 };
@@ -179,6 +188,7 @@ const styles = StyleSheet.create({
   textRestante: {
     color: "#181A2A",
     fontSize: moderateScale(12),
+    fontFamily: "Montserrat_500Medium",
   },
 });
 

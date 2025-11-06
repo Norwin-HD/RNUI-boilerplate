@@ -36,7 +36,7 @@ const RecentTransactions: React.FC = () => {
           />
         </TouchableOpacity>
       </View>
-      {transaccionesMackup.map((item, index) => (
+      {transaccionesMackup.slice(0, 2).map((item, index) => (
         <Card
           key={item.id}
           style={[
@@ -64,8 +64,8 @@ const RecentTransactions: React.FC = () => {
                   resizeMode={"stretch"}
                   style={styles.image10}
                 />
-                {/* Se utiliza la función formatRelativeDate para mostrar la fecha de la transacción */}
-                <Text style={styles.textTime}>{formatRelativeDate(item.fecha)}</Text>
+                {/* Se utiliza la funcion formatRelativeDate para mostrar la fecha de la transaccion */}
+                <Text numberOfLines={1} ellipsizeMode='head' style={styles.textTime}>{formatRelativeDate(item.fecha)}</Text>
               </View>
             </View>
             <View>
