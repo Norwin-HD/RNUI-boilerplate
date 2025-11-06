@@ -2,36 +2,32 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 
-
-
-
-
-interface TotalAhorradoYMetalTotalProps {
-  savingAll: number;
-  allGoal: number;
+interface TotalPresupuestoProps {
+  BudgetAll: number;
+  ExpensesGoal: number;
 }
 
-export default function TotalAhorradoYMetalTotal({ savingAll, allGoal }: TotalAhorradoYMetalTotalProps) {
+export default function TotalPresupuesto({ BudgetAll, ExpensesGoal }: TotalPresupuestoProps) {
   const formatNumber = (num: number) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  const savingAllInteger = Math.floor(savingAll);
-  const savingAllDecimal = (savingAll % 1).toFixed(2).substring(2);
+  const BudgetAllInteger = Math.floor(BudgetAll);
+  const BudgetAllDecimal = (BudgetAll % 1).toFixed(2).substring(2);
 
-  const allGoalInteger = Math.floor(allGoal);
-  const allGoalDecimal = (allGoal % 1).toFixed(2).substring(2);
+  const ExpensesGoalInteger = Math.floor(ExpensesGoal);
+  const ExpensesGoalDecimal = (ExpensesGoal % 1).toFixed(2).substring(2);
 
   return (
     <View style={styles.container}>
       <View style={styles.section}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>
-            Total Ahorrado
+            Presupuesto Total
           </Text>
           <Text>
-            <Text style={styles.amount}>${formatNumber(savingAllInteger)}</Text>
-            <Text style={styles.decimal}>.{savingAllDecimal}</Text>
+            <Text style={styles.amount}>${formatNumber(BudgetAllInteger)}</Text>
+            <Text style={styles.decimal}>.{BudgetAllDecimal}</Text>
           </Text>
         </View>
       </View>
@@ -39,11 +35,11 @@ export default function TotalAhorradoYMetalTotal({ savingAll, allGoal }: TotalAh
       <View style={styles.section}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>
-            Meta Total
+            Gasto Total
           </Text>
           <Text>
-            <Text style={styles.amount}>${formatNumber(allGoalInteger)}</Text>
-            <Text style={styles.decimal}>.{allGoalDecimal}</Text>
+            <Text style={styles.amount}>${formatNumber(ExpensesGoalInteger)}</Text>
+            <Text style={styles.decimal}>.{ExpensesGoalDecimal}</Text>
           </Text>
         </View>
       </View>

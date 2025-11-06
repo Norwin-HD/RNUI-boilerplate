@@ -1,21 +1,56 @@
+import React, { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import Header from "../components/header";
-import SelectionCard from "../components/selectionCard";
-import TotalAhorradoYMetalTotal from "../components/totalSection";
-import ProgressBar from "../components/progressBar";
+import BudgetsList from "../components/budget";
 import Goals from "../components/goals";
+import Header from "../components/header";
+import ProgressBar from "../components/progressBar";
+import ProgressBarBudget from "../components/progressBarBudget";
+import SelectionCard from "../components/selectionCard";
+import TotalPresupuesto from "../components/totalSectionBudget";
+import TotalMeta from "../components/totalSectionMeta";
 
 const MetasScreen = () => {
+  const [selectedComponent, setSelectedComponent] = useState<
+    "metas" | "presupuestos"
+  >("metas");
+
+  const savingAll = 5000.17;
+  const allGoal = 8000.17;
+
+  const budgetAll = 3000;
+  const expensesGoal = 870;
+
+  const renderComponent = () => {
+    if (selectedComponent === "metas") {
+      return (
+        <View>
+          <TotalMeta savingAll={savingAll} allGoal={allGoal} />
+          <ProgressBar savingAll={savingAll} allGoal={allGoal} />
+          <Goals />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <TotalPresupuesto BudgetAll={budgetAll} ExpensesGoal={expensesGoal} />
+          <ProgressBarBudget
+            BudgetAll={budgetAll}
+            ExpensesGoal={expensesGoal}
+          />
+          <BudgetsList />
+        </View>
+      );
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
       <ScrollView style={styles.scrollView}>
         <View style={styles.column3}>
-          <SelectionCard />
-          <TotalAhorradoYMetalTotal savingAll={5050.17} allGoal={8000.17} />
-          <ProgressBar savingAll={5050.17} allGoal={8000.17} />
-          <Goals />
+          <SelectionCard onSelectionChange={setSelectedComponent} />
+          {renderComponent()}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -37,6 +72,6 @@ const styles = StyleSheet.create({
   },
   column3: {
     marginBottom: verticalScale(29),
-    marginHorizontal: moderateScale(14),
+    marginHorizontal: moderateScale(15),
   },
 });

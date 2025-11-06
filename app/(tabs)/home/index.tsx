@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 
-const HomeScreen: React.FC = () => {
+const HomeScreen = () => {
   const [activeTab, setActiveTab] = useState("Todas");
 
   return (

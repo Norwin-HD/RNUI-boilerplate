@@ -21,7 +21,7 @@ const formatRelativeDate = (date: Date) => {
   return formatDistanceToNow(date, { addSuffix: true, locale: es });
 }
 
-const RecentTransactions: React.FC = () => {
+const RecentTransactions = () => {
   return (
     <View>
       <View style={styles.header}>

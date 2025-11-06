@@ -6,13 +6,14 @@ import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 // allGoal: Tu meta total
 
 interface ProgressBarProps {
-  savingAll: number;
-  allGoal: number;
+  BudgetAll: number;
+  ExpensesGoal: number;
 }
 
-const ProgressBar = ({ savingAll, allGoal }: ProgressBarProps) => {
+const ProgressBarBudget = ({ BudgetAll, ExpensesGoal }: ProgressBarProps) => {
   // Calcula el porcentaje gastado (evita que pase del 100%)
-  const percentage = allGoal > 0 ? Math.min(Math.round((savingAll / allGoal) * 100), 100) : 0;
+  const percentage =
+    BudgetAll > 0 ? Math.min(Math.round((ExpensesGoal / BudgetAll) * 100), 100) : 0;
   // Si el presupuesto es 0, muestra 0% para evitar errores
 
   return (
@@ -20,7 +21,9 @@ const ProgressBar = ({ savingAll, allGoal }: ProgressBarProps) => {
       <View style={styles.secondContainer}>
         <View style={styles.progressBarContainer}>
           {/* Muestra una barra verde que crece segun el porcentaje */}
-          <View style={[styles.progressBar, { width: `${percentage}%` }]}></View>
+          <View
+            style={[styles.progressBar, { width: `${percentage}%` }]}
+          ></View>
         </View>
         <Text style={styles.percentageText}>{`${percentage}%`}</Text>
       </View>
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#C2CAF2",
     borderRadius: 9999,
     marginRight: scale(8),
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   progressBar: {
     height: "100%",
@@ -64,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProgressBar;
+export default ProgressBarBudget;

@@ -17,7 +17,7 @@ interface TransactionItemProps {
     onPress: () => void;
 }
 
-const TransactionItem: React.FC<TransactionItemProps> = ({ transaction, onPress }) => {
+const TransactionItem = ({ transaction, onPress }: TransactionItemProps) => {
     const { categoria, monto, fecha, imagen } = transaction;
     const isIncome = monto > 0;
     const amountColor = isIncome ? styles.incomeAmount : styles.expenseAmount;

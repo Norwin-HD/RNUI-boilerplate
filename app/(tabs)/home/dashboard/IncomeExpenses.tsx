@@ -8,7 +8,7 @@ interface InfoCardProps {
     amount: number;
 }
 
-const InfoCard: React.FC<InfoCardProps> = ({ type, amount }) => {
+const InfoCard = ({ type, amount }: InfoCardProps) => {
     const isIncome = type === 'income';
     const title = isIncome ? "Ingresos" : "Gastos";
     const iconUri = isIncome

@@ -7,7 +7,7 @@ interface TabsProps {
   setActiveTab: (tab: string) => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
+const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
   const tabs = ["Todas", "Transacciones", "Metas", ];
 
   return (

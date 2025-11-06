@@ -14,6 +14,7 @@ const SelectionCard = ({ onSelectionChange }: SelectionCardProps) => {
   const handlePress = (option: "metas" | "presupuestos") => {
     setSelected(option);
     onSelectionChange?.(option);
+    
   };
 
   return (

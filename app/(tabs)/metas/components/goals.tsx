@@ -4,6 +4,13 @@ import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { metasMackup } from "../../../mackups/metas-mackup";
 import Card from "./card";
 
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+
+const formatShortDate = (date: Date) => {
+  return format(date, "MMM, yyyy", { locale: es });
+};
+
 const Goals = () => {
   // Usar datos del mockup de metas
   const { goals } = metasMackup;
@@ -25,9 +32,11 @@ const Goals = () => {
                   resizeMode={"stretch"}
                   style={styles.targetIcon}
                 />
-                <Text style={styles.goalTitle}>{goal.title}</Text>
+                <Text style={styles.goalTitle} numberOfLines={3}>
+                  {goal.title}
+                </Text>
               </View>
-              <Text style={styles.deadlineText}>{goal.deadline}</Text>
+              <Text style={styles.deadlineText}>{formatShortDate(goal.deadline)}</Text>
             </View>
             <View style={styles.progressSection}>
               <View style={styles.progressBarContainer}>
@@ -87,7 +96,8 @@ const styles = StyleSheet.create({
   headerRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    marginBottom: verticalScale(3),
+    marginHorizontal: scale(4),
   },
   titleRow: {
     flexDirection: "row",
@@ -100,10 +110,12 @@ const styles = StyleSheet.create({
     height: moderateScale(24),
   },
   goalTitle: {
+    flex: 1,
     color: "#000000",
     fontFamily: "Montserrat_600SemiBold",
     fontSize: moderateScale(16),
     lineHeight: verticalScale(24),
+
   },
   deadlineText: {
     color: "#181a2a",
