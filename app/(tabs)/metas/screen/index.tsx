@@ -10,33 +10,33 @@ import SelectionCard from "../components/selectionCard";
 import TotalPresupuesto from "../components/totalSectionBudget";
 import TotalMeta from "../components/totalSectionMeta";
 
+import { useBudgetCalculations } from "../hooks/use-budget-calcutation";
+import { useGoalsCalculations } from "../hooks/use-goals-calcutations";
+
 const MetasScreen = () => {
   const [selectedComponent, setSelectedComponent] = useState<
     "metas" | "presupuestos"
   >("metas");
 
-  const savingAll = 5000.17;
-  const allGoal = 8000.17;
-
-  const budgetAll = 3000;
-  const expensesGoal = 870;
+  const { totalBudget, totalExpenses } = useBudgetCalculations();
+  const { totalProgress, totalGoals } = useGoalsCalculations();
 
   const renderComponent = () => {
     if (selectedComponent === "metas") {
       return (
         <View>
-          <TotalMeta savingAll={savingAll} allGoal={allGoal} />
-          <ProgressBar savingAll={savingAll} allGoal={allGoal} />
+          <TotalMeta savingAll={totalProgress} allGoal={totalGoals} />
+          <ProgressBar savingAll={totalProgress} allGoal={totalGoals} />
           <Goals />
         </View>
       );
     } else {
       return (
         <View>
-          <TotalPresupuesto BudgetAll={budgetAll} ExpensesGoal={expensesGoal} />
+          <TotalPresupuesto BudgetAll={totalBudget} ExpensesGoal={totalExpenses} />
           <ProgressBarBudget
-            BudgetAll={budgetAll}
-            ExpensesGoal={expensesGoal}
+            BudgetAll={totalBudget}
+            ExpensesGoal={totalExpenses}
           />
           <BudgetsList />
         </View>

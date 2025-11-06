@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 interface TotalMetaProps {
   savingAll: number;
@@ -25,7 +25,7 @@ export default function TotalMeta({ savingAll, allGoal }: TotalMetaProps) {
           <Text style={styles.title}>
             Total Ahorrado
           </Text>
-          <Text>
+          <Text adjustsFontSizeToFit numberOfLines={1}>
             <Text style={styles.amount}>${formatNumber(savingAllInteger)}</Text>
             <Text style={styles.decimal}>.{savingAllDecimal}</Text>
           </Text>
@@ -37,7 +37,7 @@ export default function TotalMeta({ savingAll, allGoal }: TotalMetaProps) {
           <Text style={styles.title}>
             Meta Total
           </Text>
-          <Text>
+          <Text adjustsFontSizeToFit numberOfLines={1}>
             <Text style={styles.amount}>${formatNumber(allGoalInteger)}</Text>
             <Text style={styles.decimal}>.{allGoalDecimal}</Text>
           </Text>
@@ -75,18 +75,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Montserrat_500Medium',
-    fontSize: scale(12),
-    lineHeight: 18,
+    fontSize: moderateScale(12),
+    lineHeight: verticalScale(18),
   },
   amount: {
     fontFamily: 'Montserrat_700Bold',
-    fontSize: scale(29),
-    lineHeight: 51,
+    fontSize: moderateScale(45),
+    lineHeight: verticalScale(51),
   },
   decimal: {
     fontFamily: 'Montserrat_500Medium',
-    fontSize: scale(20),
-    lineHeight: 20,
+    fontSize: moderateScale(20),
+    lineHeight: verticalScale(20),
   },
   separator: {
     height: '100%',

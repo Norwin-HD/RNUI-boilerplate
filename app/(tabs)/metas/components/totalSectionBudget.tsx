@@ -25,7 +25,7 @@ export default function TotalPresupuesto({ BudgetAll, ExpensesGoal }: TotalPresu
           <Text style={styles.title}>
             Presupuesto Total
           </Text>
-          <Text>
+          <Text adjustsFontSizeToFit numberOfLines={1}>
             <Text style={styles.amount}>${formatNumber(BudgetAllInteger)}</Text>
             <Text style={styles.decimal}>.{BudgetAllDecimal}</Text>
           </Text>
@@ -37,7 +37,7 @@ export default function TotalPresupuesto({ BudgetAll, ExpensesGoal }: TotalPresu
           <Text style={styles.title}>
             Gasto Total
           </Text>
-          <Text>
+          <Text adjustsFontSizeToFit numberOfLines={1}>
             <Text style={styles.amount}>${formatNumber(ExpensesGoalInteger)}</Text>
             <Text style={styles.decimal}>.{ExpensesGoalDecimal}</Text>
           </Text>

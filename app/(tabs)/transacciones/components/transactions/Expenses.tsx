@@ -3,8 +3,14 @@ import ArrowCircleUp from "@/app/(tabs)/transacciones/svg/arrow-circle-up";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import transaccionesMackup from "../../../../mackups/transactionsMockup";
+import { useTotalExpenses } from "../../hooks/useTotalExpenses";
+import { useTotalIncome } from "../../hooks/useTotalIncome";
 
 const IncomeExpenses = () => {
+  const totalIncome = useTotalIncome(transaccionesMackup);
+  const totalExpenses = useTotalExpenses(transaccionesMackup);
+
   return (
     <View style={styles.container}>
       <View style={styles.gastosIngresosContainer}>
@@ -16,7 +22,7 @@ const IncomeExpenses = () => {
           />
           <View style={styles.containerText}>
             <Text style={styles.mainText}>{"Gastos"}</Text>
-            <Text style={styles.secondText}>{"$110.17"}</Text>
+            <Text style={styles.secondText}>{`$${totalExpenses.toLocaleString()}`}</Text>
           </View>
         </View>
         <View style={styles.IngresosContainer}>
@@ -27,7 +33,7 @@ const IncomeExpenses = () => {
           />
           <View style={styles.containerText}>
             <Text style={styles.mainText}>{"Ingresos"}</Text>
-            <Text style={styles.secondText}>{"$110.17"}</Text>
+            <Text style={styles.secondText}>{`$${totalIncome.toLocaleString()}`}</Text>
           </View>
         </View>
       </View>

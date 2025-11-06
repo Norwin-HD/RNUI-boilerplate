@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -23,7 +23,7 @@ interface TransactionsCardProps {
  * @returns Una cadena de texto con la fecha corta.
  */
 const formatShortDate = (date: Date) => {
-  return format(date, "d MMM", { locale: es });
+  return formatDistanceToNow(date, {addSuffix: true, locale: es});
 };
 
 const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
@@ -62,7 +62,7 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
                   resizeMode={"stretch"}
                   style={styles.image10}
                 />
-                {/* Se utiliza la función formatShortDate para mostrar la fecha de la transacción */}
+
                 <Text style={styles.textTime}>
                   {formatShortDate(item.fecha)}
                 </Text>

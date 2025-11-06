@@ -4,14 +4,14 @@ export const metasMackup = {
       id: 1,
       title: "Viaje a la playa",
       deadline: new Date("2024-12-20"),
-      currentAmount: 1500,
+      currentAmount: 0,
       totalAmount: 2000,
     },
     {
       id: 2,
       title: "Fondo de emergencias",
       deadline: new Date("2025-03-15"),
-      currentAmount: 2500,
+      currentAmount: 2500.45,
       totalAmount: 5000,
     },
     {
