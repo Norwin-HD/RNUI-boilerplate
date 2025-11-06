@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import transaccionesMackup from "../../../mackups/transactionsMockup";
 
 export const useTransactions = (activeTab: string) => {
-  const [filteredTransactions, setFilteredTransactions] = useState(transaccionesMackup);
-
-  useEffect(() => {
+  const filteredTransactions = useMemo(() => {
     if (activeTab === "Ingresos") {
-      setFilteredTransactions(transaccionesMackup.filter(t => t.monto > 0));
+      return transaccionesMackup.filter(t => t.monto > 0);
     } else if (activeTab === "Gastos") {
-      setFilteredTransactions(transaccionesMackup.filter(t => t.monto < 0));
+      return transaccionesMackup.filter(t => t.monto < 0);
     } else {
-      setFilteredTransactions(transaccionesMackup);
+      return transaccionesMackup;
     }
   }, [activeTab]);
 

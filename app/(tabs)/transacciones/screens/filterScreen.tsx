@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react"; 
 import {
   KeyboardAvoidingView,
   Platform,
@@ -44,6 +44,25 @@ const FilterScreen: React.FC = () => {
     handleClearFilters,
   } = useFilterScreen();
 
+  // Agregar estado para rangos de precio (min/max) para hacer RangePrice controlado
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+ //Función para validar y actualizar min/max (e.g., asegurar min < max)
+  const handleMinChange = (value: string) => {
+    const numValue = parseFloat(value) || 0;
+    if (numValue >= 0 && numValue <= parseFloat(maxPrice)) {
+      setMinPrice(value);
+    }
+  };
+
+  const handleMaxChange = (value: string) => {
+    const numValue = parseFloat(value) || 0;
+    if (numValue >= parseFloat(minPrice)) {
+      setMaxPrice(value);
+    }
+  };
+
   const handleSetActiveTypeTab = (tab: TabType) => {
     setActiveTypeTab(typeMap[tab]);
   };
@@ -58,6 +77,7 @@ const FilterScreen: React.FC = () => {
           style={styles.scrollView}
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
+          accessibilityLabel="Pantalla de filtros para transacciones" 
         >
           <View style={styles.column3}>
             <Header />
@@ -71,7 +91,13 @@ const FilterScreen: React.FC = () => {
               setActiveTab={setActiveRangeTimeTab}
             />
             <InputCalendar dates={rangeDate} setDates={setRangeDate} />
-            <RangePrice />
+            {/* CAMBIO: Hacer RangePrice controlado con props */}
+            <RangePrice
+              minValue={minPrice}
+              maxValue={maxPrice}
+              onMinChange={handleMinChange}
+              onMaxChange={handleMaxChange}
+            />
             <Footer onApply={handleApplyFilters} onClear={handleClearFilters} />
           </View>
         </ScrollView>

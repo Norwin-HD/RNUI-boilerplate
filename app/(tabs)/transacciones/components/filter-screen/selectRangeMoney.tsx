@@ -3,9 +3,21 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import UsdCircleIcon from "../../svg/usd-cirlcle";
 
-const SelectRangeMoney = () => {
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+interface SelectRangeMoneyProps {
+  minValue: string;
+  maxValue: string;
+  onMinChange: (value: string) => void;
+  onMaxChange: (value: string) => void;
+}
+
+const SelectRangeMoney = ({
+  minValue,
+  maxValue,
+  onMinChange,
+  onMaxChange,
+}: SelectRangeMoneyProps) => {
+  const [minPrice, setMinPrice] = useState(minValue);
+  const [maxPrice, setMaxPrice] = useState(maxValue);
 
   return (
     <View style={styles.container}>
@@ -18,7 +30,10 @@ const SelectRangeMoney = () => {
             placeholderTextColor="#999"
             keyboardType="numeric"
             value={minPrice}
-            onChangeText={setMinPrice}
+            onChangeText={(value) => {
+              setMinPrice(value);
+              onMinChange(value);
+            }}
             style={styles.input}
           />
         </View>
@@ -29,7 +44,10 @@ const SelectRangeMoney = () => {
             placeholderTextColor="#999"
             keyboardType="numeric"
             value={maxPrice}
-            onChangeText={setMaxPrice}
+            onChangeText={(value) => {
+              setMaxPrice(value);
+              onMaxChange(value);
+            }}
             style={styles.input}
           />
         </View>

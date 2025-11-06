@@ -8,10 +8,16 @@ interface Transaction {
   imagen: string;
 }
 
-export const useTotalExpenses = (transactions: Transaction[]) => {
+export const useTransactionTotals = (transactions: Transaction[]) => {
   return useMemo(() => {
-    return transactions
+    const totalIncome = transactions
+      .filter(transaction => transaction.monto > 0)
+      .reduce((sum, transaction) => sum + transaction.monto, 0);
+
+    const totalExpenses = transactions
       .filter(transaction => transaction.monto < 0)
       .reduce((sum, transaction) => sum + Math.abs(transaction.monto), 0);
+
+    return { totalIncome, totalExpenses };
   }, [transactions]);
 };

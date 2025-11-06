@@ -19,6 +19,7 @@ const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
         {tabs.map((tab) => (
           <TouchableOpacity
             key={tab}
+            accessibilityLabel={`Seleccionar ${tab}`}
             style={activeTab === tab ? styles.buttonMain : styles.buttonSecond}
             onPress={() => setActiveTab(tab)}
           >
