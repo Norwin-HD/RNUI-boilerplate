@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -45,23 +45,23 @@ const FilterScreen: React.FC = () => {
   } = useFilterScreen();
 
   // Agregar estado para rangos de precio (min/max) para hacer RangePrice controlado
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  // const [minPrice, setMinPrice] = useState("");
+  // const [maxPrice, setMaxPrice] = useState("");
 
  //Función para validar y actualizar min/max (e.g., asegurar min < max)
-  const handleMinChange = (value: string) => {
-    const numValue = parseFloat(value) || 0;
-    if (numValue >= 0 && numValue <= parseFloat(maxPrice)) {
-      setMinPrice(value);
-    }
-  };
+  // const handleMinChange = (value: string) => {
+  //   const numValue = parseFloat(value) || 0;
+  //   if (numValue >= 0 && numValue <= parseFloat(maxPrice)) {
+  //     setMinPrice(value);
+  //   }
+  // };
 
-  const handleMaxChange = (value: string) => {
-    const numValue = parseFloat(value) || 0;
-    if (numValue >= parseFloat(minPrice)) {
-      setMaxPrice(value);
-    }
-  };
+  // const handleMaxChange = (value: string) => {
+  //   const numValue = parseFloat(value) || 0;
+  //   if (numValue >= parseFloat(minPrice)) {
+  //     setMaxPrice(value);
+  //   }
+  // };
 
   const handleSetActiveTypeTab = (tab: TabType) => {
     setActiveTypeTab(typeMap[tab]);
@@ -91,13 +91,8 @@ const FilterScreen: React.FC = () => {
               setActiveTab={setActiveRangeTimeTab}
             />
             <InputCalendar dates={rangeDate} setDates={setRangeDate} />
-            {/* CAMBIO: Hacer RangePrice controlado con props */}
-            <RangePrice
-              minValue={minPrice}
-              maxValue={maxPrice}
-              onMinChange={handleMinChange}
-              onMaxChange={handleMaxChange}
-            />
+            {/* CAMBIO: RangePrice ahora usa contexto */}
+            <RangePrice />
             <Footer onApply={handleApplyFilters} onClear={handleClearFilters} />
           </View>
         </ScrollView>

@@ -1,8 +1,10 @@
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
-import React from "react";
+import React, { useMemo } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import { useRangeContext } from "../../contexts/context-range/dataContext";
+import { useCategoryContext } from "../../contexts/contexts-category/dataContext";
 import Card from "./Card";
 
 interface Transaction {
@@ -27,14 +29,35 @@ const formatShortDate = (date: Date) => {
 };
 
 const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
+  const { selectedCategories } = useCategoryContext();
+  const { minValue, maxValue } = useRangeContext();
+
+  // Filtrar por categorías
+  const categoryFiltered = useMemo(() => {
+    if (selectedCategories.length === 0) return transactions;
+    return transactions.filter(t => selectedCategories.includes(t.categoria));
+  }, [transactions, selectedCategories]);
+
+  // Filtrar por rango
+  const filteredTransactions = useMemo(() => {
+    let filtered = categoryFiltered;
+    if (minValue !== null || maxValue !== null) {
+      filtered = filtered.filter(t => {
+        const absMonto = Math.abs(t.monto);
+        return (minValue === null || absMonto >= minValue) && (maxValue === null || absMonto <= maxValue);
+      });
+    }
+    return filtered;
+  }, [categoryFiltered, minValue, maxValue]);
+
   return (
     <View>
       <View style={styles.header}>
         <Text
           style={styles.headerText}
-        >{`Gastos e Ingresos (${transactions.length})`}</Text>
+        >{`Gastos e Ingresos (${filteredTransactions.length})`}</Text>
       </View>
-      {transactions.map((item, index) => (
+      {filteredTransactions.map((item, index) => (
         <Card
           key={item.id}
           style={[
@@ -164,17 +187,6 @@ const styles = StyleSheet.create({
     color: "#1FC16B",
     fontSize: moderateScale(18),
     fontFamily: "Montserrat_700Bold",
-  },
-  row13: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: verticalScale(20),
-  },
-  text27: {
-    color: "#000000",
-    fontSize: moderateScale(16),
-    fontFamily: "Montserrat_700Bold",
-    marginBottom: verticalScale(16),
   },
   text28: {
     color: "#FB283A",
