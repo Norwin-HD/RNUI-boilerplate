@@ -1,6 +1,11 @@
 import { useColorScheme } from "@/src/hooks/use-color-scheme";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { scale, verticalScale } from "react-native-size-matters";
 import ClockIcon from "./BottomBarSvg/ClockIcon";
@@ -30,6 +35,17 @@ export default function FigmaBottomNav({
   variant = "center-fab",
 }: Props) {
   useColorScheme();
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
+  const handleMenuOption = (option: string) => {
+    setIsMenuVisible(false);
+    // Aquí puedes agregar navegación o lógica para cada opción
+    console.log(`Seleccionado: ${option}`);
+  };
 
   const items = [
     {
@@ -56,53 +72,91 @@ export default function FigmaBottomNav({
   ];
 
   return (
-    <SafeAreaView
-      edges={["bottom"]}
-      style={[styles.wrapper, { backgroundColor: FIGMA.bg }]}
-    >
-      {/* menu list */}
-      <View style={[styles.menuList, { backgroundColor: "transparent" }]}>
-        {items.map((it, idx) => {
-          const Icon = it.icon;
-          // center fab
-          if (idx === 2 && variant === "center-fab") {
+    <>
+      <SafeAreaView
+        edges={["bottom"]}
+        style={[styles.wrapper, { backgroundColor: FIGMA.bg }]}
+      >
+        {/* menu list */}
+        <View style={[styles.menuList, { backgroundColor: "transparent" }]}>
+          {items.map((it, idx) => {
+            const Icon = it.icon;
+            // center fab
+            if (idx === 2 && variant === "center-fab") {
+              return (
+                <View key={it.key} style={styles.menuCenterContainer}>
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    onPress={toggleMenu}
+                    style={[
+                      styles.fab,
+                      {
+                        backgroundColor: FIGMA.fab,
+                        borderColor: FIGMA.fabBorder,
+                      },
+                    ]}
+                  >
+                    <Icon width={24} height={24} color={FIGMA.fabBorder} />
+                  </TouchableOpacity>
+                </View>
+              );
+            }
+
+            const sel = idx === selectedIndex;
+            const color = sel ? FIGMA.primary : FIGMA.inactive;
+
             return (
-              <View key={it.key} style={styles.menuCenterContainer}>
-                <TouchableOpacity
-                  accessibilityRole="button"
-                  onPress={() => onSelect?.(idx)}
-                  style={[
-                    styles.fab,
-                    {
-                      backgroundColor: FIGMA.fab,
-                      borderColor: FIGMA.fabBorder,
-                    },
-                  ]}
-                >
-                  <Icon width={24} height={24} color={FIGMA.fabBorder} />
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                key={it.key}
+                style={styles.menuItem}
+                onPress={() => onSelect?.(idx)}
+              >
+                <Icon width={24} height={24} color={color} />
+                {it.label ? (
+                  <Text style={[styles.label, { color }]}>{it.label}</Text>
+                ) : null}
+              </TouchableOpacity>
             );
-          }
+          })}
+        </View>
+      </SafeAreaView>
 
-          const sel = idx === selectedIndex;
-          const color = sel ? FIGMA.primary : FIGMA.inactive;
-
-          return (
+      {isMenuVisible && (
+        <View style={styles.menuOverlay}>
+          <TouchableOpacity
+            style={styles.overlayTouchable}
+            onPress={toggleMenu}
+          />
+          <View style={styles.menuContainer}>
+            <Text style={styles.menuTitle}>Agregar</Text>
             <TouchableOpacity
-              key={it.key}
-              style={styles.menuItem}
-              onPress={() => onSelect?.(idx)}
+              style={styles.menuItemOption}
+              onPress={() => handleMenuOption("Agregar metas")}
             >
-              <Icon width={24} height={24} color={color} />
-              {it.label ? (
-                <Text style={[styles.label, { color }]}>{it.label}</Text>
-              ) : null}
+              <Text style={styles.menuText}>Nueva meta</Text>
             </TouchableOpacity>
-          );
-        })}
-      </View>
-    </SafeAreaView>
+            <TouchableOpacity
+              style={styles.menuItemOption}
+              onPress={() => handleMenuOption("Agregar presupuesto")}
+            >
+              <Text style={styles.menuText}>Nuevo presupuesto</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.menuItemOption}
+              onPress={() => handleMenuOption("Agregar gasto")}
+            >
+              <Text style={styles.menuText}>Nuevo gasto</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.menuItemOption}
+              onPress={() => handleMenuOption("Agregar ingresos")}
+            >
+              <Text style={styles.menuText}>Nuevo ingreso</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+    </>
   );
 }
 
@@ -130,10 +184,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingBottom: 18,
+    paddingBottom: verticalScale(18),
+    elevation: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    backgroundColor: "transparent",
   },
   label: {
-    marginTop: 4,
+    marginTop: scale(4),
     fontSize: 10,
     fontWeight: "500",
     lineHeight: 15,
@@ -147,5 +207,49 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: scale(14),
     borderWidth: 4,
+  },
+  menuOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "flex-end",
+  },
+  overlayTouchable: {
+    flex: 1,
+  },
+  menuContainer: {
+    backgroundColor: "#f8f9fa",
+    borderTopLeftRadius: scale(20),
+    borderTopRightRadius: scale(20),
+    padding: scale(15),
+    paddingBottom: verticalScale(30),
+    elevation: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    borderTopWidth: 2,
+    borderTopColor: FIGMA.primary,
+  },
+  menuItemOption: {
+    paddingVertical: verticalScale(10),
+    borderBottomWidth: 1,
+    borderBottomColor: FIGMA.indicator,
+  },
+  menuText: {
+    fontSize: 15,
+    color: "#000",
+    textAlign: "center",
+    fontFamily: "Montserrat_700Bold",
+  },
+  menuTitle: {
+    fontSize: 16,
+    color: FIGMA.primary,
+    textAlign: "center",
+    fontFamily: "Montserrat_700Bold",
+    marginBottom: verticalScale(5),
   },
 });
