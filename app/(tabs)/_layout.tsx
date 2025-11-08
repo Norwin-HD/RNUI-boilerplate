@@ -22,11 +22,8 @@ function FigmaNavAdapter(props: any) {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   // Oculta la tab bar cuando el foco está en la pantalla de filtro
-  if (
-    routeName === "filterScreen" ||
-    routeName === "screens/filterScreen/filterScreen" ||
-    routeName === "screens/filterScreen/categorieFilterScreen"
-  ) {
+  const name = routeName ?? '';
+  if (/filter/i.test(name)) {
     return null;
   }
 

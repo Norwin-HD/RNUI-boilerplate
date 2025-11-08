@@ -50,12 +50,20 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
           </View>
         </Modal>
 
-        <Pressable style={[styles.buttonOpen]} onPress={() => setVisible(true)}>
-          <Text style={styles.textStyle}>{displayText}</Text>
+        <Pressable style={styles.inputContainer} onPress={() => setVisible(true)}>
+          <Text
+            style={[
+              styles.inputText,
+              !dates ? styles.placeholderText : undefined,
+            ]}
+            numberOfLines={1}
+          >
+            {displayText}
+          </Text>
           <Ionicons
             name="calendar-outline"
             size={moderateScale(20)}
-            color="#374957"
+            color="#6C75AD"
           />
         </Pressable>
       </SafeAreaView>
@@ -91,21 +99,24 @@ const styles = StyleSheet.create({
     borderRadius: scale(5),
     marginBottom: scale(10),
   },
-  buttonOpen: {
-    marginTop: scale(20),
-    gap: scale(10),
-    padding: scale(10),
+  inputContainer: {
+    marginTop: scale(12),
+    paddingVertical: scale(8),
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: "#C0C3DC",
-    borderRadius: scale(10),
-    backgroundColor: "#F5F5F5",
   },
-  textStyle: {
-    color: "black",
-    textAlign: "center",
+  inputText: {
+    flex: 1,
+    marginRight: scale(8),
+    color: "#181A2A",
+    fontFamily: "Montserrat_500Medium",
+    fontSize: moderateScale(14),
+  },
+  placeholderText: {
+    color: "#6C75AD",
     fontFamily: "Montserrat_400Regular",
   },
 });

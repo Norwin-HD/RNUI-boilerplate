@@ -19,7 +19,7 @@ const TransaccionesScreen: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("Todas");
   const { appliedFilters } = useFilter();
   const { filteredTransactions: allFilteredTransactions } =
-    useTransactions(activeTab);
+    useTransactions(activeTab as Parameters<typeof useTransactions>[0]);
 
   const filteredTransactions = useMemo(() => {
     if (appliedFilters.type === "all" && !appliedFilters.dates) {

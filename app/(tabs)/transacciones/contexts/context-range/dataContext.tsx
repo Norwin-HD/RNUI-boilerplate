@@ -37,7 +37,9 @@ export const RangeProvider = ({ children }: RangeProviderProps) => {
   );
 
   return (
-    <RangeContext.Provider value={value}>{children}</RangeContext.Provider>
+    <RangeContext.Provider value={value}>
+      {children}
+    </RangeContext.Provider>
   );
 };
 

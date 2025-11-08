@@ -1,9 +1,8 @@
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 
-const FieldComponent = ({}) => {
+const FieldComponent = () => {
   return (
     <View>
       <View style={styles.container}>
@@ -21,11 +20,10 @@ const FieldComponent = ({}) => {
       <View style={styles.container}>
         <Text style={styles.label}>Monto objetivo</Text>
         <View style={styles.inputRow}>
-          
           <TextInput
             onChangeText={() => {}}
-            
             placeholder={"0.00"}
+            keyboardType="numeric"
             placeholderTextColor={"#B3B3B3"}
             style={styles.input}
             cursorColor="#181A2A"
@@ -39,19 +37,7 @@ const FieldComponent = ({}) => {
             value={""}
             onChangeText={() => {}}
             placeholder={"0.00"}
-            placeholderTextColor={"#B3B3B3"}
-            style={styles.input}
-            cursorColor="#181A2A"
-          />
-        </View>
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.label}>Fecha limite</Text>
-        <View style={styles.inputRow}>
-          <TextInput
-            value={""}
-            onChangeText={() => {}}
-            placeholder={"Seleccionar una fecha"}
+            keyboardType="numeric"
             placeholderTextColor={"#B3B3B3"}
             style={styles.input}
             cursorColor="#181A2A"
@@ -64,17 +50,17 @@ const FieldComponent = ({}) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: verticalScale(16),
+    marginBottom: verticalScale(8),
   },
   label: {
     fontFamily: "Montserrat_400Regular",
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(15),
     lineHeight: moderateScale(24),
     color: "#181A2A",
-    marginBottom: verticalScale(8),
+    marginBottom: verticalScale(15),
   },
   inputRow: {
-    height: verticalScale(48),
+    height: verticalScale(40),
     justifyContent: "center",
     borderBottomWidth: 0.5,
     borderBottomColor: "#6C75AD",
@@ -82,7 +68,7 @@ const styles = StyleSheet.create({
   },
   input: {
     fontFamily: "Montserrat_400Regular",
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(15),
     lineHeight: moderateScale(24),
     paddingHorizontal: moderateScale(8),
     paddingVertical: moderateScale(12),

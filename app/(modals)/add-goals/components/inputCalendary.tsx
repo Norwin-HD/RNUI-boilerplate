@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -9,35 +9,29 @@ import { Calendar } from "./Calendar";
 
 type DateRange = [Date, Date] | null;
 
-
 interface InputCalendarProps {
   dates: DateRange;
   setDates: (dates: DateRange) => void;
 }
 
 const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
-  const {
-    modalVisible,
-    setModalVisible,
-    showContent,
-    setShowContent,
-    handleApplyDate,
-    displayedDate,
-    updateDisplayedDates,
-  } = useCalendarModal(setDates);
+  const { visible, setVisible, displayText, applyRange, syncDisplay } =
+    useCalendarModal(setDates);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    updateDisplayedDates(dates);
-  }, [dates, updateDisplayedDates]);
+    syncDisplay(dates);
+  }, [dates, syncDisplay]);
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.centeredView}>
+        <Text style={styles.inputHeader}>Fecha limite</Text>
         <Modal
-          isVisible={modalVisible}
-          onModalShow={() => setShowContent(true)}
-          onModalHide={() => setShowContent(false)}
-          onSwipeComplete={() => setModalVisible(false)}
+          isVisible={visible}
+          onModalShow={() => setReady(true)}
+          onModalHide={() => setReady(false)}
+          onSwipeComplete={() => setVisible(false)}
           swipeDirection="down"
           propagateSwipe={true}
           animationInTiming={100}
@@ -46,12 +40,10 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
         >
           <View style={styles.modalView}>
             <View style={styles.dragIndicator} />
-            {showContent && (
+            {ready && (
               <Calendar
                 onApply={({ startDate, endDate }) =>
-                  handleApplyDate(
-                    startDate && endDate ? [startDate, endDate] : null
-                  )
+                  applyRange(startDate && endDate ? [startDate, endDate] : null)
                 }
               />
             )}
@@ -59,14 +51,22 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
         </Modal>
 
         <Pressable
-          style={[styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}
+          style={styles.inputContainer}
+          onPress={() => setVisible(true)}
         >
-          <Text style={styles.textStyle}>{displayedDate}</Text>
+          <Text
+            style={[
+              styles.inputText,
+              !dates ? styles.placeholderText : undefined,
+            ]}
+            numberOfLines={1}
+          >
+            {displayText}
+          </Text>
           <Ionicons
-            name="calendar-outline"
-            size={moderateScale(20)}
-            color="#374957"
+            name="calendar-clear-sharp"
+            size={moderateScale(22)}
+            color="#3476F4"
           />
         </Pressable>
       </SafeAreaView>
@@ -76,8 +76,8 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
-    marginHorizontal: scale(3),
+    flex: 0,
+    marginHorizontal: 0,
   },
   modalContainer: {
     justifyContent: "flex-end",
@@ -102,21 +102,30 @@ const styles = StyleSheet.create({
     borderRadius: scale(5),
     marginBottom: scale(10),
   },
-  buttonOpen: {
-    marginTop: scale(20),
-    gap: scale(10),
-    padding: scale(10),
+  inputHeader: {
+    fontFamily: "Montserrat_400Regular",
+    color: "#454A53",
+    marginBottom: scale(4),
+    fontSize: moderateScale(14),
+  },
+  inputContainer: {
+    marginTop: 0,
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: "#C0C3DC",
-    borderRadius: scale(10),
-    backgroundColor: "#F5F5F5",
+    paddingVertical: scale(6),
   },
-  textStyle: {
-    color: "black",
-    textAlign: "center",
+  inputText: {
+    flex: 1,
+    marginRight: scale(8),
+    color: "#181A2A",
+    fontFamily: "Montserrat_500Medium",
+    fontSize: moderateScale(14),
+  },
+  placeholderText: {
+    color: "#6C75AD",
     fontFamily: "Montserrat_400Regular",
   },
 });

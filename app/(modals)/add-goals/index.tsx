@@ -1,37 +1,29 @@
-
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, StatusBar } from "react-native";
-import { moderateScale, verticalScale } from "react-native-size-matters";
-import { useState } from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { moderateScale } from "react-native-size-matters";
 
-import Header from "./components/Header";
 import AddGoalContainer from "./components/container";
-import InputCalendar from "./components/inputCalendary";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 export default function AddGoalModal() {
-  const router = useRouter();
-
-  const handleSubmit = async () => {
-    console.log("Nueva meta:");
-    router.back();
-  };
+  useRouter();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar
-        backgroundColor="#3476F4"
-        barStyle="light-content"
-        translucent={false}
-      />
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      <StatusBar style="light" backgroundColor="#3476F4" translucent={false} />
       <Header />
       <ScrollView
+        style={styles.scroll}
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
         <AddGoalContainer />
-        <InputCalendar  />
       </ScrollView>
+      <Footer />
     </SafeAreaView>
   );
 }
@@ -41,7 +33,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#3476F4",
   },
+  scroll: {
+    flex: 1,
+  },
   content: {
+    flexGrow: 1,
     paddingHorizontal: moderateScale(1),
+    paddingBottom: moderateScale(100),
   },
 });
