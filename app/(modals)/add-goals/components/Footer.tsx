@@ -1,11 +1,13 @@
-import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { moderateScale } from "react-native-size-matters";
 
-const Footer = () => {
-  const router = useRouter();
+interface FooterProps {
+  onPress: () => void;
+}
+
+const Footer = ({ onPress }: FooterProps) => {
   const insets = useSafeAreaInsets();
   return (
     <View
@@ -14,10 +16,7 @@ const Footer = () => {
         { paddingBottom: insets.bottom + moderateScale(8) },
       ]}
     >
-      <TouchableOpacity
-        style={styles.primaryButton}
-        onPress={() => router.back()}
-      >
+      <TouchableOpacity style={styles.primaryButton} onPress={onPress}>
         <Text style={styles.primaryButtonText}>Guardar nueva Meta</Text>
       </TouchableOpacity>
     </View>

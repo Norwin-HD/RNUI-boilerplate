@@ -1,53 +1,58 @@
-import { useSelectCategorie } from "@/src/features/shared/categories/use-select-categorie";
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useCallback, useContext, useState } from "react";
 
-interface CategoryContextValue {
-  categories: any[];
+interface CategoryContextType {
   selectedCategories: string[];
-  setSelectedCategories: (v: string[]) => void;
+  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
   toggleCategory: (title: string) => void;
   isSelected: (title: string) => boolean;
   clear: () => void;
 }
 
-const CategoryContext = createContext<CategoryContextValue | undefined>(
+const CategoryContext = createContext<CategoryContextType | undefined>(
   undefined
 );
 
-export const CategoryProvider: React.FC<{ children: React.ReactNode }> = ({
+export const CategoryProvider = ({
   children,
+}: {
+  children: React.ReactNode;
 }) => {
-  const hook = useSelectCategorie();
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const value = useMemo<CategoryContextValue>(
-    () => ({
-      categories: hook.categories,
-      selectedCategories: hook.selectedCategories,
-      setSelectedCategories: hook.setSelectedCategories,
-      toggleCategory: hook.toggleCategory,
-      isSelected: hook.isSelected,
-      clear: hook.clear,
-    }),
-    [
-      hook.categories,
-      hook.selectedCategories,
-      hook.setSelectedCategories,
-      hook.toggleCategory,
-      hook.isSelected,
-      hook.clear,
-    ]
+  const toggleCategory = useCallback((title: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(title)
+        ? prev.filter((item) => item !== title)
+        : [...prev, title]
+    );
+  }, []);
+
+  const isSelected = useCallback(
+    (title: string) => selectedCategories.includes(title),
+    [selectedCategories]
   );
 
+  const clear = useCallback(() => setSelectedCategories([]), []);
+
   return (
-    <CategoryContext.Provider value={value}>
+    <CategoryContext.Provider
+      value={{
+        selectedCategories,
+        setSelectedCategories,
+        toggleCategory,
+        isSelected,
+        clear,
+      }}
+    >
       {children}
     </CategoryContext.Provider>
   );
 };
 
 export const useCategoryContext = () => {
-  const ctx = useContext(CategoryContext);
-  if (!ctx)
-    throw new Error("useCategoryContext must be used within CategoryProvider");
-  return ctx;
+  const context = useContext(CategoryContext);
+  if (context === undefined) {
+    throw new Error("useCategoryContext must be used within a CategoryProvider");
+  }
+  return context;
 };

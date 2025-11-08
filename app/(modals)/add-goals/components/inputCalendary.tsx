@@ -90,9 +90,13 @@ const styles = StyleSheet.create({
     padding: scale(20),
     height: "70%",
     shadowColor: "#000",
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 10,
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    elevation: 20,
   },
   dragIndicator: {
     alignSelf: "center",

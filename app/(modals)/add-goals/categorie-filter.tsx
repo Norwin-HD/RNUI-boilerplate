@@ -7,7 +7,7 @@ import InputSearch from '../new-income/categories-components/input-search';
 import SelectCategories from '../new-income/categories-components/select-categories';
 import { useCategories } from './hooks/use-search';
 
-const CategoriaFilterScreen: React.FC = () => {
+const CategoriaFilterScreen = () => {
 	const { filteredCategories, setQuery } = useCategories();
 
 	return (

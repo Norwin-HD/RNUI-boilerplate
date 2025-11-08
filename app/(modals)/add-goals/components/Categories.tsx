@@ -2,7 +2,14 @@ import { categories } from "@/app/mockups/categories-filter";
 import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
 import { router } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
 
 type Categoria = {
@@ -28,9 +35,7 @@ const CategoriesHeader = () => (
     <Text style={styles.headerTitle}>Categorías (Opcional)</Text>
     <TouchableOpacity
       style={styles.headerAction}
-      onPress={() =>
-        router.push("/(modals)/add-goals/categorie-filter")
-      }
+      onPress={() => router.push("/(modals)/add-goals/categorie-filter")}
     >
       <Text style={styles.headerText}>Ver todo</Text>
       <Image
@@ -44,9 +49,10 @@ const CategoriesHeader = () => (
   </View>
 );
 
-export default function TarjetasDeCategoria() {
+export default function CategoriaCardList() {
   const { selectedCategories } = useCategoryContext();
 
+  // Muestra categorías seleccionadas, o las dos primeras por defecto
   const preview =
     selectedCategories.length > 0
       ? categories.filter((c) => selectedCategories.includes(c.title))
@@ -55,27 +61,31 @@ export default function TarjetasDeCategoria() {
   return (
     <View style={styles.container}>
       <CategoriesHeader />
-      <View style={styles.list}>
-        {preview.map((c, i) => (
-          <CategoriaCard key={i} {...c} />
-        ))}
-      </View>
+
+      <FlatList
+        data={preview}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        keyExtractor={(item) => item.title}
+        scrollEnabled={false} // evita conflicto con el scroll principal
+        renderItem={({ item }) => <CategoriaCard {...item} />}
+        contentContainerStyle={{ gap: moderateScale(12) }}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginBottom: moderateScale(50),
+    marginTop: moderateScale(16),
+    marginBottom: moderateScale(8),
   },
   header: {
-    paddingVertical: moderateScale(4),
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 0,
-    marginBottom: moderateScale(4),
+    marginBottom: moderateScale(16),
+    paddingHorizontal: moderateScale(4),
   },
   headerTitle: {
     fontFamily: "Montserrat_500Medium",
@@ -90,50 +100,51 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: "Montserrat_400Regular",
     fontSize: moderateScale(12),
+    color: "#3476F4",
   },
   iconArrow: {
-    width: moderateScale(20),
-    height: moderateScale(20),
-  },
-  list: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: moderateScale(12),
+    width: moderateScale(16),
+    height: moderateScale(16),
+    tintColor: "#3476F4",
   },
   card: {
     backgroundColor: "#E1EBFD",
-    borderRadius: moderateScale(18),
-    width: scale(180),
-    height: scale(140),
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 2,
+    borderRadius: moderateScale(16),
+    width: "60%",
+    marginRight: moderateScale(20),
+    height: scale(130),
+    borderWidth: 1,
+    boxShadow: "0 2px 5px 1px rgba(0, 0, 0, 0.25)",
+    borderColor: "#D4E2FC",
   },
   inactive: {
-    opacity: 0.7,
+    opacity: 0.6,
+    backgroundColor: "#F5F7FA",
+    borderColor: "#E1E5E9",
   },
   cardContent: {
     flex: 1,
     justifyContent: "space-between",
-    padding: moderateScale(12),
+    padding: moderateScale(14),
   },
   iconPlaceholder: {
-    backgroundColor: "#c2caf2",
-    borderWidth: 1,
-    borderColor: "#8590c8",
-    borderRadius: 999,
-    width: scale(42),
-    height: scale(42),
+    backgroundColor: "#C2CAF2",
+    borderWidth: 2,
+    borderColor: "#8590C8",
+    borderRadius: moderateScale(20),
+    width: moderateScale(36),
+    height: moderateScale(36),
+    marginBottom: moderateScale(8),
   },
   title: {
     fontFamily: "Montserrat_600SemiBold",
-    fontSize: moderateScale(16),
-    color: "#000",
+    fontSize: moderateScale(14),
+    color: "#0B1B2B",
+    marginBottom: moderateScale(4),
   },
   transactions: {
     fontFamily: "Montserrat_400Regular",
-    fontSize: moderateScale(12),
-    color: "#000",
+    fontSize: moderateScale(11),
+    color: "#6B7280",
   },
 });

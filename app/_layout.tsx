@@ -1,3 +1,4 @@
+import { GoalsProvider } from "@/src/features/add-goals/contexts";
 import {
   Montserrat_400Regular,
   Montserrat_500Medium,
@@ -32,16 +33,18 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="auth/index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(modals)"
-          options={{ headerShown: false, presentation: "fullScreenModal" }}
-        />
-      </Stack>
-      <StatusBar style="inverted" />
-    </ThemeProvider>
+    <GoalsProvider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="auth/index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(modals)"
+            options={{ headerShown: false, presentation: "fullScreenModal" }}
+          />
+        </Stack>
+        <StatusBar style="inverted" />
+      </ThemeProvider>
+    </GoalsProvider>
   );
 }
