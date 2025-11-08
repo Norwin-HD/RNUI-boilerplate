@@ -124,14 +124,14 @@ export default function AddGoalContainer({
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    borderTopLeftRadius: moderateScale(18),
+    borderTopRightRadius: moderateScale(18),
     backgroundColor: "#ffffff",
   },
   scroll: {
     flex: 1,
   },
   container: {
-    borderTopLeftRadius: moderateScale(18),
-    borderTopRightRadius: moderateScale(18),
     paddingHorizontal: moderateScale(20),
     paddingTop: verticalScale(20),
     gap: verticalScale(8),

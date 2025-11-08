@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(15),
     lineHeight: moderateScale(24),
     color: "#181A2A",
-    marginBottom: verticalScale(15),
+    marginBottom: verticalScale(8),
   },
   inputRow: {
     height: verticalScale(40),
