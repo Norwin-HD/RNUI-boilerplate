@@ -4,7 +4,7 @@ import React from "react";
 
 export default function ModalsLayout() {
   return (
-    <CategoryProvider>
+    <CategoryProvider singleSelect={true}>
       <Stack screenOptions={{ headerShown: false, presentation: "fullScreenModal" }}>
         <Stack.Screen name="add-goals/index" options={{ headerShown: false }} />
         <Stack.Screen name="add-goals/categorie-filter" options={{ headerShown: false }} />

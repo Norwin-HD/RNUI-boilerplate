@@ -16,7 +16,7 @@ type Props = {
 };
 
 const SelectCategories = ({ categories }: Props) => {
-  const { selectedCategories, toggleCategory } = useCategoryContext();
+  const { selectedCategories, selectCategory } = useCategoryContext();
 
   return (
     <View>
@@ -26,8 +26,8 @@ const SelectCategories = ({ categories }: Props) => {
           const isSelected = selectedCategories.includes(c.title);
           return (
             <TouchableOpacity
-              key={c.title + idx}
-              onPress={() => toggleCategory(c.title)}
+              key={c.title}
+              onPress={() => selectCategory(c.title)}
             >
               <View style={[styles.item, isSelected && styles.itemSelected]}>
                 {!!c.imageUri && (

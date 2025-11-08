@@ -4,7 +4,7 @@ import React from "react";
 
 export default function AddGoalLayout() {
   return (
-    <CategoryProvider>
+    <CategoryProvider singleSelect={true}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="categorie-filter" />

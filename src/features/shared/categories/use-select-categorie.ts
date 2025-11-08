@@ -23,6 +23,12 @@ export const useSelectCategorie = (opts?: UseSelectCategorieOptions) => {
     );
   }, []);
 
+  const selectCategory = useCallback((categoryTitle: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(categoryTitle) ? [] : [categoryTitle]
+    );
+  }, []);
+
   const clear = useCallback(() => setSelectedCategories([]), []);
 
   return {
@@ -30,6 +36,7 @@ export const useSelectCategorie = (opts?: UseSelectCategorieOptions) => {
     selectedCategories,
     setSelectedCategories,
     toggleCategory,
+    selectCategory,
     isSelected,
     clear,
   };
