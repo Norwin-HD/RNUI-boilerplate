@@ -8,6 +8,9 @@ export default function ModalsLayout() {
       <Stack screenOptions={{ headerShown: false, presentation: "fullScreenModal" }}>
         <Stack.Screen name="add-goals/index" options={{ headerShown: false }} />
         <Stack.Screen name="add-goals/categorie-filter" options={{ headerShown: false }} />
+
+        <Stack.Screen name="new-income/index" options={{ headerShown: false }} />
+        <Stack.Screen name="new-income/categories-filter" options={{ headerShown: false }} />
       </Stack>
     </CategoryProvider>
   );

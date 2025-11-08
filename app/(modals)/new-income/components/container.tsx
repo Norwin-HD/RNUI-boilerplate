@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import CategoriaCard from "./Categories";
-import FieldComponent from "./fieldComponente";
+import FieldComponent from "../../new-income/components/fieldComponente";
 import InputCalendar from "./inputCalendary";
 
 export default function AddGoalContainer() {
-  const [date, setDate] = useState<Date | null>(null);
+  const [dates, setDates] = useState<[Date, Date] | null>(null);
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <FieldComponent />
-        <InputCalendar date={date} setDate={setDate} />
+        <InputCalendar dates={dates} setDates={setDates} />
         <CategoriaCard />
       </View>
     </View>

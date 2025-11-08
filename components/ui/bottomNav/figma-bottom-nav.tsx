@@ -43,6 +43,11 @@ export default function FigmaBottomNav({
       router.push("/add-goals" as any);
       return;
     }
+
+    if (option === "Agregar gasto") {
+      router.push("/new-income" as any);
+      return;
+    }
     // Otros flujos a futuro
     console.log(`Seleccionado: ${option}`);
   };

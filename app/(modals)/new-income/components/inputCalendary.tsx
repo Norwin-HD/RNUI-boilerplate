@@ -5,23 +5,23 @@ import Modal from "react-native-modal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale } from "react-native-size-matters";
 import { useCalendarModal } from "../hooks/use-calendar-modal";
-import { Calendar } from "./Calendar";
+import { Calendar } from "../../new-income/components/Calendar";
 
-type DateValue = Date | null;
+type DateRange = [Date, Date] | null;
 
 interface InputCalendarProps {
-  date: DateValue;
-  setDate: (date: DateValue) => void;
+  dates: DateRange;
+  setDates: (dates: DateRange) => void;
 }
 
-const InputCalendar = ({ date, setDate }: InputCalendarProps) => {
-  const { visible, setVisible, displayText, applyDate, syncDisplay } =
-    useCalendarModal(setDate);
+const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
+  const { visible, setVisible, displayText, applyRange, syncDisplay } =
+    useCalendarModal(setDates);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    syncDisplay(date);
-  }, [date, syncDisplay]);
+    syncDisplay(dates);
+  }, [dates, syncDisplay]);
 
   return (
     <SafeAreaProvider>
@@ -42,8 +42,8 @@ const InputCalendar = ({ date, setDate }: InputCalendarProps) => {
             <View style={styles.dragIndicator} />
             {ready && (
               <Calendar
-                onApply={({ endDate }) =>
-                  applyDate(endDate || null)
+                onApply={({ startDate, endDate }) =>
+                  applyRange(startDate && endDate ? [startDate, endDate] : null)
                 }
               />
             )}
@@ -57,7 +57,7 @@ const InputCalendar = ({ date, setDate }: InputCalendarProps) => {
           <Text
             style={[
               styles.inputText,
-              !date ? styles.placeholderText : undefined,
+              !dates ? styles.placeholderText : undefined,
             ]}
             numberOfLines={1}
           >
