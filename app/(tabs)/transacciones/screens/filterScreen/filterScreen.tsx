@@ -19,7 +19,7 @@ import TabRangeTime from "../../components/filter-screen/TabRangeTime";
 import Tabs from "../../components/filter-screen/Tabs";
 
 //Context
-import { FilterType } from "../../contexts/context-filter-transaction/FilterContext";
+import { FilterType } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
 
 //Hooks
 import { useFilterScreen } from "../../hooks/hooks-filter/use-filter-screen";

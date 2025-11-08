@@ -1,8 +1,8 @@
+import CheckIcon from "@/assets/svg/check-icon";
+import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import { useCategoryContext } from "../contexts/dataContext";
-import CheckIcon from "@/assets/svg/check-icon";
 
 type Category = {
   imageUri?: string;

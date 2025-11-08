@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { metasMackup } from "../../../mackups/metas-mackup";
+import { metasMockup } from "../../../mockups/metas-mockup";
 
 export const useGoalsCalculations = () => {
-  const { goals } = metasMackup;
+  const { goals } = metasMockup;
 
   // Calcula el progreso total (suma de todos los currentAmount)
   const totalProgress = useMemo(() => {

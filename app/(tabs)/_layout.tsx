@@ -7,9 +7,7 @@ import FigmaBottomNav from "@/components/ui/bottomNav/figma-bottom-nav";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/src/constants/theme";
 import { useColorScheme } from "@/src/hooks/use-color-scheme";
-import { FilterProvider } from "./transacciones/contexts/context-filter-transaction/FilterContext";
-import { RangeProvider } from "./transacciones/contexts/context-range/dataContext";
-import { CategoryProvider } from "./transacciones/contexts/contexts-category/dataContext";
+// Providers se movieron a src/features y se aplican en el stack local de Transacciones
 
 // Adapter to convert react-navigation bottom tab props to our BottomNav items
 function FigmaNavAdapter(props: any) {
@@ -59,9 +57,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <FilterProvider>
-      <CategoryProvider>
-        <RangeProvider>
+    
           <Tabs
             tabBar={(props: any) => <FigmaNavAdapter {...props} />}
             screenOptions={{
@@ -109,8 +105,5 @@ export default function TabLayout() {
               }}
             />
           </Tabs>
-        </RangeProvider>
-      </CategoryProvider>
-    </FilterProvider>
   );
 }

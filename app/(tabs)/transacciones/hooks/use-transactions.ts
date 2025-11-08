@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import transaccionesMackup from "../../../mackups/transactionsMockup";
+import transaccionesMackup from "../../../mockups/transactionsMockup";
 
 export type TabKind = "Todas" | "Ingresos" | "Gastos";
 

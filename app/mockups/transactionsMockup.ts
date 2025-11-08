@@ -1,12 +1,13 @@
 const now = new Date();
 
-const transaccionesMackup = [
+const transaccionesMockup = [
   {
     id: 1,
     categoria: "Comida",
     monto: 400,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
     type: "income",
   },
   {
@@ -14,7 +15,8 @@ const transaccionesMackup = [
     categoria: "Transporte",
     monto: -400,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -22,7 +24,8 @@ const transaccionesMackup = [
     categoria: "Café",
     monto: -400,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -30,7 +33,8 @@ const transaccionesMackup = [
     categoria: "Salario",
     monto: 3000,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
     type: "income",
   },
   {
@@ -38,7 +42,8 @@ const transaccionesMackup = [
     categoria: "Compras",
     monto: -150,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -46,7 +51,8 @@ const transaccionesMackup = [
     categoria: "Entretenimiento",
     monto: -75,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 4),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -54,7 +60,8 @@ const transaccionesMackup = [
     categoria: "Salud",
     monto: -200,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 5),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -62,7 +69,8 @@ const transaccionesMackup = [
     categoria: "Inversión",
     monto: 1000,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
     type: "income",
   },
   {
@@ -70,7 +78,8 @@ const transaccionesMackup = [
     categoria: "Facturas",
     monto: -500,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -78,7 +87,8 @@ const transaccionesMackup = [
     categoria: "Viaje",
     monto: -1200,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 14),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -86,7 +96,8 @@ const transaccionesMackup = [
     categoria: "Regalos",
     monto: -50,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 14),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -94,7 +105,8 @@ const transaccionesMackup = [
     categoria: "Suscripciones",
     monto: -15,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 21),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -102,7 +114,8 @@ const transaccionesMackup = [
     categoria: "Ropa",
     monto: -120,
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 21),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -110,7 +123,8 @@ const transaccionesMackup = [
     categoria: "Hogar",
     monto: -300,
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -118,7 +132,8 @@ const transaccionesMackup = [
     categoria: "Mascotas",
     monto: -80,
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -126,7 +141,8 @@ const transaccionesMackup = [
     categoria: "Freelance",
     monto: 750,
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/uos1zoxp_expires_30_days.png",
     type: "income",
   },
   {
@@ -134,7 +150,8 @@ const transaccionesMackup = [
     categoria: "Educación",
     monto: -250,
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
   {
@@ -142,8 +159,9 @@ const transaccionesMackup = [
     categoria: "Otros",
     monto: -25,
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
+    imagen:
+      "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png",
     type: "expense",
   },
 ];
-export default transaccionesMackup;
+export default transaccionesMockup;

@@ -1,4 +1,5 @@
 import { useTransactions } from "@/app/(tabs)/transacciones/hooks/use-transactions";
+import { useFilter } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import {
@@ -13,7 +14,6 @@ import Expenses from "../components/transactions/Expenses";
 import Header from "../components/transactions/Header";
 import Tabs from "../components/transactions/Tabs";
 import TransactionsCard from "../components/transactions/TrasaccionsCard";
-import { useFilter } from "../contexts/context-filter-transaction/FilterContext";
 
 const TransaccionesScreen: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("Todas");

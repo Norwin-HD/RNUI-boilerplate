@@ -1,10 +1,10 @@
+import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
+import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import React, { useMemo } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { useRangeContext } from "../../contexts/context-range/dataContext";
-import { useCategoryContext } from "../../contexts/contexts-category/dataContext";
 import Card from "./Card";
 
 interface Transaction {

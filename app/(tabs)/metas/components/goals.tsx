@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { metasMackup } from "../../../mackups/metas-mackup";
+import { metasMockup } from "../../../mockups/metas-mockup";
 import Card from "./card";
 
 import { format } from "date-fns";
@@ -13,7 +13,7 @@ const formatShortDate = (date: Date) => {
 
 const Goals = () => {
   // Usar datos del mockup de metas
-  const { goals } = metasMackup;
+  const { goals } = metasMockup;
 
   return (
     <View style={styles.container}>

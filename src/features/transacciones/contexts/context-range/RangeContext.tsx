@@ -1,12 +1,11 @@
 import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
+    createContext,
+    ReactNode,
+    useCallback,
+    useContext,
+    useMemo,
+    useState,
 } from "react";
-
 
 interface RangeContextType {
   minValue: number | null;

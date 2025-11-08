@@ -1,10 +1,10 @@
 import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
+    createContext,
+    ReactNode,
+    useCallback,
+    useContext,
+    useMemo,
+    useState,
 } from "react";
 
 // Definir tipos de filtro
@@ -34,8 +34,6 @@ const initialState: AppliedFilters = {
 };
 
 export const FilterProvider = ({ children }: { children: ReactNode }) => {
-
-
   // Estado de los filtros
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilters>(initialState);
 

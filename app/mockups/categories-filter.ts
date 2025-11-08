@@ -1,4 +1,4 @@
-const categories = [
+export const categories = [
   {
     imageUri: "https://www.svgrepo.com/svg/535633/shopping-cart.svg",
     title: "Supermercado",

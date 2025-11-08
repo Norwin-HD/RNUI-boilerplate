@@ -1,4 +1,4 @@
-export const metasMackup = {
+export const metasMockup = {
   goals: [
     {
       id: 1,

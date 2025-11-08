@@ -1,5 +1,5 @@
+import { categories } from "@/app/mockups/categories-filter";
 import { useMemo, useState } from "react";
-import categories from "../../../../mackups/categories-filter";
 
 // Hook para buscar
 export const useCategories = () => {

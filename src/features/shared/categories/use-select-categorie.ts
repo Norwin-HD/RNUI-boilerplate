@@ -1,4 +1,4 @@
-import categories from "@/app/mackups/categories-filter";
+import { categories } from "@/app/mockups/categories-filter";
 import { useCallback, useState } from "react";
 
 export interface UseSelectCategorieOptions {
@@ -10,26 +10,19 @@ export const useSelectCategorie = (opts?: UseSelectCategorieOptions) => {
     opts?.initialSelected ?? []
   );
 
-  // Verificar si una categoria esta seleccionada
   const isSelected = useCallback(
-    // Mantener funcion estable (Seleccionada)
-
-    (categoryTitle: string) => {
-      return selectedCategories.includes(categoryTitle);
-    },
+    (categoryTitle: string) => selectedCategories.includes(categoryTitle),
     [selectedCategories]
   );
 
-  // Alternar seleccion de una categoria
   const toggleCategory = useCallback((categoryTitle: string) => {
-
-    // Mantener funcion estable (Alternar)
     setSelectedCategories((prev) =>
-      prev.includes(categoryTitle) ? prev.filter((item) => item !== categoryTitle) : [...prev, categoryTitle]
+      prev.includes(categoryTitle)
+        ? prev.filter((item) => item !== categoryTitle)
+        : [...prev, categoryTitle]
     );
   }, []);
 
-  // Limpiar la categorias seleccionadas
   const clear = useCallback(() => setSelectedCategories([]), []);
 
   return {

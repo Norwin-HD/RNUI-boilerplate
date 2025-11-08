@@ -1,4 +1,4 @@
-export const presupuestosMackup = {
+export const presupuestosMockup = {
   budgets: [
     {
       id: 1,

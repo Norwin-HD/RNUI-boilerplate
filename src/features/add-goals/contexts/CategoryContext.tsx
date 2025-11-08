@@ -1,8 +1,8 @@
+import { useSelectCategorie } from "@/src/features/shared/categories/use-select-categorie";
 import React, { createContext, useContext, useMemo } from "react";
-import { useSelectCategorie } from "../../hooks/hooks-filter-category/use-select-categorie";
 
 interface CategoryContextValue {
-  categories: any[]; 
+  categories: any[];
   selectedCategories: string[];
   setSelectedCategories: (v: string[]) => void;
   toggleCategory: (title: string) => void;

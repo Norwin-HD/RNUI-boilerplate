@@ -1,6 +1,6 @@
+import { CategoryProvider } from "@/src/features/add-goals/contexts/CategoryContext";
 import { Stack } from "expo-router";
 import React from "react";
-import { CategoryProvider } from "./add-goals/contexts/dataContext";
 
 export default function ModalsLayout() {
   return (

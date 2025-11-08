@@ -169,16 +169,6 @@ export function Calendar({ onApply }: CalendarProps) {
         >
           <Text style={styles.quickButtonLightText}>Hoy</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.quickButtonPrimary}
-          onPress={() => {
-            const y = new Date();
-            y.setDate(y.getDate() - 1);
-            setSelected({ startDate: y, endDate: y });
-          }}
-        >
-          <Text style={styles.quickButtonPrimaryText}>Ayer</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -236,24 +226,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#DDECFD",
     borderWidth: 1,
     borderColor: "#9fbffa",
-    paddingHorizontal: moderateScale(60),
+    paddingHorizontal: moderateScale(120),
     paddingVertical: moderateScale(8),
     borderRadius: moderateScale(8),
   },
   quickButtonLightText: {
     color: "#016EED",
-    fontWeight: "600",
-    fontFamily: "Montserrat_600SemiBold",
-  },
-  quickButtonPrimary: {
-    backgroundColor: "#016EED",
-    paddingHorizontal: moderateScale(60),
-    paddingVertical: moderateScale(8),
-    borderRadius: moderateScale(8),
-  },
-  quickButtonPrimaryText: {
-    color: "#fff",
-    fontWeight: "600",
     fontFamily: "Montserrat_600SemiBold",
   },
 });

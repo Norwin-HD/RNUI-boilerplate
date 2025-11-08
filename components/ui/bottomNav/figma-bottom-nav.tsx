@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   menuList: {
-    height: verticalScale(56),
+    height: verticalScale(70),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     width: scale(70),
+    marginTop: -verticalScale(30),
     height: verticalScale(60),
     borderRadius: 100,
     alignItems: "center",
