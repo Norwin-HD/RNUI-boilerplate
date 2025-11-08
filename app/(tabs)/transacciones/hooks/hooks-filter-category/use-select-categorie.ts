@@ -1,24 +1,43 @@
-import { useState } from "react";
-import categories from "../../../../mackups/categories-filter";
+import categories from "@/app/mackups/categories-filter";
+import { useCallback, useState } from "react";
 
-export const useSelectCategorie = () => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+export interface UseSelectCategorieOptions {
+  initialSelected?: string[];
+}
 
-  const toggleCategory = (categoryTitle: string) => {
-    const newSelectedCategories = selectedCategories.includes(categoryTitle)
+export const useSelectCategorie = (opts?: UseSelectCategorieOptions) => {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    opts?.initialSelected ?? []
+  );
 
-      ? selectedCategories.filter((item) => item !== categoryTitle) // Remover
+  // Verificar si una categoria esta seleccionada
+  const isSelected = useCallback(
+    // Mantener funcion estable (Seleccionada)
 
-      : [...selectedCategories, categoryTitle]; // Agregar
-      
-    setSelectedCategories(newSelectedCategories);
-    console.log("Categorías seleccionadas:", newSelectedCategories);
-  };
+    (categoryTitle: string) => {
+      return selectedCategories.includes(categoryTitle);
+    },
+    [selectedCategories]
+  );
+
+  // Alternar seleccion de una categoria
+  const toggleCategory = useCallback((categoryTitle: string) => {
+
+    // Mantener funcion estable (Alternar)
+    setSelectedCategories((prev) =>
+      prev.includes(categoryTitle) ? prev.filter((item) => item !== categoryTitle) : [...prev, categoryTitle]
+    );
+  }, []);
+
+  // Limpiar la categorias seleccionadas
+  const clear = useCallback(() => setSelectedCategories([]), []);
 
   return {
-    selectedCategories,
-    toggleCategory,
     categories,
+    selectedCategories,
     setSelectedCategories,
+    toggleCategory,
+    isSelected,
+    clear,
   };
 };

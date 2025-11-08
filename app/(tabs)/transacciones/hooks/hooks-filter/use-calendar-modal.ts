@@ -2,32 +2,33 @@ import { useCallback, useState } from "react";
 import { formatDateRange } from "../../utils/format-date-range";
 
 export const useCalendarModal = (
-  setDates: (dates: [Date, Date] | null) => void
+  // cargar el rango de fechas seleccionado
+  onChangeRange: (range: [Date, Date] | null) => void
 ) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [showContent, setShowContent] = useState(false);
-  const [displayedDate, setDisplayedDate] = useState(formatDateRange(null));
+  // cambiar de estado visible al modal de calendario
+  const [visible, setVisible] = useState(false);
+  // controlar cuando el contenido del modal esta listo para mostrarse
+  const [displayText, setDisplayText] = useState(formatDateRange(null)); 
 
-  const handleApplyDate = useCallback(
-    (newDates: [Date, Date] | null) => {
-      setDates(newDates);
-      setDisplayedDate(formatDateRange(newDates));
-      setModalVisible(false);
+  // aplicar el rango seleccionado y actualizar el texto mostrado
+  const applyRange = useCallback( //
+    (range: [Date, Date] | null) => {
+      onChangeRange(range);
+      setDisplayText(formatDateRange(range));
+      setVisible(false);
     },
-    [setDates]
+    [onChangeRange]
   );
 
-  const updateDisplayedDates = useCallback((newDates: [Date, Date] | null) => {
-    setDisplayedDate(formatDateRange(newDates));
+  const syncDisplay = useCallback((range: [Date, Date] | null) => {
+    setDisplayText(formatDateRange(range));
   }, []);
 
   return {
-    modalVisible,
-    setModalVisible,
-    showContent,
-    setShowContent,
-    handleApplyDate,
-    displayedDate,
-    updateDisplayedDates,
+    visible,
+    setVisible,
+    displayText,
+    applyRange,
+    syncDisplay,
   };
 };

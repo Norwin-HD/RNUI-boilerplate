@@ -8,31 +8,40 @@ import {
   View,
 } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import Categories from "../components/filter-screen/Categories";
-import Footer from "../components/filter-screen/footer";
-import Header from "../components/filter-screen/Header";
-import InputCalendar from "../components/filter-screen/inputCalendary";
-import RangePrice from "../components/filter-screen/selectRangeMoney";
-import TabRangeTime from "../components/filter-screen/TabRangeTime";
-import Tabs from "../components/filter-screen/Tabs";
-import { FilterType } from "../contexts/context-filter-transaction/FilterContext";
-import { useFilterScreen } from "../hooks/hooks-filter/use-filter-screen";
+
+//Components
+import Categories from "../../components/filter-screen/Categories";
+import Footer from "../../components/filter-screen/footer";
+import Header from "../../components/filter-screen/Header";
+import InputCalendar from "../../components/filter-screen/inputCalendary";
+import RangePrice from "../../components/filter-screen/selectRangeMoney";
+import TabRangeTime from "../../components/filter-screen/TabRangeTime";
+import Tabs from "../../components/filter-screen/Tabs";
+
+//Context
+import { FilterType } from "../../contexts/context-filter-transaction/FilterContext";
+
+//Hooks
+import { useFilterScreen } from "../../hooks/hooks-filter/use-filter-screen";
 
 type TabType = "Todas" | "Ingresos" | "Gastos";
 
+
+// Refleja el tipo de transaccion
 const typeMap: Record<TabType, FilterType> = {
   Todas: "all",
   Ingresos: "income",
   Gastos: "expense",
 };
 
+// Refleja el tipo de transaccion
 const reverseTypeMap: Record<FilterType, TabType> = {
   all: "Todas",
   income: "Ingresos",
   expense: "Gastos",
 };
 
-const FilterScreen: React.FC = () => {
+const FilterScreen = () => {
   const {
     activeTypeTab,
     setActiveTypeTab,
@@ -43,25 +52,6 @@ const FilterScreen: React.FC = () => {
     handleApplyFilters,
     handleClearFilters,
   } = useFilterScreen();
-
-  // Agregar estado para rangos de precio (min/max) para hacer RangePrice controlado
-  // const [minPrice, setMinPrice] = useState("");
-  // const [maxPrice, setMaxPrice] = useState("");
-
- //Función para validar y actualizar min/max (e.g., asegurar min < max)
-  // const handleMinChange = (value: string) => {
-  //   const numValue = parseFloat(value) || 0;
-  //   if (numValue >= 0 && numValue <= parseFloat(maxPrice)) {
-  //     setMinPrice(value);
-  //   }
-  // };
-
-  // const handleMaxChange = (value: string) => {
-  //   const numValue = parseFloat(value) || 0;
-  //   if (numValue >= parseFloat(minPrice)) {
-  //     setMaxPrice(value);
-  //   }
-  // };
 
   const handleSetActiveTypeTab = (tab: TabType) => {
     setActiveTypeTab(typeMap[tab]);
@@ -77,7 +67,7 @@ const FilterScreen: React.FC = () => {
           style={styles.scrollView}
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
-          accessibilityLabel="Pantalla de filtros para transacciones" 
+          accessibilityLabel="Pantalla de filtros para transacciones"
         >
           <View style={styles.column3}>
             <Header />
@@ -91,7 +81,6 @@ const FilterScreen: React.FC = () => {
               setActiveTab={setActiveRangeTimeTab}
             />
             <InputCalendar dates={rangeDate} setDates={setRangeDate} />
-            {/* CAMBIO: RangePrice ahora usa contexto */}
             <RangePrice />
             <Footer onApply={handleApplyFilters} onClear={handleClearFilters} />
           </View>

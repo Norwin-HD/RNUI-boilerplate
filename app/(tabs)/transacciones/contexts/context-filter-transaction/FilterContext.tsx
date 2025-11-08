@@ -1,21 +1,32 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
+// Definir tipos de filtro
 export type FilterType = "all" | "income" | "expense";
 
 export interface AppliedFilters {
-  type: FilterType;
-  range: string;
-  dates: [Date, Date] | null;
+  type: FilterType; // Tipo de transaccion
+  range: string; // Rango amigable con date-fns
+  dates: [Date, Date] | null; // Rango de fechas especifico
 }
 
+// Crear interfaz del contexto
 interface FilterContextType {
-  appliedFilters: AppliedFilters;
-  applyFilters: (filters: AppliedFilters) => void;
-  clearFilters: () => void;
+  appliedFilters: AppliedFilters; // Filtros actualmente aplicados
+  applyFilters: (filters: AppliedFilters) => void; // Funcion para aplicar filtros
+  clearFilters: () => void; // Funcion para limpiar filtros
 }
 
+// crear contexto
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
+// Estado inicial de los filtros
 const initialState: AppliedFilters = {
   type: "all",
   range: "all",
@@ -23,21 +34,29 @@ const initialState: AppliedFilters = {
 };
 
 export const FilterProvider = ({ children }: { children: ReactNode }) => {
-  const [appliedFilters, setAppliedFilters] =
-    useState<AppliedFilters>(initialState);
 
-  const applyFilters = (filters: AppliedFilters) => {
+
+  // Estado de los filtros
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFilters>(initialState);
+
+  // Funciones para aplicar
+  const applyFilters = useCallback((filters: AppliedFilters) => {
     setAppliedFilters(filters);
-  };
+  }, []);
 
-  const clearFilters = () => {
+  // Funciones para limpiar
+  const clearFilters = useCallback(() => {
     setAppliedFilters(initialState);
-  };
+  }, []);
+
+  // Crear valor del contexto
+  const value = useMemo(
+    () => ({ appliedFilters, applyFilters, clearFilters }),
+    [appliedFilters, applyFilters, clearFilters]
+  );
 
   return (
-    <FilterContext.Provider
-      value={{ appliedFilters, applyFilters, clearFilters }}
-    >
+    <FilterContext.Provider value={value}>
       {children}
     </FilterContext.Provider>
   );

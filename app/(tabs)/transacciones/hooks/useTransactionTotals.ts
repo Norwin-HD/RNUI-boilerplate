@@ -1,23 +1,21 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-interface Transaction {
+export interface Transaction {
   id: number;
   categoria: string;
-  monto: number;
+  monto: number; // positivo = ingreso, negativo = gasto
   fecha: Date;
   imagen: string;
 }
 
-export const useTransactionTotals = (transactions: Transaction[]) => {
+export const useTransactionTotals = (transactions: readonly Transaction[]) => {
   return useMemo(() => {
-    const totalIncome = transactions
-      .filter(transaction => transaction.monto > 0)
-      .reduce((sum, transaction) => sum + transaction.monto, 0);
-
-    const totalExpenses = transactions
-      .filter(transaction => transaction.monto < 0)
-      .reduce((sum, transaction) => sum + Math.abs(transaction.monto), 0);
-
-    return { totalIncome, totalExpenses };
+    let income = 0;
+    let expenses = 0;
+    for (const t of transactions) {
+      if (t.monto > 0) income += t.monto;
+      else if (t.monto < 0) expenses += Math.abs(t.monto);
+    }
+    return { totalIncome: income, totalExpenses: expenses };
   }, [transactions]);
 };

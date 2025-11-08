@@ -29,7 +29,9 @@ const CategoriesHeader = () => (
     <TouchableOpacity
       style={styles.headerAction}
       onPress={() =>
-        router.push("/(tabs)/transacciones/screens/categorieFilterScreen")
+        router.push(
+          "/(tabs)/transacciones/screens/filterScreen/categorieFilterScreen"
+        )
       }
     >
       <Text style={styles.headerText}>Ver todo</Text>

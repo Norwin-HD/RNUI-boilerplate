@@ -1,4 +1,12 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
+
 
 interface RangeContextType {
   minValue: number | null;
@@ -14,26 +22,29 @@ interface RangeProviderProps {
   children: ReactNode;
 }
 
-export const RangeProvider: React.FC<RangeProviderProps> = ({ children }) => {
+export const RangeProvider = ({ children }: RangeProviderProps) => {
   const [minValue, setMinValue] = useState<number | null>(null);
   const [maxValue, setMaxValue] = useState<number | null>(null);
 
-  const clearRange = () => {
+  const clearRange = useCallback(() => {
     setMinValue(null);
     setMaxValue(null);
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ minValue, maxValue, setMinValue, setMaxValue, clearRange }),
+    [minValue, maxValue, clearRange]
+  );
 
   return (
-    <RangeContext.Provider value={{ minValue, maxValue, setMinValue, setMaxValue, clearRange }}>
-      {children}
-    </RangeContext.Provider>
+    <RangeContext.Provider value={value}>{children}</RangeContext.Provider>
   );
 };
 
 export const useRangeContext = () => {
   const context = useContext(RangeContext);
   if (!context) {
-    throw new Error('useRangeContext must be used within a RangeProvider');
+    throw new Error("useRangeContext must be used within a RangeProvider");
   }
   return context;
 };

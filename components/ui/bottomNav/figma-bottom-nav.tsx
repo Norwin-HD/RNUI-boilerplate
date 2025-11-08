@@ -1,11 +1,7 @@
 import { useColorScheme } from "@/src/hooks/use-color-scheme";
+import { router } from "expo-router";
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { scale, verticalScale } from "react-native-size-matters";
 import ClockIcon from "./BottomBarSvg/ClockIcon";
@@ -43,7 +39,11 @@ export default function FigmaBottomNav({
 
   const handleMenuOption = (option: string) => {
     setIsMenuVisible(false);
-    // Aquí puedes agregar navegación o lógica para cada opción
+    if (option === "Nueva meta") {
+      router.push("/add-goals" as any);
+      return;
+    }
+    // Otros flujos a futuro
     console.log(`Seleccionado: ${option}`);
   };
 
@@ -131,7 +131,7 @@ export default function FigmaBottomNav({
             <Text style={styles.menuTitle}>Agregar</Text>
             <TouchableOpacity
               style={styles.menuItemOption}
-              onPress={() => handleMenuOption("Agregar metas")}
+              onPress={() => handleMenuOption("Nueva meta")}
             >
               <Text style={styles.menuText}>Nueva meta</Text>
             </TouchableOpacity>

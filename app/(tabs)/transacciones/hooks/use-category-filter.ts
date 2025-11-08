@@ -1,57 +1,66 @@
+import { useCallback, useMemo, useState } from "react";
 
-import { useMemo, useState } from 'react';
-
-interface Item {
-  name?: string;
-  title?: string;
-  [key: string]: any;
+export interface NameFilterMetrics {
+  total: number;
+  filtered: number;
+  hasSearch: boolean;
+  isEmpty: boolean;
 }
 
-const useNameFilter = (initialData: Item[] = []) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [data, setData] = useState<Item[]>(initialData);
+export interface NameFilterItem {
+  name?: string;
+  title?: string;
+  [key: string]: any; // permitir campos adicionales sin romper tipado
+}
 
-  // Filtrar datos por nombre
-  const filteredData = useMemo(() => {
-    if (!searchTerm.trim()) {
-      return data;
-    }
+export interface UseNameFilterResult<T extends NameFilterItem> {
+  data: T[]; // datos filtrados
+  all: T[]; // datos originales
+  term: string; // termino actual
+  metrics: NameFilterMetrics;
+  setTerm: (term: string) => void;
+  clear: () => void;
+  setData: (data: T[]) => void;
+}
 
-    const term = searchTerm.toLowerCase().trim();
-    return data.filter(item =>
-      item.name?.toLowerCase().includes(term) ||
-      item.title?.toLowerCase().includes(term)
+export const useNameFilter = <T extends NameFilterItem>(
+  initialData: T[] = []
+): UseNameFilterResult<T> => {
+  const [term, setTerm] = useState("");
+  const [all, setAll] = useState<T[]>(initialData);
+
+  const data = useMemo(() => {
+    const trimmed = term.trim();
+    if (!trimmed) return all;
+    const lower = trimmed.toLowerCase();
+    return all.filter(
+      (item) =>
+        item.name?.toLowerCase().includes(lower) ||
+        item.title?.toLowerCase().includes(lower)
     );
-  }, [data, searchTerm]);
+  }, [all, term]);
 
-  // Estadísticas de búsqueda
-  const searchInfo = useMemo(() => {
-    return {
-      total: data.length,
-      filtered: filteredData.length,
-      hasSearch: searchTerm.length > 0,
-      isEmpty: filteredData.length === 0
-    };
-  }, [data.length, filteredData.length, searchTerm]);
+  const metrics = useMemo<NameFilterMetrics>(
+    () => ({
+      total: all.length,
+      filtered: data.length,
+      hasSearch: term.length > 0,
+      isEmpty: data.length === 0,
+    }),
+    [all.length, data.length, term.length]
+  );
 
-  // Buscar
-  const search = (term: string) => {
-    setSearchTerm(term);
-  };
-
-  // Limpiar búsqueda
-  const clearSearch = () => {
-    setSearchTerm('');
-  };
+  const setData = useCallback((next: T[]) => setAll(next), []);
+  const clear = useCallback(() => setTerm(""), []);
 
   return {
-    data: filteredData,
-    allData: data,
-    searchTerm,
-    searchInfo,
-    search,
-    clearSearch,
-    setData
+    data,
+    all,
+    term,
+    metrics,
+    setTerm,
+    clear,
+    setData,
   };
 };
 

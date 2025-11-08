@@ -61,8 +61,7 @@ const TransaccionesScreen: React.FC = () => {
   const router = useRouter();
 
   const handleFilterPress = () => {
-    // Navega al nuevo screen dentro de la carpeta `screens`
-    router.push("/(tabs)/transacciones/screens/filterScreen");
+    router.push("/(tabs)/transacciones/screens/filterScreen/filterScreen");
   };
 
   return (

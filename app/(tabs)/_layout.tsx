@@ -24,8 +24,8 @@ function FigmaNavAdapter(props: any) {
   // Oculta la tab bar cuando el foco está en la pantalla de filtro
   if (
     routeName === "filterScreen" ||
-    routeName === "screens/filterScreen" ||
-    routeName === "screens/categorieFilterScreen"
+    routeName === "screens/filterScreen/filterScreen" ||
+    routeName === "screens/filterScreen/categorieFilterScreen"
   ) {
     return null;
   }
@@ -53,7 +53,9 @@ function FigmaNavAdapter(props: any) {
   // Map route index to bottom nav index (inserting FAB at position 2)
   const bottomNavIndex = state.index < 2 ? state.index : state.index + 1;
 
-  return <FigmaBottomNav selectedIndex={bottomNavIndex} onSelect={handleSelect} />;
+  return (
+    <FigmaBottomNav selectedIndex={bottomNavIndex} onSelect={handleSelect} />
+  );
 }
 
 export default function TabLayout() {

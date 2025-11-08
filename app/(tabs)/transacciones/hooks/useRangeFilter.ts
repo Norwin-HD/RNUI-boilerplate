@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-interface Transaction {
+export interface Transaction {
   id: number;
   categoria: string;
   monto: number;
@@ -15,15 +15,12 @@ const useRangeFilter = (initialData: Transaction[] = []) => {
 
   // Filtrar datos por rango de monto
   const filteredData = useMemo(() => {
-    if (minValue === null && maxValue === null) {
-      return data;
-    }
-
+    if (minValue === null && maxValue === null) return data;
+    const min = minValue ?? -Infinity;
+    const max = maxValue ?? Infinity;
     return data.filter(item => {
-      const amount = Math.abs(item.monto); // Usar valor absoluto para gastos/ingresos
-      const minCheck = minValue === null || amount >= minValue;
-      const maxCheck = maxValue === null || amount <= maxValue;
-      return minCheck && maxCheck;
+      const amount = Math.abs(item.monto);
+      return amount >= min && amount <= max;
     });
   }, [data, minValue, maxValue]);
 
@@ -38,16 +35,16 @@ const useRangeFilter = (initialData: Transaction[] = []) => {
   }, [data.length, filteredData.length, minValue, maxValue]);
 
   // Establecer rango
-  const setRange = (min: number | null, max: number | null) => {
+  const setRange = useCallback((min: number | null, max: number | null) => {
     setMinValue(min);
     setMaxValue(max);
-  };
+  }, []);
 
   // Limpiar filtro
-  const clearFilter = () => {
+  const clearFilter = useCallback(() => {
     setMinValue(null);
     setMaxValue(null);
-  };
+  }, []);
 
   return {
     data: filteredData,

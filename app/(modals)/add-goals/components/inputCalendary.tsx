@@ -1,13 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale } from "react-native-size-matters";
-import { useCalendarModal } from "../../hooks/hooks-filter/use-calendar-modal";
+import { useCalendarModal } from "../hooks/use-calendar-modal";
 import { Calendar } from "./Calendar";
 
 type DateRange = [Date, Date] | null;
+
 
 interface InputCalendarProps {
   dates: DateRange;
@@ -15,21 +16,28 @@ interface InputCalendarProps {
 }
 
 const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
-  const { visible, setVisible, displayText, applyRange, syncDisplay } = useCalendarModal(setDates);
-  const [ready, setReady] = useState(false);
+  const {
+    modalVisible,
+    setModalVisible,
+    showContent,
+    setShowContent,
+    handleApplyDate,
+    displayedDate,
+    updateDisplayedDates,
+  } = useCalendarModal(setDates);
 
   useEffect(() => {
-    syncDisplay(dates);
-  }, [dates, syncDisplay]);
+    updateDisplayedDates(dates);
+  }, [dates, updateDisplayedDates]);
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.centeredView}>
         <Modal
-          isVisible={visible}
-          onModalShow={() => setReady(true)}
-          onModalHide={() => setReady(false)}
-          onSwipeComplete={() => setVisible(false)}
+          isVisible={modalVisible}
+          onModalShow={() => setShowContent(true)}
+          onModalHide={() => setShowContent(false)}
+          onSwipeComplete={() => setModalVisible(false)}
           swipeDirection="down"
           propagateSwipe={true}
           animationInTiming={100}
@@ -38,10 +46,10 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
         >
           <View style={styles.modalView}>
             <View style={styles.dragIndicator} />
-            {ready && (
+            {showContent && (
               <Calendar
                 onApply={({ startDate, endDate }) =>
-                  applyRange(
+                  handleApplyDate(
                     startDate && endDate ? [startDate, endDate] : null
                   )
                 }
@@ -50,8 +58,11 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
           </View>
         </Modal>
 
-        <Pressable style={[styles.buttonOpen]} onPress={() => setVisible(true)}>
-          <Text style={styles.textStyle}>{displayText}</Text>
+        <Pressable
+          style={[styles.buttonOpen]}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.textStyle}>{displayedDate}</Text>
           <Ionicons
             name="calendar-outline"
             size={moderateScale(20)}

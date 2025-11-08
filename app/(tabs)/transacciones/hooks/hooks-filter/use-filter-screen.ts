@@ -1,52 +1,59 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
-import { FilterType, useFilter } from '../../contexts/context-filter-transaction/FilterContext';
-import { getRangeTime } from './use-range-time';
+import { useRouter } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
+import {
+  FilterType,
+  useFilter,
+} from "../../contexts/context-filter-transaction/FilterContext";
+import { getRangeTime } from "./use-range-time";
 
+//mantiene tipo y rango como estado local, deriva fechas automaticamente.
 export const useFilterScreen = () => {
-    const router = useRouter();
-    const { appliedFilters, applyFilters } = useFilter();
+  const router = useRouter();
+  const { appliedFilters, applyFilters } = useFilter();
 
-    const [activeTypeTab, setActiveTypeTab] = useState<FilterType>(appliedFilters.type);
-    const [activeRangeTimeTab, setActiveRangeTimeTab] = useState<string>(appliedFilters.range);
-    
-    const [rangeDate, setRangeDate] = useState<[Date, Date] | null>(() => getRangeTime(appliedFilters.range));
+  // Estado local inicial desde filtros aplicados
+  const [activeTypeTab, setActiveTypeTab] = useState<FilterType>(
+    appliedFilters.type
+  );
+  const [activeRangeTimeTab, setActiveRangeTimeTab] = useState<string>(
+    appliedFilters.range
+  );
 
-    useFocusEffect(
-        useCallback(() => {
-            setActiveTypeTab(appliedFilters.type);
-            setActiveRangeTimeTab(appliedFilters.range);
-            const newRangeDate = getRangeTime(appliedFilters.range);
-            setRangeDate(newRangeDate);
-        }, [appliedFilters])
-    );
+  // Rango de fechas editable por el calendario, inicializado desde el rango activo
+  const [rangeDate, setRangeDate] = useState<[Date, Date] | null>( // si no hay rango, es null
+    getRangeTime(activeRangeTimeTab)
+  ); 
 
-    const handleApplyFilters = () => {
-        applyFilters({
-            type: activeTypeTab,
-            range: activeRangeTimeTab,
-            dates: rangeDate,
-        });
-        router.back();
-    };
+  // Cuando cambia el rango temporal, recalcular fechas automaticamente
+  useEffect(() => {
+    setRangeDate(getRangeTime(activeRangeTimeTab));
+  }, [activeRangeTimeTab]);
 
-    const handleClearFilters = () => {
-        applyFilters({
-            type: 'all',
-            range: 'all',
-            dates: null,
-        });
-    };
+  // Aplicar filtros y volver
+  const handleApplyFilters = useCallback(() => {
+    applyFilters({
+      type: activeTypeTab,
+      range: activeRangeTimeTab,
+      dates: rangeDate,
+    });
+    router.back();
+  }, [activeTypeTab, activeRangeTimeTab, rangeDate, applyFilters, router]);
 
-    return {
-        activeTypeTab,
-        setActiveTypeTab,
-        activeRangeTimeTab,
-        setActiveRangeTimeTab,
-        rangeDate,
-        setRangeDate,
-        handleApplyFilters,
-        handleClearFilters,
-    };
+  // Limpiar filtros a valores por defecto
+  const handleClearFilters = useCallback(() => {
+    setActiveTypeTab("all");
+    setActiveRangeTimeTab("all");
+    applyFilters({ type: "all", range: "all", dates: null });
+  }, [applyFilters]);
+
+  return {
+    activeTypeTab,
+    setActiveTypeTab,
+    activeRangeTimeTab,
+    setActiveRangeTimeTab,
+    rangeDate,
+    setRangeDate,
+    handleApplyFilters,
+    handleClearFilters,
+  };
 };
