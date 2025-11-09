@@ -7,6 +7,7 @@ interface SocialLoginProps {
   onFacebookPress?: () => void;
 }
 
+
 export default function SocialLogin({
   onGooglePress,
   onMicrosoftPress,

@@ -6,6 +6,7 @@ interface StepDotsProps {
   activeIndex: number; //empieza en 0
 }
 
+
 export default function StepDots({ total, activeIndex }: StepDotsProps) {
   return (
     <View style={styles.dotsContainer}>

@@ -15,6 +15,7 @@ export default function PrimaryButton({ title, onPress, style }: PrimaryButtonPr
   );
 }
 
+
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "#3476F4",

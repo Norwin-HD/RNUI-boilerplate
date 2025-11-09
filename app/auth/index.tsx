@@ -16,6 +16,7 @@ export default function WelcomeScreen() {
         resizeMode="contain"
       />
 
+
       <View style={styles.bottomContainer}>
         <Text style={styles.bottomTitle}>Empieza ahora!</Text>
         <Text style={styles.bottomSubtitle}>

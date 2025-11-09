@@ -19,6 +19,7 @@ export default function Header({ title, onBack }: HeaderProps) {
   );
 }
 
+
 const styles = StyleSheet.create({
   header: {
     backgroundColor: "#3476F4",

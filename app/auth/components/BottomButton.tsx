@@ -19,6 +19,7 @@ const BottomButton: React.FC<BottomButtonProps> = ({ onPress, text }) => {
   );
 };
 
+
 export default BottomButton;
 
 const styles = StyleSheet.create({

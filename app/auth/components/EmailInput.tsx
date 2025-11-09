@@ -9,6 +9,7 @@ interface EmailInputProps {
   style?: object;
 }
 
+
 export default function EmailInput({
   label = "Correo electrónico",
   value,

@@ -8,6 +8,7 @@ import TitleSubtitle from "../components/TittleSubtitle";
 export default function SuccessScreen() {
   const router = useRouter();
 
+  
   return (
     <View style={styles.container}>
       <Image

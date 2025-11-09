@@ -11,6 +11,7 @@ export default function SuccessResetScreen() {
   const handleContinue = () => {
     router.push("/auth/login");
   };
+  
 
   return (
     <View style={styles.screen}>
