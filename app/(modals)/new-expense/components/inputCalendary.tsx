@@ -3,30 +3,30 @@ import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { moderateScale, scale } from "react-native-size-matters";
+import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useCalendarModal } from "../hooks/use-calendar-modal";
-import { Calendar } from "../../new-income/components/Calendar";
+import { Calendar } from "./Calendar";
 
-type DateRange = [Date, Date] | null;
+type DateValue = Date | null;
 
 interface InputCalendarProps {
-  dates: DateRange;
-  setDates: (dates: DateRange) => void;
+  date: DateValue;
+  setDate: (date: DateValue) => void;
 }
 
-const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
-  const { visible, setVisible, displayText, applyRange, syncDisplay } =
-    useCalendarModal(setDates);
+const InputCalendar = ({ date, setDate }: InputCalendarProps) => {
+  const { visible, setVisible, displayText, applyDate, syncDisplay } =
+    useCalendarModal(setDate);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    syncDisplay(dates);
-  }, [dates, syncDisplay]);
+    syncDisplay(date);
+  }, [date, syncDisplay]);
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.centeredView}>
-        <Text style={styles.inputHeader}>Fecha limite</Text>
+        <Text style={styles.inputHeader}>Fecha</Text>
         <Modal
           isVisible={visible}
           onModalShow={() => setReady(true)}
@@ -42,8 +42,8 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
             <View style={styles.dragIndicator} />
             {ready && (
               <Calendar
-                onApply={({ startDate, endDate }) =>
-                  applyRange(startDate && endDate ? [startDate, endDate] : null)
+                onApply={({ endDate }) =>
+                  applyDate(endDate || null)
                 }
               />
             )}
@@ -57,7 +57,7 @@ const InputCalendar = ({ dates, setDates }: InputCalendarProps) => {
           <Text
             style={[
               styles.inputText,
-              !dates ? styles.placeholderText : undefined,
+              !date ? styles.placeholderText : undefined,
             ]}
             numberOfLines={1}
           >
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 0,
     marginHorizontal: 0,
+    marginTop: verticalScale(10),
   },
   modalContainer: {
     justifyContent: "flex-end",
@@ -90,9 +91,13 @@ const styles = StyleSheet.create({
     padding: scale(20),
     height: "70%",
     shadowColor: "#000",
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 10,
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    elevation: 20,
   },
   dragIndicator: {
     alignSelf: "center",
@@ -106,7 +111,6 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_400Regular",
     color: "#454A53",
     marginBottom: scale(4),
-    marginTop: scale(20),
     fontSize: moderateScale(14),
   },
   inputContainer: {

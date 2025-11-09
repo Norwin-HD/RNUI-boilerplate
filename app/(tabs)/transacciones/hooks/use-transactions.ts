@@ -1,19 +1,22 @@
 import { useMemo } from "react";
-import transaccionesMackup from "../../../mockups/transactionsMockup";
+import { useTransactions as useGlobalTransactions } from "../../../../src/features/transacciones/contexts/transactions-context";
 
 export type TabKind = "Todas" | "Ingresos" | "Gastos";
 
 export const useTransactions = (activeTab: TabKind) => {
+  const { transactions } = useGlobalTransactions();
+
   const filteredTransactions = useMemo(() => {
+    const baseTransactions = transactions;
     switch (activeTab) {
       case "Ingresos":
-        return transaccionesMackup.filter((t) => t.monto > 0);
+        return baseTransactions.filter((t) => t.type === "income");
       case "Gastos":
-        return transaccionesMackup.filter((t) => t.monto < 0);
+        return baseTransactions.filter((t) => t.type === "expense");
       default:
-        return transaccionesMackup;
+        return baseTransactions;
     }
-  }, [activeTab]);
+  }, [activeTab, transactions]);
 
   return { filteredTransactions };
 };

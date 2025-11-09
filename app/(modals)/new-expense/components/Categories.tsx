@@ -1,9 +1,9 @@
 import { categories } from "@/app/mockups/categories-filter";
-import { useCategoryContext } from "@/src/features/shared/categories/CategoryContext";
 import { router } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
+import { useCategoryContext } from "../../../../src/features/transacciones/contexts/contexts-category/CategoryContext";
 
 type Categoria = {
   title: string;
@@ -28,9 +28,7 @@ const CategoriesHeader = () => (
     <Text style={styles.headerTitle}>Categorías (Opcional)</Text>
     <TouchableOpacity
       style={styles.headerAction}
-      onPress={() =>
-        router.push("/(modals)/add-goals/categorie-filter")
-      }
+      onPress={() => router.push("/(modals)/new-expense/categorie-filter")}
     >
       <Text style={styles.headerText}>Ver todo</Text>
       <Image

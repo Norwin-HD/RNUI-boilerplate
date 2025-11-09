@@ -1,16 +1,48 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale } from "react-native-size-matters";
+import { z } from "zod";
+import { useTransactions } from "../../../src/features/transacciones/contexts/transactions-context";
+import { ExpenseSchema } from "../../../src/features/transacciones/schemas";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import AddIncomeContainer from "./components/container";
 
-export default function AddIncomeModal() {
-  useRouter();
+type ExpenseFormData = z.infer<typeof ExpenseSchema>;
+
+export default function AddExpenseModal() {
+  const router = useRouter();
+  const { addTransaction } = useTransactions();
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<ExpenseFormData>({
+    resolver: zodResolver(ExpenseSchema),
+    defaultValues: {
+      monto: undefined,
+      fecha: new Date(),
+      categoria: "",
+      descripcion: "",
+    },
+  });
+
+  const onSubmit = (data: ExpenseFormData) => {
+    const newTransaction = {
+      ...data,
+      monto: -Math.abs(data.monto),
+      type: "expense" as const,
+    };
+    addTransaction(newTransaction);
+    router.dismiss();
+  };
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
@@ -21,9 +53,13 @@ export default function AddIncomeModal() {
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
-        <AddIncomeContainer />
+        <AddIncomeContainer
+          control={control}
+          errors={errors}
+          setValue={setValue}
+        />
       </ScrollView>
-      <Footer />
+      <Footer onPress={handleSubmit(onSubmit)} />
     </SafeAreaView>
   );
 }

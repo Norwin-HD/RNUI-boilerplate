@@ -8,13 +8,12 @@ import DateTimePicker, {
 } from "react-native-ui-datepicker";
 
 interface CalendarProps {
-  onApply?: (r: { startDate?: Date; endDate?: Date }) => void;
+  onApply?: (r: { endDate?: Date }) => void;
 }
 
 export function Calendar({ onApply }: CalendarProps) {
   const defaultStyles = useDefaultStyles();
-  type RangeDate = { startDate?: DateType; endDate?: DateType };
-  const [selected, setSelected] = useState<RangeDate | undefined>();
+  const [selected, setSelected] = useState<DateType | undefined>(undefined);
 
   const COLORS = {
     primary: "#016EED",
@@ -133,13 +132,8 @@ export function Calendar({ onApply }: CalendarProps) {
         <TouchableOpacity
           style={styles.applyRow}
           onPress={() => {
-            const start = selected?.startDate
-              ? new Date(selected.startDate as any)
-              : undefined;
-            const end = selected?.endDate
-              ? new Date(selected.endDate as any)
-              : undefined;
-            onApply?.({ startDate: start, endDate: end });
+            const end = selected ? new Date(selected as any) : undefined;
+            onApply?.({ endDate: end });
           }}
         >
           <Ionicons name="checkmark" size={25} color={COLORS.textPrimary} />
@@ -150,12 +144,9 @@ export function Calendar({ onApply }: CalendarProps) {
         <DateTimePicker
           monthsFormat="full"
           weekdaysFormat="short"
-          mode="range"
-          startDate={selected?.startDate}
-          endDate={selected?.endDate}
-          onChange={({ startDate, endDate }) =>
-            setSelected({ startDate, endDate })
-          }
+          mode="single"
+          date={selected}
+          onChange={({ date }) => setSelected(date as DateType)}
           styles={stylesOverride}
         />
       </View>
@@ -163,9 +154,7 @@ export function Calendar({ onApply }: CalendarProps) {
       <View style={styles.quickButtonsRow}>
         <TouchableOpacity
           style={styles.quickButtonLight}
-          onPress={() =>
-            setSelected({ startDate: new Date(), endDate: new Date() })
-          }
+          onPress={() => setSelected(new Date() as unknown as DateType)}
         >
           <Text style={styles.quickButtonLightText}>Hoy</Text>
         </TouchableOpacity>

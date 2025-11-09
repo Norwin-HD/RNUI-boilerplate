@@ -18,6 +18,7 @@ import "./global.css";
 
 import { useColorScheme } from "@/src/hooks/use-color-scheme";
 import { useFonts } from "expo-font";
+import { TransactionsProvider } from "../src/features/transacciones/contexts/transactions-context";
 
 const FONT_MAP = {
   Montserrat_500Medium,
@@ -34,17 +35,19 @@ export default function RootLayout() {
 
   return (
     <GoalsProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="auth/index" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="(modals)"
-            options={{ headerShown: false, presentation: "fullScreenModal" }}
-          />
-        </Stack>
-        <StatusBar style="inverted" />
-      </ThemeProvider>
+      <TransactionsProvider>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="auth/index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="(modals)"
+              options={{ headerShown: false, presentation: "fullScreenModal" }}
+            />
+          </Stack>
+          <StatusBar style="inverted" />
+        </ThemeProvider>
+      </TransactionsProvider>
     </GoalsProvider>
   );
 }
