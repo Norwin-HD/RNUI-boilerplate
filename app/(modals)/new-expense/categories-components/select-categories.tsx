@@ -1,7 +1,8 @@
 import CheckIcon from "@/assets/svg/check-icon";
 import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
+import DynamicImage from "@/types/components/dynamicImage";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 
 type Category = {
@@ -31,7 +32,7 @@ const SelectCategories = ({ categories }: Props) => {
             >
               <View style={[styles.item, isSelected && styles.itemSelected]}>
                 {!!c.imageUri && (
-                  <Image source={{ uri: c.imageUri }} style={styles.avatar} />
+                  <DynamicImage path={c.imageUri} width={moderateScale(60)} height={moderateScale(60)} borderRadius={moderateScale(999)} />
                 )}
                 <View style={styles.itemText}>
                   <Text

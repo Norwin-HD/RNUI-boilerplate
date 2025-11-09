@@ -1,3 +1,4 @@
+import DynamicImage from "@/types/components/dynamicImage";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -15,7 +16,7 @@ const TransactionDetail = () => {
     categoria: categoria as string,
     monto: parseFloat(monto as string),
     fecha: new Date(fecha as string),
-    imagen: imagen as string,
+    imageUri: imagen as string,
     descripcion: (descripcion as string) || "",
   };
 
@@ -26,9 +27,12 @@ const TransactionDetail = () => {
       </TouchableOpacity>
       <View style={styles.detailContainer}>
         <View style={styles.iconContainer}>
-          <Text style={styles.iconText}>
-            {transaction.categoria.charAt(0).toUpperCase()}
-          </Text>
+          <DynamicImage
+            path={`${transaction.imageUri}.webp`}
+            width={moderateScale(80)}
+            height={moderateScale(80)}
+            borderRadius={moderateScale(40)}
+          />
         </View>
         <Text style={styles.category}>{transaction.categoria}</Text>
         {transaction.descripcion ? (

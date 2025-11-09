@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import transaccionesMockup from "../../../../app/mockups/transactionsMockup";
+import transaccionesMockup from "@/app/mockups/transactionsMockup";
 
 interface Transaction {
   id: number;
@@ -28,15 +28,23 @@ interface TransactionsContextType {
 const TransactionsContext = createContext<TransactionsContextType | null>(null);
 
 export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
-  const [transactions, setTransactions] = useState(transaccionesMockup);
+  const [transactions, setTransactions] = useState<Transaction[]>(
+    transaccionesMockup as Transaction[]
+  );
 
   const addTransaction = (transaction: NewTransaction) => {
-    setTransactions([...transactions, { 
-      ...transaction, 
-      id: transactions.length + 1,
-      imagen: transaction.imagen || "https://example.com/default.png",
-      categoria: transaction.categoria || "Otros"
-    }]);
+    setTransactions([
+      ...transactions,
+      {
+        ...transaction,
+        id: transactions.length + 1,
+  // Use the short key 'default' so the UI resolver can prefer a local
+  // require(...) asset if available, falling back to ImageKit otherwise.
+  imagen: transaction.imagen || "default",
+        categoria: transaction.categoria || "Otros",
+        descripcion: transaction.descripcion || "",
+      },
+    ]);
   };
 
   return (

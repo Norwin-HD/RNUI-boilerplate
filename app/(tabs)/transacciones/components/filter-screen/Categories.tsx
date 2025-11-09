@@ -4,17 +4,33 @@ import { router } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
+import DynamicImage from "@/types/components/dynamicImage";
 
 type Categoria = {
+  imageUri?: string;
   title: string;
   transactions: string;
   active?: boolean;
 };
 
-const CategoriaCard = ({ title, transactions, active }: Categoria) => (
+const CategoriaCard = ({
+  imageUri,
+  title,
+  transactions,
+  active,
+}: Categoria) => (
   <View style={[styles.card, !active && styles.inactive]}>
     <View style={styles.cardContent}>
-      <View style={styles.iconPlaceholder} />
+      <View style={styles.iconPlaceholder}>
+        {imageUri && (
+          <DynamicImage
+            path={`${imageUri}.webp`}
+            width={scale(45)}
+            height={scale(45)}
+            borderRadius={999}
+          />
+        )}
+      </View>
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.transactions}>{transactions}</Text>

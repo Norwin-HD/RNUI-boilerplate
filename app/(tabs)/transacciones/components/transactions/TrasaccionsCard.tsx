@@ -1,5 +1,6 @@
 import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
 import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
+import DynamicImage from "@/types/components/dynamicImage";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import { useRouter } from "expo-router";
@@ -13,7 +14,7 @@ interface Transaction {
   categoria: string;
   monto: number;
   fecha: Date;
-  imagen: string;
+  imageUri: string;
   descripcion?: string;
 }
 
@@ -69,9 +70,12 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
           ]}
         >
           <View style={styles.iconContainer}>
-            <Text style={styles.iconPlaceholderText}>
-              {item.categoria.charAt(0).toUpperCase()}
-            </Text>
+            <DynamicImage
+              path={`${item.imageUri}.webp`}
+              width={moderateScale(60)}
+              height={moderateScale(60)}
+              borderRadius={moderateScale(18)}
+            />
           </View>
           <View style={styles.contentRow}>
             <View style={styles.detailsColumn}>
@@ -101,7 +105,7 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
                   )}&fecha=${encodeURIComponent(
                     item.fecha.toISOString()
                   )}&imagen=${encodeURIComponent(
-                    item.imagen
+                    item.imageUri
                   )}&descripcion=${encodeURIComponent(item.descripcion ?? "")}`;
                   router.push(url as any);
                 }}

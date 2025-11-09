@@ -7,7 +7,7 @@ const transaccionesMockup = [
     monto: 400,
     descripcion: "Venta de comida en restaurante",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1),
-    imagen: "food",
+    imageUri: "food",
     type: "income",
   },
   {
@@ -16,7 +16,7 @@ const transaccionesMockup = [
     monto: -400,
     descripcion: "Taxi al trabajo",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2),
-    imagen: "car",
+    imageUri: "car",
     type: "expense",
   },
   {
@@ -25,7 +25,7 @@ const transaccionesMockup = [
     monto: -400,
     descripcion: "Café y desayuno",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2),
-    imagen: "coffe",
+    imageUri: "coffe",
     type: "expense",
   },
   {
@@ -34,7 +34,7 @@ const transaccionesMockup = [
     monto: 3000,
     descripcion: "Pago de salario mensual",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3),
-    imagen: "briefcase",
+    imageUri: "briefcase",
     type: "income",
   },
   {
@@ -43,7 +43,7 @@ const transaccionesMockup = [
     monto: -150,
     descripcion: "Compra en supermercado",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3),
-    imagen: "cart-shopping",
+    imageUri: "cart-shopping",
     type: "expense",
   },
   {
@@ -52,7 +52,7 @@ const transaccionesMockup = [
     monto: -75,
     descripcion: "Entrada al cine",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 4),
-    imagen: "party",
+    imageUri: "party",
     type: "expense",
   },
   {
@@ -61,7 +61,7 @@ const transaccionesMockup = [
     monto: -200,
     descripcion: "Consulta médica y medicamentos",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 5),
-    imagen: "pills",
+    imageUri: "pills",
     type: "expense",
   },
   {
@@ -70,7 +70,7 @@ const transaccionesMockup = [
     monto: 1000,
     descripcion: "Retorno de inversión",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7),
-    imagen: "briefcase",
+    imageUri: "briefcase",
     type: "income",
   },
   {
@@ -79,7 +79,7 @@ const transaccionesMockup = [
     monto: -500,
     descripcion: "Pago de factura de servicios",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7),
-    imagen: "house",
+    imageUri: "house",
     type: "expense",
   },
   {
@@ -88,7 +88,7 @@ const transaccionesMockup = [
     monto: -1200,
     descripcion: "Reserva de vuelo",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 14),
-    imagen: "plane",
+    imageUri: "plane",
     type: "expense",
   },
   {
@@ -97,7 +97,7 @@ const transaccionesMockup = [
     monto: -50,
     descripcion: "Regalo para un amigo",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 14),
-    imagen: "giftbox",
+    imageUri: "giftbox",
     type: "expense",
   },
   {
@@ -106,7 +106,7 @@ const transaccionesMockup = [
     monto: -15,
     descripcion: "Suscripción mensual a app",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 21),
-    imagen: "mobile-app",
+    imageUri: "mobile-app",
     type: "expense",
   },
   {
@@ -115,7 +115,7 @@ const transaccionesMockup = [
     monto: -120,
     descripcion: "Compra de ropa",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 21),
-    imagen: "high-heels",
+    imageUri: "high-heels",
     type: "expense",
   },
   {
@@ -124,7 +124,7 @@ const transaccionesMockup = [
     monto: -300,
     descripcion: "Reparación del hogar",
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "house",
+    imageUri: "house",
     type: "expense",
   },
   {
@@ -133,7 +133,7 @@ const transaccionesMockup = [
     monto: -80,
     descripcion: "Compra de alimento para mascota",
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "tortoiseshell",
+    imageUri: "tortoiseshell",
     type: "expense",
   },
   {
@@ -142,7 +142,7 @@ const transaccionesMockup = [
     monto: 750,
     descripcion: "Proyecto freelance completado",
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "briefcase",
+    imageUri: "briefcase",
     type: "income",
   },
   {
@@ -151,7 +151,7 @@ const transaccionesMockup = [
     monto: -250,
     descripcion: "Pago de curso online",
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "mortarboard",
+    imageUri: "mortarbord",
     type: "expense",
   },
   {
@@ -160,7 +160,7 @@ const transaccionesMockup = [
     monto: -25,
     descripcion: "Gasto menor",
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imagen: "package",
+    imageUri: "package",
     type: "expense",
   },
 ];

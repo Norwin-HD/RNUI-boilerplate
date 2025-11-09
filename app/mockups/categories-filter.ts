@@ -1,65 +1,34 @@
-export const categories = [
-  {
-    imageUri: "/shopping-cart.svg",
-    title: "Supermercado",
-    transactions: "10 transacciones hasta ahora",
-    active: true,
-  },
-  {
-    imageUri: "./assets/icons/food-and-restaurant.svg",
-    title: "Comida",
-    transactions: "6 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/bus.svg",
-    title: "Transporte",
-    transactions: "4 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/medicine.svg",
-    title: "Salud",
-    transactions: "3 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/popcorn.svg",
-    title: "Entretenimiento",
-    transactions: "5 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/graduation-cap.svg",
-    title: "Educación",
-    transactions: "2 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/home-1.svg",
-    title: "Hogar",
-    transactions: "7 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/lightning-charge.svg",
-    title: "Servicios",
-    transactions: "6 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/t-shirt.svg",
-    title: "Ropa",
-    transactions: "3 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/plane.svg",
-    title: "Viajes",
-    transactions: "1 transacción hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/laptop.svg",
-    title: "Tecnología",
-    transactions: "4 transacciones hasta ahora",
-  },
-  {
-    imageUri: "./assets/icons/ellipsis.svg",
-    title: "Otros",
-    transactions: "2 transacciones hasta ahora",
-  },
-];
+import transaccionesMockup from "./transactionsMockup";
+
+type CategoryMock = {
+  imageUri?: string;
+  title: string;
+  transactions: string;
+  active?: boolean;
+};
+
+// Build categories derived from transactions mockup: take unique categoria names,
+// keep the first imageUri found for that category and count occurrences.
+const map = new Map<string, { imageUri: string; count: number }>();
+
+transaccionesMockup.forEach((t) => {
+  const title = t.categoria ?? "Otros";
+  const imageUri = t.imageUri ?? "ellipsis";
+  if (!map.has(title)) {
+    map.set(title, { imageUri, count: 1 });
+  } else {
+    const cur = map.get(title)!;
+    cur.count += 1;
+  }
+});
+
+export const categories: CategoryMock[] = Array.from(map.entries()).map(
+  ([title, { imageUri, count }], idx) => ({
+    imageUri,
+    title,
+    transactions: `${count} transacciones hasta ahora`,
+    active: idx === 0,
+  })
+);
 
 export default categories;
