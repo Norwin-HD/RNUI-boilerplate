@@ -96,17 +96,9 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
             <View style={styles.amountColumn}>
               <TouchableOpacity
                 onPress={() => {
-                  const url = `/transacciones/detail?id=${encodeURIComponent(
+                  const url = `/(modals)/detail-transactions?id=${encodeURIComponent(
                     item.id.toString()
-                  )}&categoria=${encodeURIComponent(
-                    item.categoria
-                  )}&monto=${encodeURIComponent(
-                    item.monto.toString()
-                  )}&fecha=${encodeURIComponent(
-                    item.fecha.toISOString()
-                  )}&imagen=${encodeURIComponent(
-                    item.imageUri
-                  )}&descripcion=${encodeURIComponent(item.descripcion ?? "")}`;
+                  )}`;
                   router.push(url as any);
                 }}
               >

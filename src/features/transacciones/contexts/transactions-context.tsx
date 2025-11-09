@@ -1,5 +1,5 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
 import transaccionesMockup from "@/app/mockups/transactionsMockup";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 
 interface Transaction {
   id: number;
@@ -9,6 +9,7 @@ interface Transaction {
   descripcion?: string;
   type: string;
   imagen: string;
+  imageUri?: string; 
 }
 
 interface NewTransaction {
@@ -29,7 +30,12 @@ const TransactionsContext = createContext<TransactionsContextType | null>(null);
 
 export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>(
-    transaccionesMockup as Transaction[]
+    (transaccionesMockup as any[]).map((t) => ({
+      ...t,
+      imagen: (t.imagen as string) ?? (t.imageUri as string) ?? "default",
+      imageUri: (t.imageUri as string) ?? (t.imagen as string) ?? "default",
+      fecha: new Date(t.fecha),
+    })) as Transaction[]
   );
 
   const addTransaction = (transaction: NewTransaction) => {
@@ -38,9 +44,9 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
       {
         ...transaction,
         id: transactions.length + 1,
-  // Use the short key 'default' so the UI resolver can prefer a local
-  // require(...) asset if available, falling back to ImageKit otherwise.
-  imagen: transaction.imagen || "default",
+        // Keep both imagen and imageUri in new items to remain compatible
+        imagen: (transaction as any).imagen || (transaction as any).imageUri || "default",
+        imageUri: (transaction as any).imageUri || (transaction as any).imagen || "default",
         categoria: transaction.categoria || "Otros",
         descripcion: transaction.descripcion || "",
       },
