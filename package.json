@@ -17,11 +17,8 @@
     "@expo-google-fonts/montserrat": "^0.4.2",
     "@expo/metro-runtime": "~6.1.2",
     "@expo/vector-icons": "^15.0.2",
-<<<<<<< HEAD
     "@react-native-community/datetimepicker": "8.4.4",
-=======
     "@hookform/resolvers": "^5.2.2",
->>>>>>> e7f5f2270892bfde8a7f2fd835de79e992fdd20b
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
