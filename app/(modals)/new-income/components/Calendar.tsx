@@ -8,7 +8,7 @@ import DateTimePicker, {
 } from "react-native-ui-datepicker";
 
 interface CalendarProps {
-  onApply?: (r: { startDate?: Date; endDate?: Date }) => void;
+  onApply?: (r: { endDate?: Date }) => void;
 }
 
 export function Calendar({ onApply }: CalendarProps) {
@@ -133,13 +133,10 @@ export function Calendar({ onApply }: CalendarProps) {
         <TouchableOpacity
           style={styles.applyRow}
           onPress={() => {
-            const start = selected?.startDate
-              ? new Date(selected.startDate as any)
-              : undefined;
             const end = selected?.endDate
               ? new Date(selected.endDate as any)
               : undefined;
-            onApply?.({ startDate: start, endDate: end });
+            onApply?.({ endDate: end });
           }}
         >
           <Ionicons name="checkmark" size={25} color={COLORS.textPrimary} />
@@ -150,11 +147,10 @@ export function Calendar({ onApply }: CalendarProps) {
         <DateTimePicker
           monthsFormat="full"
           weekdaysFormat="short"
-          mode="range"
-          startDate={selected?.startDate}
-          endDate={selected?.endDate}
-          onChange={({ startDate, endDate }) =>
-            setSelected({ startDate, endDate })
+          mode="single"
+          date={selected?.endDate}
+          onChange={({ date }) =>
+            setSelected({ endDate: date })
           }
           styles={stylesOverride}
         />
@@ -164,7 +160,7 @@ export function Calendar({ onApply }: CalendarProps) {
         <TouchableOpacity
           style={styles.quickButtonLight}
           onPress={() =>
-            setSelected({ startDate: new Date(), endDate: new Date() })
+            setSelected({ endDate: new Date() })
           }
         >
           <Text style={styles.quickButtonLightText}>Hoy</Text>

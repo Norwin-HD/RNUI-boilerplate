@@ -19,13 +19,12 @@ interface TransactionsCardProps {
   transactions: Transaction[];
 }
 
-/**
- * Formatea una fecha a un formato corto (ej. "5 nov").
- * @param date La fecha a formatear.
- * @returns Una cadena de texto con la fecha corta.
- */
 const formatShortDate = (date: Date) => {
-  return formatDistanceToNow(date, {addSuffix: true, locale: es});
+  return formatDistanceToNow(date, { addSuffix: true, locale: es });
+};
+
+const getIconPath = (iconName: string): string | null => {
+  return null;
 };
 
 const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
@@ -35,16 +34,19 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
   // Filtrar por categorías
   const categoryFiltered = useMemo(() => {
     if (selectedCategories.length === 0) return transactions;
-    return transactions.filter(t => selectedCategories.includes(t.categoria));
+    return transactions.filter((t) => selectedCategories.includes(t.categoria));
   }, [transactions, selectedCategories]);
 
   // Filtrar por rango
   const filteredTransactions = useMemo(() => {
     let filtered = categoryFiltered;
     if (minValue !== null || maxValue !== null) {
-      filtered = filtered.filter(t => {
+      filtered = filtered.filter((t) => {
         const absMonto = Math.abs(t.monto);
-        return (minValue === null || absMonto >= minValue) && (maxValue === null || absMonto <= maxValue);
+        return (
+          (minValue === null || absMonto >= minValue) &&
+          (maxValue === null || absMonto <= maxValue)
+        );
       });
     }
     return filtered;
@@ -57,61 +59,72 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
           style={styles.headerText}
         >{`Gastos e Ingresos (${filteredTransactions.length})`}</Text>
       </View>
-      {filteredTransactions.map((item, index) => (
-        <Card
-          key={item.id}
-          style={[
-            styles.row16,
-            index === transactions.length - 1
-              ? {}
-              : { marginBottom: verticalScale(24) },
-          ]}
-        >
-          <Image
-            source={{
-              uri: item.imagen,
-            }}
-            resizeMode={"stretch"}
-            style={styles.iconOne}
-          />
-          <View style={styles.row3}>
-            <View style={styles.column12}>
-              <Text style={styles.textHeaderCard}>{item.categoria}</Text>
-              <View style={styles.row12}>
-                <Image
-                  source={{
-                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/owykmtoc_expires_30_days.png",
-                  }}
-                  resizeMode={"stretch"}
-                  style={styles.image10}
-                />
+      {filteredTransactions.map((item, index) => {
+        // Obtener la ruta del ícono SVG
+        const iconPath = getIconPath(item.imagen);
 
-                <Text style={styles.textTime}>
-                  {formatShortDate(item.fecha)}
+        return (
+          <Card
+            key={item.id}
+            style={[
+              styles.row16,
+              index === transactions.length - 1
+                ? {}
+                : { marginBottom: verticalScale(24) },
+            ]}
+          >
+            {iconPath ? (
+              <Image
+                source={{ uri: iconPath }}
+                resizeMode={"contain"}
+                style={styles.iconOne}
+              />
+            ) : (
+              <View style={styles.iconPlaceholder}>
+                <Text style={styles.iconPlaceholderText}>
+                  {item.categoria.charAt(0).toUpperCase()}
                 </Text>
               </View>
-            </View>
-            <View>
-              <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
-                <View style={styles.view4}>
+            )}
+            <View style={styles.row3}>
+              <View style={styles.column12}>
+                <Text style={styles.textHeaderCard}>{item.categoria}</Text>
+                <View style={styles.row12}>
                   <Image
                     source={{
-                      uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/0s8o6qbm_expires_30_days.png",
+                      uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/owykmtoc_expires_30_days.png",
                     }}
                     resizeMode={"stretch"}
-                    style={styles.iconArrow}
+                    style={styles.image10}
                   />
+
+                  <Text style={styles.textTime}>
+                    {formatShortDate(item.fecha)}
+                  </Text>
                 </View>
-              </TouchableOpacity>
-              <Text
-                style={item.monto > 0 ? styles.text26 : styles.text28}
-              >{`${item.monto > 0 ? "+" : "-"} $${Math.abs(
-                item.monto
-              )} `}</Text>
+              </View>
+              <View>
+                <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
+                  <View style={styles.view4}>
+                    <Image
+                      source={{
+                        uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/0s8o6qbm_expires_30_days.png",
+                      }}
+                      resizeMode={"stretch"}
+                      style={styles.iconArrow}
+                    />
+                  </View>
+                </TouchableOpacity>
+                <Text
+                  style={item.monto > 0 ? styles.text26 : styles.text28}
+                >{`${item.monto > 0 ? "+" : "-"} $${Math.abs(
+                  item.monto
+                )} `}</Text>
+              </View>
             </View>
-          </View>
-        </Card>
-      ))}
+          </Card>
+        );
+      })}
     </View>
   );
 };
@@ -144,6 +157,20 @@ const styles = StyleSheet.create({
     width: moderateScale(60),
     height: moderateScale(60),
     marginHorizontal: scale(16),
+  },
+  iconPlaceholder: {
+    borderRadius: moderateScale(18),
+    width: moderateScale(60),
+    height: moderateScale(60),
+    marginHorizontal: scale(16),
+    backgroundColor: "#E1EBFD",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconPlaceholderText: {
+    fontSize: moderateScale(24),
+    fontFamily: "Montserrat_700Bold",
+    color: "#016EED",
   },
   row3: {
     // IGNORE

@@ -46,7 +46,7 @@ export default function AddExpenseContainer({
       >
         <FieldComponent control={control} errors={errors} />
 
-        <VaucherComponent />
+        <VaucherComponent control={control} />
       </ScrollView>
     </KeyboardAvoidingView>
   );

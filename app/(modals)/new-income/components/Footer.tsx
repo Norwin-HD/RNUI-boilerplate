@@ -4,7 +4,11 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { moderateScale } from "react-native-size-matters";
 
-const Footer = () => {
+interface FooterProps {
+  onPress?: () => void;
+}
+
+const Footer = ({ onPress }: FooterProps) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   return (
@@ -16,7 +20,7 @@ const Footer = () => {
     >
       <TouchableOpacity
         style={styles.primaryButton}
-        onPress={() => router.back()}
+        onPress={onPress || (() => router.back())}
       >
         <Text style={styles.primaryButtonText}>Guardar nuevo Ingreso</Text>
       </TouchableOpacity>

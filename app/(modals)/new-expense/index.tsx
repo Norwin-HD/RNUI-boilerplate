@@ -31,6 +31,7 @@ export default function AddExpenseModal() {
       fecha: new Date(),
       categoria: "",
       descripcion: "",
+      imagen: "",
     },
   });
 

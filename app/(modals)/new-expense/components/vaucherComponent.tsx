@@ -1,15 +1,22 @@
+import { ExpenseSchema } from "@/src/features/transacciones/schemas";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
+import { Control, Controller } from "react-hook-form";
 import { Alert, Image, Linking, Platform, StyleSheet } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import { Text, TouchableOpacity, View } from "react-native-ui-lib";
+import { z } from "zod";
 
-const VaucherComponent = () => {
-  const [image, setImage] = useState<string | null>(null);
+type ExpenseFormData = z.infer<typeof ExpenseSchema>;
+
+interface VaucherComponentProps {
+  control: Control<ExpenseFormData>;
+}
+
+const VaucherComponent = ({ control }: VaucherComponentProps) => {
   const [status, requestPermissions] = ImagePicker.useMediaLibraryPermissions();
 
-  const result = async () => {
+  const result = async (onChange: (value: string | null) => void) => {
     try {
       // Comprobar permisos
       if (Platform.OS !== "web") {
@@ -53,7 +60,7 @@ const VaucherComponent = () => {
         console.log(result);
 
         if (!result.canceled) {
-          setImage(result.assets[0].uri);
+          onChange(result.assets[0].uri);
         }
       }
     } catch (error) {
@@ -61,35 +68,40 @@ const VaucherComponent = () => {
     }
   };
 
-  const pickImage = () => {
-    result();
-  };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Recibo o vaucher (opcional)</Text>
+    <Controller
+      control={control}
+      name="imagen"
+      render={({ field: { onChange, value } }) => (
+        <View style={styles.container}>
+          <Text style={styles.title}>Recibo o vaucher (opcional)</Text>
 
-      <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
-        <View style={styles.imagePickerContent}>
-          {image ? (
-            <>
-              <Image source={{ uri: image }} style={styles.selectedImage} />
-              <View style={styles.iconContainer}>
-                <Ionicons name="expand-outline" size={20} color="white" />
-              </View>
-            </>
-          ) : (
-            <>
-              <Ionicons name="cloud-upload-outline" size={24} color="black" />
-              <Text style={styles.imagePickerText}>Sube una foto opcional</Text>
-              <Text style={styles.imagePickerSubText}>
-                Tamaño máximo de archivo: 10 MB
-              </Text>
-            </>
-          )}
+          <TouchableOpacity
+            onPress={() => result(onChange)}
+            style={styles.imagePicker}
+          >
+            <View style={styles.imagePickerContent}>
+              {value ? (
+                <>
+                  <Image source={{ uri: value }} style={styles.selectedImage} />
+                  <View style={styles.iconContainer}>
+                    <Ionicons name="expand-outline" size={20} color="white" />
+                  </View>
+                </>
+              ) : (
+                <>
+                  <Ionicons name="cloud-upload-outline" size={24} color="black" />
+                  <Text style={styles.imagePickerText}>Sube una foto opcional</Text>
+                  <Text style={styles.imagePickerSubText}>
+                    Tamaño máximo de archivo: 10 MB
+                  </Text>
+                </>
+              )}
+            </View>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
-    </View>
+      )}
+    />
   );
 };
 

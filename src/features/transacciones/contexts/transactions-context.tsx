@@ -16,6 +16,7 @@ interface NewTransaction {
   monto: number;
   fecha: Date;
   descripcion?: string;
+  imagen?: string;
   type: string;
 }
 
@@ -33,7 +34,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     setTransactions([...transactions, { 
       ...transaction, 
       id: transactions.length + 1,
-      imagen: "https://example.com/default.png",
+      imagen: transaction.imagen || "https://example.com/default.png",
       categoria: transaction.categoria || "Otros"
     }]);
   };

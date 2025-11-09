@@ -9,12 +9,21 @@ type Categoria = {
   title: string;
   transactions: string;
   active?: boolean;
+  imageUri?: string;
 };
 
-const CategoriaCard = ({ title, transactions, active }: Categoria) => (
+const CategoriaCard = ({ title, transactions, active, imageUri }: Categoria) => (
   <View style={[styles.card, !active && styles.inactive]}>
     <View style={styles.cardContent}>
-      <View style={styles.iconPlaceholder} />
+      {imageUri ? (
+        <Image
+          source={{ uri: imageUri }}
+          style={styles.categoryIcon}
+          resizeMode="contain"
+        />
+      ) : (
+        <View style={styles.iconPlaceholder} />
+      )}
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.transactions}>{transactions}</Text>
@@ -123,6 +132,11 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     width: scale(42),
     height: scale(42),
+  },
+  categoryIcon: {
+    width: scale(42),
+    height: scale(42),
+    borderRadius: moderateScale(8),
   },
   title: {
     fontFamily: "Montserrat_600SemiBold",
