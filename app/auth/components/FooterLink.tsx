@@ -10,7 +10,6 @@ interface FooterLinkProps {
 
 const FooterLink: React.FC<FooterLinkProps> = ({ question, actionText, linkTo }) => {
   const router = useRouter();
-
   return (
     <View style={styles.container}>
       <Text style={styles.text}>

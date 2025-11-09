@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 
+
 import FooterLink from "../components/FooterLink";
 import Header from "../components/Header";
 import PrimaryButton from "../components/PrimaryButton";

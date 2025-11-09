@@ -13,6 +13,7 @@ import PasswordInput from "../auth/components/PasswordInput";
 import SocialLogin from "../auth/components/SocialLogin";
 import EmailInput from "./components/EmailInput";
 
+
 export default function LoginScreen() {
   const router = useRouter();
   const [email, setEmail] = useState("");

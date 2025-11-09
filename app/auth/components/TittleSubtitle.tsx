@@ -8,6 +8,7 @@ interface TitleSubtitleProps {
   subtitleStyle?: TextStyle;
 }
 
+
 const TitleSubtitle: React.FC<TitleSubtitleProps> = ({ title, subtitle, titleStyle, subtitleStyle }) => {
   return (
     <View style={styles.container}>

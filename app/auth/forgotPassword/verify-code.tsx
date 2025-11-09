@@ -12,6 +12,7 @@ import {
 import BottomButton from "../../auth/components/BottomButton";
 import ScreenHeader from "../../auth/components/ScreenHeader";
 
+
 export default function VerifyCodeScreen() {
   const router = useRouter();
   const [code, setCode] = useState(["", "", "", ""]);

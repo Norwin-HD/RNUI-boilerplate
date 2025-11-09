@@ -18,6 +18,7 @@ export default function ResetPasswordScreen() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  
   const handleContinue = () => {
     if (!newPassword || !confirmPassword) {
       Alert.alert("Error", "Por favor completa ambos campos.");

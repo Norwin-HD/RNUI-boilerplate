@@ -10,6 +10,7 @@ import SocialLogin from "../components/SocialLogin";
 import StepDots from "../components/Stepdots";
 import TitleSubtitle from "../components/TittleSubtitle";
 
+
 export default function RegisterEmailScreen() {
   const router = useRouter();
   const [email, setEmail] = useState("");

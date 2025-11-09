@@ -11,6 +11,7 @@ interface ScreenHeaderProps {
 export default function ScreenHeader({ title, imageUri, onBack }: ScreenHeaderProps) {
   const router = useRouter();
 
+  
   return (
     <View>
       <View style={styles.header}>
