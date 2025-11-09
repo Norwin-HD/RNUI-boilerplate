@@ -2,6 +2,7 @@ import { useRangeContext } from "@/src/features/transacciones/contexts/context-r
 import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
+import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
@@ -13,6 +14,7 @@ interface Transaction {
   monto: number;
   fecha: Date;
   imagen: string;
+  descripcion?: string;
 }
 
 interface TransactionsCardProps {
@@ -23,21 +25,18 @@ const formatShortDate = (date: Date) => {
   return formatDistanceToNow(date, { addSuffix: true, locale: es });
 };
 
-const getIconPath = (iconName: string): string | null => {
-  return null;
-};
-
 const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
   const { selectedCategories } = useCategoryContext();
   const { minValue, maxValue } = useRangeContext();
+  const router = useRouter();
 
-  // Filtrar por categorías
+  // Filter by categories
   const categoryFiltered = useMemo(() => {
     if (selectedCategories.length === 0) return transactions;
     return transactions.filter((t) => selectedCategories.includes(t.categoria));
   }, [transactions, selectedCategories]);
 
-  // Filtrar por rango
+  // Filter by range
   const filteredTransactions = useMemo(() => {
     let filtered = categoryFiltered;
     if (minValue !== null || maxValue !== null) {
@@ -55,76 +54,79 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
   return (
     <View>
       <View style={styles.header}>
-        <Text
-          style={styles.headerText}
-        >{`Gastos e Ingresos (${filteredTransactions.length})`}</Text>
+        <Text style={styles.headerText}>
+          {`Gastos e Ingresos (${filteredTransactions.length})`}
+        </Text>
       </View>
-      {filteredTransactions.map((item, index) => {
-        // Obtener la ruta del ícono SVG
-        const iconPath = getIconPath(item.imagen);
-
-        return (
-          <Card
-            key={item.id}
-            style={[
-              styles.row16,
-              index === transactions.length - 1
-                ? {}
-                : { marginBottom: verticalScale(24) },
-            ]}
-          >
-            {iconPath ? (
-              <Image
-                source={{ uri: iconPath }}
-                resizeMode={"contain"}
-                style={styles.iconOne}
-              />
-            ) : (
-              <View style={styles.iconPlaceholder}>
-                <Text style={styles.iconPlaceholderText}>
-                  {item.categoria.charAt(0).toUpperCase()}
+      {filteredTransactions.map((item, index) => (
+        <Card
+          key={item.id}
+          style={[
+            styles.cardContainer,
+            index === filteredTransactions.length - 1
+              ? {}
+              : { marginBottom: verticalScale(24) },
+          ]}
+        >
+          <View style={styles.iconContainer}>
+            <Text style={styles.iconPlaceholderText}>
+              {item.categoria.charAt(0).toUpperCase()}
+            </Text>
+          </View>
+          <View style={styles.contentRow}>
+            <View style={styles.detailsColumn}>
+              <Text style={styles.categoryText}>{item.categoria}</Text>
+              <View style={styles.timeRow}>
+                <Image
+                  source={{
+                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/owykmtoc_expires_30_days.png",
+                  }}
+                  resizeMode={"stretch"}
+                  style={styles.timeIcon}
+                />
+                <Text style={styles.timeText}>
+                  {formatShortDate(item.fecha)}
                 </Text>
               </View>
-            )}
-            <View style={styles.row3}>
-              <View style={styles.column12}>
-                <Text style={styles.textHeaderCard}>{item.categoria}</Text>
-                <View style={styles.row12}>
+            </View>
+            <View style={styles.amountColumn}>
+              <TouchableOpacity
+                onPress={() => {
+                  const url = `/transacciones/detail?id=${encodeURIComponent(
+                    item.id.toString()
+                  )}&categoria=${encodeURIComponent(
+                    item.categoria
+                  )}&monto=${encodeURIComponent(
+                    item.monto.toString()
+                  )}&fecha=${encodeURIComponent(
+                    item.fecha.toISOString()
+                  )}&imagen=${encodeURIComponent(
+                    item.imagen
+                  )}&descripcion=${encodeURIComponent(item.descripcion ?? "")}`;
+                  router.push(url as any);
+                }}
+              >
+                <View style={styles.arrowContainer}>
                   <Image
                     source={{
-                      uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/owykmtoc_expires_30_days.png",
+                      uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/0s8o6qbm_expires_30_days.png",
                     }}
                     resizeMode={"stretch"}
-                    style={styles.image10}
+                    style={styles.arrowIcon}
                   />
-
-                  <Text style={styles.textTime}>
-                    {formatShortDate(item.fecha)}
-                  </Text>
                 </View>
-              </View>
-              <View>
-                <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
-                  <View style={styles.view4}>
-                    <Image
-                      source={{
-                        uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/0s8o6qbm_expires_30_days.png",
-                      }}
-                      resizeMode={"stretch"}
-                      style={styles.iconArrow}
-                    />
-                  </View>
-                </TouchableOpacity>
-                <Text
-                  style={item.monto > 0 ? styles.text26 : styles.text28}
-                >{`${item.monto > 0 ? "+" : "-"} $${Math.abs(
-                  item.monto
-                )} `}</Text>
-              </View>
+              </TouchableOpacity>
+              <Text
+                style={
+                  item.monto > 0 ? styles.positiveAmount : styles.negativeAmount
+                }
+              >
+                {`${item.monto > 0 ? "+" : "-"} $${Math.abs(item.monto)} `}
+              </Text>
             </View>
-          </Card>
-        );
-      })}
+          </View>
+        </Card>
+      ))}
     </View>
   );
 };
@@ -141,24 +143,12 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(18),
     flex: 1,
   },
-  iconArrow: {
-    width: moderateScale(24),
-    height: moderateScale(24),
-  },
-  row16: {
-    // IGNORE
+  cardContainer: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: verticalScale(20),
-    marginBottom: verticalScale(24),
   },
-  iconOne: {
-    borderRadius: moderateScale(18),
-    width: moderateScale(60),
-    height: moderateScale(60),
-    marginHorizontal: scale(16),
-  },
-  iconPlaceholder: {
+  iconContainer: {
     borderRadius: moderateScale(18),
     width: moderateScale(60),
     height: moderateScale(60),
@@ -172,50 +162,53 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_700Bold",
     color: "#016EED",
   },
-  row3: {
-    // IGNORE
+  contentRow: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     marginRight: scale(12),
   },
-  column12: {
+  detailsColumn: {
     flex: 1,
     marginRight: scale(12),
   },
-  textHeaderCard: {
+  categoryText: {
     color: "#000000",
     fontSize: moderateScale(16),
     fontFamily: "Montserrat_700Bold",
     marginBottom: verticalScale(16),
   },
-  row12: {
+  timeRow: {
     flexDirection: "row",
     alignItems: "center",
   },
-  image10: {
-    // IGNORE
+  timeIcon: {
     width: moderateScale(15),
     height: moderateScale(15),
     marginRight: scale(10),
   },
-  textTime: {
+  timeText: {
     color: "#000000",
     fontFamily: "Montserrat_500Medium",
     fontSize: moderateScale(12),
     flex: 1,
   },
-  view4: {
-    // IGNORE
+  amountColumn: {
     alignItems: "flex-end",
+  },
+  arrowContainer: {
     marginBottom: verticalScale(16),
   },
-  text26: {
+  arrowIcon: {
+    width: moderateScale(24),
+    height: moderateScale(24),
+  },
+  positiveAmount: {
     color: "#1FC16B",
     fontSize: moderateScale(18),
     fontFamily: "Montserrat_700Bold",
   },
-  text28: {
+  negativeAmount: {
     color: "#FB283A",
     fontSize: moderateScale(18),
     fontFamily: "Montserrat_700Bold",

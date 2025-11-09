@@ -27,6 +27,7 @@ export default function TransaccionesStack() {
               }}
             />
             <Stack.Screen name="screens/index" options={{ headerShown: false }} />
+            <Stack.Screen name="detail/index" options={{ headerShown: false }} />
           </Stack>
         </RangeProvider>
       </CategoryProvider>
