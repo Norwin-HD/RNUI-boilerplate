@@ -18,7 +18,7 @@ const Footer = () => {
         style={styles.primaryButton}
         onPress={() => router.back()}
       >
-        <Text style={styles.primaryButtonText}>Guardar nuevo Ingreso</Text>
+        <Text style={styles.primaryButtonText}>Guardar nuevo Gasto</Text>
       </TouchableOpacity>
     </View>
   );

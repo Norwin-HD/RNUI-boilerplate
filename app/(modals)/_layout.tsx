@@ -11,6 +11,9 @@ export default function ModalsLayout() {
 
         <Stack.Screen name="new-income/index" options={{ headerShown: false }} />
         <Stack.Screen name="new-income/categories-filter" options={{ headerShown: false }} />
+
+        <Stack.Screen name="new-expense/index" options={{ headerShown: false }} />
+        <Stack.Screen name="new-expense/categories-filter" options={{ headerShown: false }} />
       </Stack>
     </CategoryProvider>
   );

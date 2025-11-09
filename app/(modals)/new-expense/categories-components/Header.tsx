@@ -10,9 +10,9 @@ const Header = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => router.back()} style={styles.button}>
-        <ArrowSmallLeft width={24} height={24} color="#FFFFFF" />
+        <ArrowSmallLeft width={24} height={24} color="#000" />
       </TouchableOpacity>
-      <Text style={styles.title}>Nuevo Ingreso</Text>
+      <Text style={styles.title}>Categorías</Text>
     </View>
   );
 };
@@ -21,15 +21,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: verticalScale(15),
-    marginBottom: verticalScale(10),
+    paddingVertical: verticalScale(10),
+    marginBottom: verticalScale(20),
+    backgroundColor: "#FFFFFF",
   },
   button: {
     padding: scale(5),
-    paddingLeft: scale(16),
   },
   title: {
-    color: "#FFFFFF",
+    color: "#454A53",
     fontSize: moderateScale(20),
     fontFamily: "Montserrat_700Bold",
     marginLeft: scale(15),

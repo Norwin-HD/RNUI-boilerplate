@@ -45,6 +45,11 @@ export default function FigmaBottomNav({
     }
 
     if (option === "Agregar gasto") {
+      router.push("/new-expense" as any);
+      return;
+    }
+
+    if (option === "Agregar ingresos") {
       router.push("/new-income" as any);
       return;
     }
@@ -139,12 +144,6 @@ export default function FigmaBottomNav({
               onPress={() => handleMenuOption("Nueva meta")}
             >
               <Text style={styles.menuText}>Nueva meta</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.menuItemOption}
-              onPress={() => handleMenuOption("Agregar presupuesto")}
-            >
-              <Text style={styles.menuText}>Nuevo presupuesto</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.menuItemOption}

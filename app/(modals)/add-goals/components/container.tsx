@@ -114,7 +114,6 @@ export default function AddGoalContainer({
             />
           )}
         />
-
         <CategoriaCard />
       </ScrollView>
     </KeyboardAvoidingView>
