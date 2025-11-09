@@ -43,6 +43,16 @@ export default function FigmaBottomNav({
       router.push("/add-goals" as any);
       return;
     }
+
+    if (option === "Agregar gasto") {
+      router.push("/new-expense" as any);
+      return;
+    }
+
+    if (option === "Agregar ingresos") {
+      router.push("/new-income" as any);
+      return;
+    }
     // Otros flujos a futuro
     console.log(`Seleccionado: ${option}`);
   };
@@ -137,12 +147,6 @@ export default function FigmaBottomNav({
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.menuItemOption}
-              onPress={() => handleMenuOption("Agregar presupuesto")}
-            >
-              <Text style={styles.menuText}>Nuevo presupuesto</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.menuItemOption}
               onPress={() => handleMenuOption("Agregar gasto")}
             >
               <Text style={styles.menuText}>Nuevo gasto</Text>
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   menuList: {
-    height: verticalScale(56),
+    height: verticalScale(70),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -201,6 +205,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     width: scale(70),
+    marginTop: -verticalScale(30),
     height: verticalScale(60),
     borderRadius: 100,
     alignItems: "center",

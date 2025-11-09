@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { presupuestosMackup } from '../../../mackups/presupuestos-mackup'; 
+import { presupuestosMockup } from '../../../mockups/presupuestos-mockup';
 
 export const useBudgetCalculations = () => {
-  const { budgets } = presupuestosMackup;
+  const { budgets } = presupuestosMockup;
 
   // Calcula el presupuesto total (suma de todos los totalAmount)
   const totalBudget = useMemo(() => {

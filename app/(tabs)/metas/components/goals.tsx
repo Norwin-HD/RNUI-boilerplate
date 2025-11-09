@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { metasMackup } from "../../../mackups/metas-mackup";
 import Card from "./card";
 
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { GoalsContext } from "@/src/features/add-goals/contexts";
 
-const formatShortDate = (date: Date) => {
+const formatShortDate = (dateString: string) => {
+  const date = new Date(dateString);
   return format(date, "MMM, yyyy", { locale: es });
 };
 
 const Goals = () => {
-  // Usar datos del mockup de metas
-  const { goals } = metasMackup;
+  const { goals } = useContext(GoalsContext);
 
   return (
     <View style={styles.container}>

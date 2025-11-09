@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
-import { presupuestosMackup } from '../../../mackups/presupuestos-mackup';
+import { presupuestosMockup } from '../../../mockups/presupuestos-mockup';
 import Card from './card';
 
 interface SecondaryGoalCardProps {
@@ -40,7 +40,7 @@ const BudgetCard = ({ title, currentAmount, totalAmount, iconUri }: SecondaryGoa
 };
 
 const BudgetsList = () => {
-  const { budgets } = presupuestosMackup;
+  const { budgets } = presupuestosMockup;
 
   return (
     <View style={styles.listContainer}>

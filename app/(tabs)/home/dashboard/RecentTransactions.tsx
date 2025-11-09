@@ -2,14 +2,14 @@ import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 import React from "react";
 import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import transaccionesMackup from "../../../mackups/transactionsMockup";
+import transaccionesMockup from "../../../mockups/transactionsMockup";
 import Card from "./Card";
 
 /**
@@ -36,12 +36,12 @@ const RecentTransactions = () => {
           />
         </TouchableOpacity>
       </View>
-      {transaccionesMackup.slice(0, 2).map((item, index) => (
+  {transaccionesMockup.slice(0, 2).map((item, index) => (
         <Card
           key={item.id}
           style={[
             styles.row16,
-            index === transaccionesMackup.length - 1
+            index === transaccionesMockup.length - 1
               ? {}
               : { marginBottom: verticalScale(24) },
           ]}

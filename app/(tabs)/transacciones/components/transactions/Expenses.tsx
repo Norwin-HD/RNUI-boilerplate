@@ -3,7 +3,7 @@ import ArrowCircleUp from "@/app/(tabs)/transacciones/svg/arrow-circle-up";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import transaccionesMackup from "../../../../mackups/transactionsMockup";
+import transaccionesMackup from "../../../../mockups/transactionsMockup";
 import { useTransactionTotals } from "../../hooks/useTransactionTotals";
 
 const IncomeExpenses = () => {

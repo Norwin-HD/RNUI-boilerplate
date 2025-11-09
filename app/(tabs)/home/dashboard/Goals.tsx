@@ -1,14 +1,14 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { metasMackup } from "../../../mackups/metas-mackup";
-import { presupuestosMackup } from "../../../mackups/presupuestos-mackup";
+import { metasMockup } from "../../../mockups/metas-mockup";
+import { presupuestosMockup } from "../../../mockups/presupuestos-mockup";
 import MainGoalCard from "./MainGoalCard";
 import SecondaryGoalCard from "./SecondaryGoalCard";
 
 const Goals = () => {
-  const { goals } = metasMackup;
-  const { budgets } = presupuestosMackup;
+  const { goals } = metasMockup;
+  const { budgets } = presupuestosMockup;
 
   // Usar la primera meta como meta principal y el primer presupuesto como meta secundaria
   const mainGoal = goals[0];

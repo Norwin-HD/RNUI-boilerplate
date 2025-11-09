@@ -1,9 +1,9 @@
-import { useRouter } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
 import {
   FilterType,
   useFilter,
-} from "../../contexts/context-filter-transaction/FilterContext";
+} from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
+import { useRouter } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { getRangeTime } from "./use-range-time";
 
 //mantiene tipo y rango como estado local, deriva fechas automaticamente.
