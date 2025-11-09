@@ -1,0 +1,60 @@
+export const metasMockup = {
+  goals: [
+    {
+      id: 1,
+      title: "Viaje a la playa",
+      deadline: new Date("2024-12-20"),
+      currentAmount: 0,
+      totalAmount: 2000,
+    },
+    {
+      id: 2,
+      title: "Fondo de emergencias",
+      deadline: new Date("2025-03-15"),
+      currentAmount: 2500.45,
+      totalAmount: 5000,
+    },
+    {
+      id: 3,
+      title: "Compra de auto nuevo",
+      deadline: new Date("2025-06-30"),
+      currentAmount: 8000,
+      totalAmount: 15000,
+    },
+    {
+      id: 4,
+      title: "Educación universitaria",
+      deadline: new Date("2026-09-01"),
+      currentAmount: 12000,
+      totalAmount: 25000,
+    },
+    {
+      id: 5,
+      title: "Enganche casa propia",
+      deadline: new Date("2026-12-31"),
+      currentAmount: 35000,
+      totalAmount: 80000,
+    },
+    {
+      id: 6,
+      title: "Vacaciones familiares",
+      deadline: new Date("2025-07-15"),
+      currentAmount: 3200,
+      totalAmount: 6000,
+    },
+    {
+      id: 7,
+      title: "Renovación cocina",
+      deadline: new Date("2025-02-28"),
+      currentAmount: 1800,
+      totalAmount: 4000,
+    },
+    {
+      id: 8,
+      title: "Equipo de gimnasio",
+      deadline: new Date("2025-04-10"),
+      currentAmount: 450,
+      totalAmount: 1200,
+    },
+  ],
+};
