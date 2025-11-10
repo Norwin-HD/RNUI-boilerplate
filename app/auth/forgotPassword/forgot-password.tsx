@@ -24,9 +24,12 @@ export default function ForgotPasswordScreen() {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useEffect(() => {
-    const showSub = Keyboard.addListener("keyboardDidShow", (e: KeyboardEvent) => {
-      setKeyboardHeight(e.endCoordinates.height);
-    });
+    const showSub = Keyboard.addListener(
+      "keyboardDidShow",
+      (e: KeyboardEvent) => {
+        setKeyboardHeight(e.endCoordinates.height);
+      }
+    );
     const hideSub = Keyboard.addListener("keyboardDidHide", () => {
       setKeyboardHeight(0);
     });
@@ -59,7 +62,7 @@ export default function ForgotPasswordScreen() {
       >
         <ScreenHeader
           title="Recuperar contraseña"
-          imageUri="https://drive.google.com/uc?export=download&id=1eRpTB7RXIo8iqv8J1Q5sZr8bkiylwlt3"
+          imageUri="https://ik.imagekit.io/nwogrqfzj/new-message.png?updatedAt=1762808561522"
           onBack={() => router.push("/auth/login")}
         />
 
@@ -73,7 +76,10 @@ export default function ForgotPasswordScreen() {
         <EmailInput
           value={email}
           onChangeText={setEmail}
-          style={{ marginTop: verticalScale(10), marginBottom: verticalScale(20) }}
+          style={{
+            marginTop: verticalScale(10),
+            marginBottom: verticalScale(20),
+          }}
         />
 
         <FooterLink
@@ -83,7 +89,9 @@ export default function ForgotPasswordScreen() {
         />
       </ScrollView>
 
-      <View style={[styles.bottomButtonWrapper, { marginBottom: keyboardHeight }]}>
+      <View
+        style={[styles.bottomButtonWrapper, { marginBottom: keyboardHeight }]}
+      >
         <BottomButton onPress={handleContinue} text="Continuar" />
       </View>
     </View>

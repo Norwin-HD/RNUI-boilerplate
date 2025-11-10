@@ -18,7 +18,7 @@ export default function SuccessResetScreen() {
       <View style={styles.content}>
         <Image
           source={{
-            uri: "https://drive.google.com/uc?export=download&id=1UIVwhtkh9su4BgfAwAh9QTlWml0K7Scd",
+            uri: "https://ik.imagekit.io/nwogrqfzj/Confirmed.png?updatedAt=1762808915461",
           }}
           style={styles.image}
         />

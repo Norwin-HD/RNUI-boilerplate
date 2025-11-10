@@ -12,7 +12,7 @@ import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 
 import BottomButton from "../../auth/components/BottomButton";
 import ScreenHeader from "../../auth/components/ScreenHeader";
-import AppText from "../../auth/components/AppText"; 
+import AppText from "../../auth/components/AppText";
 
 export default function VerifyCodeScreen() {
   const router = useRouter();
@@ -53,7 +53,7 @@ export default function VerifyCodeScreen() {
           <View style={styles.content}>
             <ScreenHeader
               title="Ingresar código"
-              imageUri="https://drive.google.com/uc?export=download&id=1XMZefUKNZbd_ywfNTJl7U8R9ZQohh4K9"
+              imageUri="https://ik.imagekit.io/nwogrqfzj/two-factor-authentication.png?updatedAt=1762808714882"
             />
 
             <View style={styles.textBlock}>
@@ -85,7 +85,11 @@ export default function VerifyCodeScreen() {
 
             <AppText variant="medium" style={styles.resendText}>
               ¿No lo has recibido?{" "}
-              <AppText variant="bold" style={styles.resendLink} onPress={() => alert("Código reenviado")}>
+              <AppText
+                variant="bold"
+                style={styles.resendLink}
+                onPress={() => alert("Código reenviado")}
+              >
                 Enviar de nuevo
               </AppText>
             </AppText>
@@ -100,7 +104,11 @@ export default function VerifyCodeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#FFFFFF", minHeight: "100%" },
-  scrollContainer: { flexGrow: 1, paddingHorizontal: scale(20), paddingTop: verticalScale(36) },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingHorizontal: scale(20),
+    paddingTop: verticalScale(36),
+  },
   content: { flexGrow: 1 },
   textBlock: { alignItems: "center", marginBottom: verticalScale(10) },
   title: {

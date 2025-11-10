@@ -13,7 +13,7 @@ export default function SuccessScreen() {
     <View style={styles.container}>
       <Image
         source={{
-          uri: "https://drive.google.com/uc?export=download&id=14oeh668L2feTEB6GGRwB32V4piMwtJyF",
+          uri: "https://ik.imagekit.io/nwogrqfzj/Personal-finance.png?updatedAt=1762809050340",
         }}
         style={styles.image}
       />

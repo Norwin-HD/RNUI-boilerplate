@@ -5,10 +5,14 @@ import AppText from "../components/AppText";
 interface PrimaryButtonProps {
   title: string;
   onPress: () => void;
-  style?: ViewStyle | ViewStyle[]; 
+  style?: ViewStyle | ViewStyle[];
 }
 
-export default function PrimaryButton({ title, onPress, style }: PrimaryButtonProps) {
+export default function PrimaryButton({
+  title,
+  onPress,
+  style,
+}: PrimaryButtonProps) {
   return (
     <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
       <AppText variant="bold" style={styles.text}>

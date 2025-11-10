@@ -3,6 +3,7 @@ import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { router } from "expo-router";
 
+
 import AppText from "../auth/components/AppText"; 
 
 export default function WelcomeScreen() {
@@ -14,7 +15,7 @@ export default function WelcomeScreen() {
 
       <Image
         source={{
-          uri: "https://drive.google.com/uc?export=download&id=1GmR8C-WIZoMPiOJloUNxayKE_o8LCvB8",
+          uri: "https://ik.imagekit.io/nwogrqfzj/welcome.png?updatedAt=1762808211850",
         }}
         style={styles.image}
         resizeMode="contain"
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     fontSize: scale(25),
     color: "#000",
     marginTop: verticalScale(80),
-    marginBottom: verticalScale(30),
+    marginBottom: verticalScale(0),
   },
   image: {
     width: scale(360),

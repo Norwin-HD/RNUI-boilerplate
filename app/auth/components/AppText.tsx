@@ -7,7 +7,12 @@ interface AppTextProps extends TextProps {
   style?: TextStyle;
 }
 
-export default function AppText({ children, variant = "regular", style, ...props }: AppTextProps) {
+export default function AppText({
+  children,
+  variant = "regular",
+  style,
+  ...props
+}: AppTextProps) {
   let fontFamily = "Montserrat_400Regular";
 
   switch (variant) {

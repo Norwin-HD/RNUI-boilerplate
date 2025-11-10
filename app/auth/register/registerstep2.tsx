@@ -107,7 +107,6 @@ export default function RegisterEmailScreen() {
         <StepDots activeIndex={1} total={3} />
 
         <SocialLogin />
-
         <FooterLink
           question="¿Ya tienes una cuenta?"
           actionText="Iniciar sesión"

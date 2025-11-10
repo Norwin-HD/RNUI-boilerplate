@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import AppText from "../components/AppText"; 
+import AppText from "../components/AppText";
 
 interface ScreenHeaderProps {
   title: string;
@@ -11,7 +11,11 @@ interface ScreenHeaderProps {
   onBack?: () => void;
 }
 
-export default function ScreenHeader({ title, imageUri, onBack }: ScreenHeaderProps) {
+export default function ScreenHeader({
+  title,
+  imageUri,
+  onBack,
+}: ScreenHeaderProps) {
   const router = useRouter();
 
   return (

@@ -33,15 +33,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  backWrap: { 
-    width: scale(50), 
-    height: verticalScale(30), 
-    justifyContent: "center", 
+  backWrap: {
+    width: scale(50),
+    height: verticalScale(30),
+    justifyContent: "center",
     alignItems: "center",
   },
-  headerTitle: { 
-    color: "#fff", 
-    fontSize: scale(16), 
+  headerTitle: {
+    color: "#fff",
+    fontSize: scale(16),
     marginLeft: scale(2),
   },
 });

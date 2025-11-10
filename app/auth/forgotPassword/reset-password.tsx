@@ -23,9 +23,14 @@ export default function ResetPasswordScreen() {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useEffect(() => {
-    const showSub = Keyboard.addListener("keyboardDidShow", (e: KeyboardEvent) => {
-      setKeyboardHeight(e.endCoordinates.height - (Platform.OS === "ios" ? 20 : 0));
-    });
+    const showSub = Keyboard.addListener(
+      "keyboardDidShow",
+      (e: KeyboardEvent) => {
+        setKeyboardHeight(
+          e.endCoordinates.height - (Platform.OS === "ios" ? 20 : 0)
+        );
+      }
+    );
     const hideSub = Keyboard.addListener("keyboardDidHide", () => {
       setKeyboardHeight(0);
     });
@@ -62,7 +67,7 @@ export default function ResetPasswordScreen() {
       >
         <ScreenHeader
           title="Reestablecer contraseña"
-          imageUri="https://drive.google.com/uc?export=download&id=171kYG3KkXzBnyUU_U_8qw2-36OkRcxHN"
+          imageUri="https://ik.imagekit.io/nwogrqfzj/Mobile-login.png?updatedAt=1762808837904"
         />
 
         <TitleSubtitle

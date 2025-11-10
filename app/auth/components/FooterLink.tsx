@@ -2,15 +2,19 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import AppText from "../components/AppText"; 
+import AppText from "../components/AppText";
 
 interface FooterLinkProps {
   question: string;
   actionText: string;
-  linkTo: string; 
+  linkTo: string;
 }
 
-const FooterLink: React.FC<FooterLinkProps> = ({ question, actionText, linkTo }) => {
+const FooterLink: React.FC<FooterLinkProps> = ({
+  question,
+  actionText,
+  linkTo,
+}) => {
   const router = useRouter();
 
   return (

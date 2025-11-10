@@ -1,6 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import AppText from "../components/AppText";
 
@@ -13,7 +18,11 @@ const BottomButton: React.FC<BottomButtonProps> = ({ onPress, text }) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={onPress}
+          activeOpacity={0.8}
+        >
           <View style={styles.buttonContent}>
             <Ionicons
               name="arrow-forward"

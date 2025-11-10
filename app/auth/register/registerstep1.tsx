@@ -81,10 +81,14 @@ export default function RegisterScreen() {
         />
 
         <View style={styles.formGroup}>
-          <AppText variant="medium" style={styles.label}>Nombre</AppText>
+          <AppText variant="medium" style={styles.label}>
+            Nombre
+          </AppText>
           <TextInput
             value={nombre}
-            onChangeText={(text) => setNombre(text.replace(/[^A-Za-zÀ-ÿ\s]/g, ""))}
+            onChangeText={(text) =>
+              setNombre(text.replace(/[^A-Za-zÀ-ÿ\s]/g, ""))
+            }
             placeholder="Ingresa tu primer nombre"
             placeholderTextColor="#BDBDBD"
             style={styles.input}
@@ -92,10 +96,14 @@ export default function RegisterScreen() {
         </View>
 
         <View style={styles.formGroup}>
-          <AppText variant="medium" style={styles.label}>Apellido</AppText>
+          <AppText variant="medium" style={styles.label}>
+            Apellido
+          </AppText>
           <TextInput
             value={apellido}
-            onChangeText={(text) => setApellido(text.replace(/[^A-Za-zÀ-ÿ\s]/g, ""))}
+            onChangeText={(text) =>
+              setApellido(text.replace(/[^A-Za-zÀ-ÿ\s]/g, ""))
+            }
             placeholder="Ingresa tu primer apellido"
             placeholderTextColor="#BDBDBD"
             style={styles.input}
@@ -103,12 +111,17 @@ export default function RegisterScreen() {
         </View>
 
         <View style={styles.formGroup}>
-          <AppText variant="medium" style={styles.label}>Ocupación</AppText>
+          <AppText variant="medium" style={styles.label}>
+            Ocupación
+          </AppText>
           <TouchableOpacity
             style={styles.input}
             onPress={() => setShowOcupacion(!showOcupacion)}
           >
-            <AppText variant="medium" style={{ color: ocupacion ? "#111827" : "#BDBDBD" }}>
+            <AppText
+              variant="medium"
+              style={{ color: ocupacion ? "#111827" : "#BDBDBD" }}
+            >
               {ocupacion || "Selecciona tu ocupación"} ▼
             </AppText>
           </TouchableOpacity>
@@ -132,12 +145,17 @@ export default function RegisterScreen() {
         </View>
 
         <View style={styles.formGroup}>
-          <AppText variant="medium" style={styles.label}>Fecha de nacimiento</AppText>
+          <AppText variant="medium" style={styles.label}>
+            Fecha de nacimiento
+          </AppText>
           <TouchableOpacity
             style={styles.input}
             onPress={() => setShowDatePicker(true)}
           >
-            <AppText variant="medium" style={{ color: fechaNacimiento ? "#111827" : "#BDBDBD" }}>
+            <AppText
+              variant="medium"
+              style={{ color: fechaNacimiento ? "#111827" : "#BDBDBD" }}
+            >
               {fechaNacimiento
                 ? fechaNacimiento.toLocaleDateString()
                 : "Ingresa tu fecha de nacimiento"}
@@ -150,7 +168,9 @@ export default function RegisterScreen() {
               mode="date"
               display={Platform.OS === "ios" ? "spinner" : "default"}
               onChange={onDateChange}
-              maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 10))}
+              maximumDate={
+                new Date(new Date().setFullYear(new Date().getFullYear() - 10))
+              }
             />
           )}
         </View>

@@ -76,7 +76,6 @@ export default function LoginScreen() {
         </TouchableOpacity>
 
         <SocialLogin />
-
         <FooterLink
           question="¿No tienes una cuenta?"
           actionText="Registrarse"

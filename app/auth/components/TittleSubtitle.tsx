@@ -1,7 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, TextStyle, View } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import { useFonts, Montserrat_500Medium, Montserrat_700Bold } from "@expo-google-fonts/montserrat";
+import {
+  useFonts,
+  Montserrat_500Medium,
+  Montserrat_700Bold,
+} from "@expo-google-fonts/montserrat";
 
 interface TitleSubtitleProps {
   title: string;
@@ -10,7 +14,12 @@ interface TitleSubtitleProps {
   subtitleStyle?: TextStyle;
 }
 
-const TitleSubtitle: React.FC<TitleSubtitleProps> = ({ title, subtitle, titleStyle, subtitleStyle }) => {
+const TitleSubtitle: React.FC<TitleSubtitleProps> = ({
+  title,
+  subtitle,
+  titleStyle,
+  subtitleStyle,
+}) => {
   let [fontsLoaded] = useFonts({
     Montserrat_500Medium,
     Montserrat_700Bold,
@@ -20,11 +29,19 @@ const TitleSubtitle: React.FC<TitleSubtitleProps> = ({ title, subtitle, titleSty
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { fontFamily: "Montserrat_700Bold" }, titleStyle]}>
+      <Text
+        style={[styles.title, { fontFamily: "Montserrat_700Bold" }, titleStyle]}
+      >
         {title}
       </Text>
       {subtitle && (
-        <Text style={[styles.subtitle, { fontFamily: "Montserrat_500Medium" }, subtitleStyle]}>
+        <Text
+          style={[
+            styles.subtitle,
+            { fontFamily: "Montserrat_500Medium" },
+            subtitleStyle,
+          ]}
+        >
           {subtitle}
         </Text>
       )}

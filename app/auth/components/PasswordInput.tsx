@@ -1,6 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View, Text } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Text,
+} from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 
 interface PasswordInputProps {
@@ -29,7 +35,9 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.label, { fontFamily: "Montserrat_500Medium" }]}>{label}</Text>
+      <Text style={[styles.label, { fontFamily: "Montserrat_500Medium" }]}>
+        {label}
+      </Text>
 
       <View style={styles.inputWrapper}>
         <TextInput
@@ -44,7 +52,11 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           style={styles.eyeButton}
           onPress={() => setShowPassword(!showPassword)}
         >
-          <Ionicons name={showPassword ? "eye-off" : "eye"} size={scale(24)} color="#6B7280" />
+          <Ionicons
+            name={showPassword ? "eye-off" : "eye"}
+            size={scale(24)}
+            color="#6B7280"
+          />
         </TouchableOpacity>
       </View>
 
@@ -53,7 +65,10 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           <Text
             style={[
               styles.label,
-              { marginTop: verticalScale(16), fontFamily: "Montserrat_500Medium" },
+              {
+                marginTop: verticalScale(16),
+                fontFamily: "Montserrat_500Medium",
+              },
             ]}
           >
             Confirmar contraseña
@@ -86,7 +101,11 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
 const styles = StyleSheet.create({
   container: { marginBottom: verticalScale(14) },
-  label: { fontSize: scale(14), color: "#111827", marginBottom: verticalScale(10) },
+  label: {
+    fontSize: scale(14),
+    color: "#111827",
+    marginBottom: verticalScale(10),
+  },
   inputWrapper: { position: "relative", width: "100%" },
   input: {
     backgroundColor: "#F9FAFB",
@@ -97,7 +116,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(14),
     fontSize: scale(14),
     color: "#111827",
-    fontFamily: "Montserrat_400Regular", 
+    fontFamily: "Montserrat_400Regular",
   },
   eyeButton: { position: "absolute", right: scale(10), top: verticalScale(12) },
 });
