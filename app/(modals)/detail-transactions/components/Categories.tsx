@@ -1,10 +1,11 @@
 import { categories } from "@/app/mockups/categories-filter";
-import { router } from "expo-router";
+import { useTransactionDetail } from "@/shared/TransactionDetailContext";
+import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
+
+import DynamicImage from "@/types/components/dynamicImage";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
-import { useCategoryContext } from "../../../../src/features/transacciones/contexts/contexts-category/CategoryContext";
-import { useTransactionDetail } from "../TransactionDetailContext";
 
 type Categoria = {
   title: string;
@@ -16,15 +17,16 @@ type Categoria = {
 const CategoriaCard = ({ title, transactions, active, imageUri }: Categoria) => (
   <View style={[styles.card, !active && styles.inactive]}>
     <View style={styles.cardContent}>
-      {imageUri ? (
-        <Image
-          source={{ uri: imageUri }}
-          style={styles.categoryIcon}
-          resizeMode="contain"
-        />
-      ) : (
-        <View style={styles.iconPlaceholder} />
-      )}
+      <View style={styles.iconPlaceholder}>
+        {imageUri && (
+          <DynamicImage
+            path={`${imageUri}.webp`}
+            width={scale(42)}
+            height={scale(42)}
+            borderRadius={scale(21)}
+          />
+        )}
+      </View>
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.transactions}>{transactions}</Text>
@@ -36,19 +38,6 @@ const CategoriaCard = ({ title, transactions, active, imageUri }: Categoria) => 
 const CategoriesHeader = () => (
   <View style={styles.header}>
     <Text style={styles.headerTitle}>Categoría</Text>
-    <TouchableOpacity
-      style={styles.headerAction}
-      onPress={() => router.push("/(modals)/new-expense/categorie-filter")}
-    >
-      <Text style={styles.headerText}>ver todas</Text>
-      <Image
-        source={{
-          uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/bfp1jzo4_expires_30_days.png",
-        }}
-        resizeMode="stretch"
-        style={styles.iconArrow}
-      />
-    </TouchableOpacity>
   </View>
 );
 
@@ -81,11 +70,11 @@ const styles = StyleSheet.create({
     marginBottom: moderateScale(20),
   },
   header: {
-    paddingVertical: moderateScale(4),
+    paddingVertical: moderateScale(0),
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: moderateScale(30),
+    marginTop: moderateScale(5),
     marginBottom: moderateScale(4),
   },
   headerTitle: {

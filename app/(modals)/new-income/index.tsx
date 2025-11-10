@@ -75,5 +75,6 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     paddingHorizontal: moderateScale(1),
+    backgroundColor: '#fff',
   },
 });

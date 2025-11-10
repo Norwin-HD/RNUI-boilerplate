@@ -4,15 +4,19 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
-const Header = () => {
+interface Props {
+  title?: string
+}
+
+const Header = ({ title = 'Detalle' }: Props) => {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => router.back()} style={styles.button}>
-        <ArrowSmallLeft width={24} height={24} color="#000" />
+        <ArrowSmallLeft width={24} height={24} color="#ffff" />
       </TouchableOpacity>
-      <Text style={styles.title}>Categorías</Text>
+      <Text style={styles.title}>{title}</Text>
     </View>
   );
 };
@@ -23,13 +27,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: verticalScale(10),
     marginBottom: verticalScale(20),
-    backgroundColor: "#FFFFFF",
   },
   button: {
     padding: scale(5),
   },
   title: {
-    color: "#454A53",
+    color: "#ffffff",
     fontSize: moderateScale(20),
     fontFamily: "Montserrat_700Bold",
     marginLeft: scale(15),

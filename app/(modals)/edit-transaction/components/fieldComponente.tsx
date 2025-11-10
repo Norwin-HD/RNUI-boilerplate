@@ -1,90 +1,110 @@
 import { useTransactionDetail } from "@/shared/TransactionDetailContext";
-import { Image } from "expo-image";
-import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Modal from "react-native-modal";
+import React from "react";
+import { Controller } from "react-hook-form";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import TarjetasDeCategoria from "./Categories";
+import InputCalendar from "./inputCalendary";
+import VaucherComponent from "./vaucherComponent";
 
-// Componente de solo lectura para mostrar detalles de la transacción
-const FieldComponent: React.FC = () => {
+interface FieldComponentProps {
+  isEditable?: boolean;
+  control?: any;
+}
+
+const FieldComponent: React.FC<FieldComponentProps> = ({ isEditable = false, control }) => {
   const transaction = useTransactionDetail();
-  const [showVoucher, setShowVoucher] = useState(false);
 
   if (!transaction) return null;
 
-  const amount = transaction.monto ?? 0;
-  const sign = amount > 0 ? "+" : "-";
-  const formattedAmount = `${sign} $${Math.abs(amount).toFixed(2)}`;
-  const dateText = new Date(transaction.fecha).toLocaleDateString("es-ES", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
+  if (isEditable) {
+    return (
+      <View style={styles.wrapper}>
+        <Text style={styles.mainTitle}>{transaction.type === "income" ? "Editar Ingreso" : "Editar Gasto"}</Text>
 
-  const voucherUri = transaction.imagen;
+        <View style={styles.fieldBlock}>
+          <Text style={styles.label}>Monto</Text>
+          <View style={styles.inputRowTall}>
+            <Text style={styles.currency}>$</Text>
+            <Controller
+              control={control}
+              name="monto"
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  style={styles.amountInput}
+                  value={value.toString()}
+                  onChangeText={(text) => onChange(parseFloat(text) || 0)}
+                  keyboardType="numeric"
+                  placeholder="0.00"
+                />
+              )}
+            />
+          </View>
+        </View>
+
+        <View style={styles.fieldBlock}>
+          <Controller
+            control={control}
+            name="fecha"
+            render={({ field: { onChange, value } }) => (
+              <InputCalendar date={value} setDate={onChange} />
+            )}
+          />
+        </View>
+
+        <View style={styles.fieldBlock}>
+          <Text style={styles.label}>Descripción</Text>
+          <Controller
+            control={control}
+            name="descripcion"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.descriptionInput}
+                value={value}
+                onChangeText={onChange}
+                placeholder="Descripción"
+                multiline
+                numberOfLines={4}
+              />
+            )}
+          />
+        </View>
+
+        <VaucherComponent control={control} />
+
+      </View>
+    );
+  }
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.mainTitle}>{transaction.type === "income" ? "Detalle de Ingreso" : "Detalle de Gasto"}</Text>
+      <Text style={styles.mainTitle}>{transaction.type === "income" ? "Detalle Ingreso" : "Detalle Gasto"}</Text>
 
       <View style={styles.fieldBlock}>
         <Text style={styles.label}>Monto</Text>
         <View style={styles.inputRowTall}>
           <Text style={styles.currency}>$</Text>
-          <Text style={styles.amount}>{formattedAmount.replace(/^[-+]?\s?\$/,'')}</Text>
+          <Text style={styles.amountInput}>{transaction.monto.toString()}</Text>
         </View>
       </View>
 
       <View style={styles.fieldBlock}>
         <Text style={styles.label}>Fecha</Text>
-        <View style={styles.inputRowTallBetween}>
-          <Text style={styles.inputValue}>{dateText}</Text>
-          <View style={styles.calendarIcon} />
-        </View>
+        <Text style={styles.inputValue}>{transaction.fecha ? new Date(transaction.fecha).toISOString().split('T')[0] : ""}</Text>
       </View>
-
-      <TarjetasDeCategoria />
 
       <View style={styles.fieldBlock}>
         <Text style={styles.label}>Descripción</Text>
-        <View style={styles.descriptionRow}>
-          <Text style={styles.descriptionText} numberOfLines={4}>
-            {transaction.descripcion || "Sin descripción"}
-          </Text>
-        </View>
+        <Text style={styles.descriptionText}>{transaction.descripcion || "Sin descripción"}</Text>
       </View>
 
-      <View style={styles.fieldBlock}>
-        <Text style={styles.label}>Recibo o voucher</Text>
-        <TouchableOpacity
-          style={styles.receiptBox}
-          onPress={() => {
-            if (voucherUri) setShowVoucher(true);
-          }}
-        >
-          {voucherUri ? (
-            <Image source={{ uri: voucherUri }} style={styles.receiptImage} resizeMode="cover" />
-          ) : (
-            <View style={styles.receiptPlaceholder} />
-          )}
-        </TouchableOpacity>
-      </View>
-
-      <Modal
-        isVisible={showVoucher}
-        onBackdropPress={() => setShowVoucher(false)}
-        style={styles.modal}
-      >
-        <View style={styles.modalContent}>
-          {voucherUri ? (
-            <Image source={{ uri: voucherUri }} style={styles.fullImage} contentFit="contain" />
-          ) : null}
-          <TouchableOpacity onPress={() => setShowVoucher(false)} style={styles.closeButton}>
-            <Text style={styles.closeText}>Cerrar</Text>
-          </TouchableOpacity>
+      {transaction.imagen && transaction.imagen !== "default" ? (
+        <View style={styles.fieldBlock}>
+          <Text style={styles.label}>Recibo o vaucher</Text>
+          <View style={styles.receiptBox}>
+            <Image source={{ uri: transaction.imagen }} style={styles.receiptImage} />
+          </View>
         </View>
-      </Modal>
+      ) : null}
     </View>
   );
 };
@@ -97,7 +117,7 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontFamily: "Montserrat_700Bold",
     fontSize: moderateScale(24),
-    lineHeight: moderateScale(34),
+    lineHeight: moderateScale(36),
     color: "#181A2A",
     marginBottom: verticalScale(24),
   },
@@ -107,9 +127,9 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: "Montserrat_400Regular",
     fontSize: moderateScale(16),
-    lineHeight: moderateScale(20),
+    lineHeight: moderateScale(24),
     color: "#181A2A",
-    marginBottom: verticalScale(2),
+    marginBottom: verticalScale(8),
   },
   inputRowTall: {
     flexDirection: "row",
@@ -135,11 +155,22 @@ const styles = StyleSheet.create({
     lineHeight: moderateScale(36),
     color: "#3476F4",
   },
-  amount: {
+  amountInput: {
     fontFamily: "Montserrat_600SemiBold",
     fontSize: moderateScale(20),
     lineHeight: moderateScale(20),
     color: "#181A2A",
+    flex: 1,
+  },
+  descriptionInput: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: moderateScale(16),
+    lineHeight: moderateScale(24),
+    color: "#181A2A",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#6C75AD",
+    paddingHorizontal: scale(8),
+    paddingVertical: verticalScale(12),
   },
   inputValue: {
     fontFamily: "Montserrat_600SemiBold",

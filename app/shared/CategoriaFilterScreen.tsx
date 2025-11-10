@@ -2,11 +2,11 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import Footer from "../../shared/categories-components/Footer";
-import Header from "../../shared/categories-components/Header";
-import InputSearch from "../../shared/categories-components/input-search";
-import SelectCategories from "../../shared/categories-components/select-categories";
-import { useCategories } from "../../shared/hooks/use-search";
+import Footer from "./categories-components/Footer";
+import Header from "./categories-components/Header";
+import InputSearch from "./categories-components/input-search";
+import SelectCategories from "./categories-components/select-categories";
+import { useCategories } from "./hooks/use-search";
 
 const CategoriaFilterScreen = () => {
   const { filteredCategories, setQuery } = useCategories();

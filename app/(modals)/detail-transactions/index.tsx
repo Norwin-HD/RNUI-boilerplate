@@ -1,18 +1,20 @@
+import { TransactionDetailProvider } from "@/shared/TransactionDetailContext";
 import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { TransactionDetailProvider } from "./TransactionDetailContext";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import FieldComponent from "./components/fieldComponente";
 
 const TransactionDetail = () => {
   const params = useLocalSearchParams();
+  const router = useRouter();
   const { id } = params as { id?: string };
-  const { transactions } = useTransactions();
+  const { transactions, setTransactions } = useTransactions();
 
   const tid = Number(id);
   const found = transactions.find((t) => t.id === tid);
@@ -44,6 +46,24 @@ const TransactionDetail = () => {
             (params && (params as any).monto > 0 ? "income" : "expense"),
         }
       : null);
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Eliminar transacción",
+      "¿Estás seguro que deseas eliminar esta transacción? Esta acción no se puede deshacer.",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Eliminar",
+          style: "destructive",
+          onPress: () => {
+            setTransactions(transactions.filter((t) => t.id !== tid));
+            router.back();
+          },
+        },
+      ]
+    );
+  };
 
   if (!transaction) {
     return (
@@ -82,6 +102,10 @@ const TransactionDetail = () => {
     );
   }
 
+  const handleEdit = () => {
+    router.push({ pathname: "/(modals)/edit-transaction", params: { id: tid.toString() } });
+  };
+
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
       <StatusBar style="light" backgroundColor="#3476F4" translucent={false} />
@@ -96,6 +120,7 @@ const TransactionDetail = () => {
           </TransactionDetailProvider>
         </View>
       </ScrollView>
+      <Footer onDelete={handleDelete} onEdit={handleEdit} />
     </SafeAreaView>
   );
 };
@@ -108,7 +133,7 @@ const styles = StyleSheet.create({
   },
   panel: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     borderTopLeftRadius: moderateScale(18),
     borderTopRightRadius: moderateScale(18),
     paddingHorizontal: scale(20),
