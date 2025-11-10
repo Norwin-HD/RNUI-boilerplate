@@ -1,7 +1,9 @@
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import ArrowCircleDown from '@/assets/svg/arrow-down';
+import ArrowCircleUp from '@/assets/svg/arrow-up';
 import { useTransactions } from '@/src/features/transacciones/contexts/transactions-context';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 interface InfoCardProps {
     type: 'income' | 'expense';
@@ -11,20 +13,43 @@ interface InfoCardProps {
 const InfoCard = ({ type, amount }: InfoCardProps) => {
     const isIncome = type === 'income';
     const title = isIncome ? "Ingresos" : "Gastos";
-    const iconUri = isIncome
-        ? "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/ef73o05t_expires_30_days.png" // Green up arrow
-        : "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/4p9gt8wl_expires_30_days.png"; // Red down arrow
+
+    const amountStr = `$${amount.toFixed(2)}`;
+    const getFontSize = (text: string) => {
+        if (text.length > 12) return moderateScale(14);
+        if (text.length > 10) return moderateScale(16); 
+        return moderateScale(19); 
+    };
+
+    const fontSize = getFontSize(amountStr);
 
     return (
         <View style={styles.cardContainer}>
-            <Image
-                source={{ uri: iconUri }}
-                resizeMode={"stretch"}
-                style={styles.icon}
-            />
-            <View>
+            <View style={styles.iconContainer}>
+                {isIncome ? (
+                    <ArrowCircleUp
+                        width={moderateScale(45)}
+                        height={moderateScale(45)}
+                        color="#FFFFFF"
+                    />
+                ) : (
+                    <ArrowCircleDown
+                        width={moderateScale(45)}
+                        height={moderateScale(45)}
+                        color="#FFFFFF"
+                    />
+                )}
+            </View>
+            <View style={styles.textContainer}>
                 <Text style={styles.cardTitle}>{title}</Text>
-                <Text style={styles.cardAmount}>{`$${amount.toFixed(2)}`}</Text>
+                <Text 
+                    style={[styles.cardAmount, { fontSize }]}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.7}
+                >
+                    {amountStr}
+                </Text>
             </View>
         </View>
     );
@@ -74,23 +99,32 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
+        minWidth: 0, 
     },
-    icon: {
-        width: moderateScale(45),
-        height: moderateScale(45),
+    iconContainer: {
         marginRight: scale(12),
+        backgroundColor: "#3476F4",
+        borderRadius: moderateScale(25),
+        width: moderateScale(50),
+        height: moderateScale(50),
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    textContainer: {
+        flex: 1,
+        minWidth: 0,
     },
     cardTitle: {
         color: "#181A2A",
         lineHeight: verticalScale(18),
         fontSize: moderateScale(12),
         fontFamily: "Montserrat_500Medium",
-        marginBottom: verticalScale(10),
+        marginBottom: verticalScale(4),
     },
     cardAmount: {
         color: "#181A2A",
+        lineHeight: verticalScale(28),
         fontSize: moderateScale(20),
-        lineHeight: verticalScale(24),
         fontFamily: "Montserrat_600SemiBold",
     },
 });

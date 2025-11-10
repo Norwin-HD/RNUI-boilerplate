@@ -1,5 +1,6 @@
 import { categories } from "@/app/mockups/categories-filter";
 import { useCategoryContext } from "@/src/features/shared/categories/CategoryContext";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -42,13 +43,7 @@ const CategoriesHeader = () => (
       }
     >
       <Text style={styles.headerText}>Ver todo</Text>
-      <Image
-        source={{
-          uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/bfp1jzo4_expires_30_days.png",
-        }}
-        resizeMode="stretch"
-        style={styles.iconArrow}
-      />
+      <Ionicons name="chevron-forward" size={moderateScale(16)} color="#3476F4" />
     </TouchableOpacity>
   </View>
 );
@@ -99,10 +94,6 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: "Montserrat_400Regular",
     fontSize: moderateScale(12),
-  },
-  iconArrow: {
-    width: moderateScale(20),
-    height: moderateScale(20),
   },
   list: {
     flexDirection: "row",

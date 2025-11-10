@@ -1,11 +1,12 @@
 import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
 import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
 import DynamicImage from "@/types/components/dynamicImage";
+import { Ionicons } from "@expo/vector-icons";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Card from "./Card";
 
@@ -72,22 +73,16 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
           <View style={styles.iconContainer}>
             <DynamicImage
               path={`${item.imageUri}.webp`}
-              width={moderateScale(60)}
-              height={moderateScale(60)}
-              borderRadius={moderateScale(18)}
+              width={moderateScale(50)}
+              height={moderateScale(50)}
+              borderRadius={999}
             />
           </View>
           <View style={styles.contentRow}>
             <View style={styles.detailsColumn}>
               <Text style={styles.categoryText}>{item.categoria}</Text>
               <View style={styles.timeRow}>
-                <Image
-                  source={{
-                    uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/owykmtoc_expires_30_days.png",
-                  }}
-                  resizeMode={"stretch"}
-                  style={styles.timeIcon}
-                />
+                <Ionicons name="time-outline" size={moderateScale(15)} color="#000000" style={{ marginRight: scale(10) }} />
                 <Text style={styles.timeText}>
                   {formatShortDate(item.fecha)}
                 </Text>
@@ -103,13 +98,7 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
                 }}
               >
                 <View style={styles.arrowContainer}>
-                  <Image
-                    source={{
-                      uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/0s8o6qbm_expires_30_days.png",
-                    }}
-                    resizeMode={"stretch"}
-                    style={styles.arrowIcon}
-                  />
+                  <Ionicons name="chevron-forward" size={moderateScale(24)} color="#000000" />
                 </View>
               </TouchableOpacity>
               <Text
@@ -145,11 +134,13 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(20),
   },
   iconContainer: {
-    borderRadius: moderateScale(18),
+    borderRadius: 999,
     width: moderateScale(60),
     height: moderateScale(60),
     marginHorizontal: scale(16),
-    backgroundColor: "#E1EBFD",
+    backgroundColor: "#c2caf2",
+    borderWidth: 1,
+    borderColor: "#8590c8",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -178,11 +169,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  timeIcon: {
-    width: moderateScale(15),
-    height: moderateScale(15),
-    marginRight: scale(10),
-  },
   timeText: {
     color: "#000000",
     fontFamily: "Montserrat_500Medium",
@@ -194,10 +180,6 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     marginBottom: verticalScale(16),
-  },
-  arrowIcon: {
-    width: moderateScale(24),
-    height: moderateScale(24),
   },
   positiveAmount: {
     color: "#1FC16B",

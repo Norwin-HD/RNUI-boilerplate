@@ -1,6 +1,7 @@
 
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 interface InsightsProps {
@@ -13,10 +14,11 @@ const Insights = ({ insightText, onConfigureAlerts }: InsightsProps) => {
     <View>
       <View style={styles.card}>
         <View style={styles.header}>
-          <Image
-            source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/03z6e7zv_expires_30_days.png" }}
-            resizeMode={"stretch"}
-            style={styles.icon}
+          <Ionicons
+            name="bulb"
+            size={moderateScale(30)}
+            color="#FFFFFF"
+            style={{ marginRight: scale(8) }}
           />
           <Text style={styles.title}>{"Insight del mes"}</Text>
         </View>
@@ -24,10 +26,10 @@ const Insights = ({ insightText, onConfigureAlerts }: InsightsProps) => {
       </View>
       <TouchableOpacity style={styles.configureButton} onPress={onConfigureAlerts}>
         <Text style={styles.configureButtonText}>{"Configurar alertas"}</Text>
-        <Image
-          source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/eoj7bu7f_expires_30_days.png" }}
-          resizeMode={"stretch"}
-          style={styles.arrowIcon}
+        <Ionicons
+          name="chevron-forward"
+          size={moderateScale(24)}
+          color="#000000"
         />
       </TouchableOpacity>
     </View>
@@ -58,11 +60,6 @@ const styles = StyleSheet.create({
         marginBottom: verticalScale(16),
         marginLeft: scale(16),
     },
-    icon: {
-        width: moderateScale(30),
-        height: moderateScale(30),
-        marginRight: scale(8),
-    },
     title: {
         color: "#FFFFFF",
         fontSize: moderateScale(16),
@@ -85,10 +82,6 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(18),
         marginRight: scale(12),
         fontFamily: "Montserrat_500Medium",
-    },
-    arrowIcon: {
-        width: moderateScale(24),
-        height: moderateScale(24),
     },
 });
 

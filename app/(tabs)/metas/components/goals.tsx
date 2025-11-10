@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Card from "./card";
 
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { GoalsContext, useGoalsContext } from "@/src/features/add-goals/contexts";
+import { GoalsContext } from "@/src/features/add-goals/contexts";
 
 const formatShortDate = (dateString: string) => {
   const date = new Date(dateString);

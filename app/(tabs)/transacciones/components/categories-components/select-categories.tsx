@@ -32,12 +32,14 @@ const SelectCategories = ({ categories }: Props) => {
             >
               <View style={[styles.item, isSelected && styles.itemSelected]}>
                 {!!c.imageUri && (
-                  <DynamicImage
-                    path={`${c.imageUri}.webp`}
-                    width={moderateScale(60)}
-                    height={moderateScale(60)}
-                    borderRadius={moderateScale(999)}
-                  />
+                  <View style={styles.iconPlaceholder}>
+                    <DynamicImage
+                      path={`${c.imageUri}.webp`}
+                      width={moderateScale(50)}
+                      height={moderateScale(50)}
+                      borderRadius={999}
+                    />
+                  </View>
                 )}
                 <View style={styles.itemText}>
                   <Text
@@ -94,6 +96,18 @@ const styles = StyleSheet.create({
   },
   itemSelected: {
     boxShadow: "0 2px 5px 1px rgba(0, 0, 0, 0.25)",
+  },
+  iconPlaceholder: {
+    backgroundColor: "#c2caf2",
+    borderWidth: 1,
+    borderColor: "#8590c8",
+    borderRadius: 999,
+    width: moderateScale(60),
+    height: moderateScale(60),
+    marginLeft: moderateScale(12),
+
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatar: {
     marginLeft: moderateScale(10),
