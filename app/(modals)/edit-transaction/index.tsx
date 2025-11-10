@@ -1,4 +1,6 @@
+import { categories } from "@/app/mockups/categories-filter";
 import { TransactionDetailProvider } from "@/shared/TransactionDetailContext";
+import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
 import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -22,20 +24,28 @@ type FormData = {
 export default function EditTransactionModal() {
   const { id } = useLocalSearchParams() as { id?: string };
   const { transactions, setTransactions } = useTransactions();
+  const { selectedCategories } = useCategoryContext();
   const router = useRouter();
 
   const tid = Number(id);
   const transaction = transactions.find((t) => t.id === tid);
 
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, setValue } = useForm<FormData>({
     defaultValues: {
       monto: transaction ? Math.abs(transaction.monto || 0) : 0,
       fecha: transaction?.fecha ? new Date(transaction.fecha) : new Date(),
       descripcion: transaction?.descripcion || "",
-      imagen: transaction?.imagen || "",
-      categoria: transaction?.categoria || "",
+      imagen: transaction?.imagen || transaction?.imageUri || "",
+      categoria: transaction?.categoria || selectedCategories[0] || "",
     },
   });
+
+  // Update categoria when selectedCategories changes
+  React.useEffect(() => {
+    if (selectedCategories.length > 0) {
+      setValue('categoria', selectedCategories[0]);
+    }
+  }, [selectedCategories, setValue]);
 
   const handleSave = (data: FormData) => {
     console.log('handleSave called with data:', data);
@@ -43,6 +53,10 @@ export default function EditTransactionModal() {
       console.log('No transaction found');
       return;
     }
+    
+    // Find the category icon
+    const categoryData = categories.find((cat: any) => cat.title === data.categoria);
+    const categoryImageUri = categoryData?.imageUri || "package";
     
     const signedAmount = transaction.type === "income" ? data.monto : -data.monto;
     console.log('Signed amount:', signedAmount);
@@ -54,6 +68,7 @@ export default function EditTransactionModal() {
             ...data,
             monto: signedAmount,
             fecha: new Date(data.fecha),
+            imageUri: categoryImageUri,
           }
         : t
     );

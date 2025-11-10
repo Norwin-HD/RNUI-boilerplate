@@ -24,7 +24,7 @@ const FooterLink: React.FC<FooterLinkProps> = ({
         <AppText
           variant="medium"
           style={styles.link}
-          onPress={() => router.push(linkTo)}
+          onPress={() => router.push(linkTo as any)}
         >
           {actionText}
         </AppText>

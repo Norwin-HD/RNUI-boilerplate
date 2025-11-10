@@ -1,5 +1,6 @@
 import { categories } from "@/app/mockups/categories-filter";
 import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
+import DynamicImage from "@/types/components/dynamicImage";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -11,17 +12,24 @@ import {
   View
 } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
-
 type Categoria = {
   title: string;
   transactions: string;
+  imageUri?: string;
   active?: boolean;
 };
 
-const CategoriaCard = ({ title, transactions, active }: Categoria) => (
+const CategoriaCard = ({ title, transactions, imageUri, active }: Categoria) => (
   <View style={[styles.card, !active && styles.inactive]}>
     <View style={styles.cardContent}>
-      <View style={styles.iconPlaceholder} />
+      <View style={styles.iconContainer}>
+        <DynamicImage
+          path={`${imageUri}.webp` || "https://ik.imagekit.io/ffbwrejsa/Kovara/package.webp?updatedAt=1762713644321"}
+          width={moderateScale(32)}
+          height={moderateScale(32)}
+          borderRadius={moderateScale(16)}
+        />
+      </View>
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.transactions}>{transactions}</Text>
@@ -35,7 +43,7 @@ const CategoriesHeader = () => (
     <Text style={styles.headerTitle}>Categorías (Opcional)</Text>
     <TouchableOpacity
       style={styles.headerAction}
-      onPress={() => router.push("/(modals)/add-goals/categorie-filter")}
+      onPress={() => router.push("/(modals)/edit-transaction/categorie-filter")}
     >
       <Text style={styles.headerText}>Ver todo</Text>
       <Ionicons name="chevron-forward" size={moderateScale(16)} color="#3476F4" />
@@ -116,14 +124,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: moderateScale(14),
   },
-  iconPlaceholder: {
+  iconContainer: {
+    marginBottom: moderateScale(8),
     backgroundColor: "#C2CAF2",
     borderWidth: 2,
     borderColor: "#8590C8",
     borderRadius: moderateScale(20),
-    width: moderateScale(36),
-    height: moderateScale(36),
-    marginBottom: moderateScale(8),
+    width: moderateScale(40),
+    height: moderateScale(40),
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontFamily: "Montserrat_600SemiBold",

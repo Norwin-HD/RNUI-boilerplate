@@ -1,5 +1,5 @@
-import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
 import { useFilter } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
+import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import {
@@ -22,41 +22,49 @@ const TransaccionesScreen: React.FC = () => {
     useTransactions();
 
   const filteredTransactions = useMemo(() => {
-    if (appliedFilters.type === "all" && !appliedFilters.dates) {
-      return allFilteredTransactions;
+    let baseTransactions = allFilteredTransactions;
+
+    if (activeTab === "Ingresos") {
+      baseTransactions = baseTransactions.filter(transaction => transaction.type === "income");
+    } else if (activeTab === "Gastos") {
+      baseTransactions = baseTransactions.filter(transaction => transaction.type === "expense");
     }
 
-    return allFilteredTransactions.filter((transaction) => {
-      // Filter by type
-      if (appliedFilters.type === "income" && transaction.type !== "income") {
-        return false;
-      }
-      if (appliedFilters.type === "expense" && transaction.type !== "expense") {
-        return false;
-      }
+    if (appliedFilters.type !== "all" || appliedFilters.dates) {
+      return baseTransactions.filter((transaction) => {
 
-      // Filter by date
-      if (appliedFilters.dates) {
-        const [startDate, endDate] = appliedFilters.dates;
-        const transactionDate = new Date(transaction.fecha);
-
-        const filterStartDate = new Date(startDate);
-        filterStartDate.setHours(0, 0, 0, 0);
-
-        const filterEndDate = new Date(endDate);
-        filterEndDate.setHours(23, 59, 59, 999);
-
-        if (
-          transactionDate < filterStartDate ||
-          transactionDate > filterEndDate
-        ) {
+        if (appliedFilters.type === "income" && transaction.type !== "income") {
           return false;
         }
-      }
+        if (appliedFilters.type === "expense" && transaction.type !== "expense") {
+          return false;
+        }
 
-      return true;
-    });
-  }, [appliedFilters, allFilteredTransactions]);
+        // Filter by date
+        if (appliedFilters.dates) {
+          const [startDate, endDate] = appliedFilters.dates;
+          const transactionDate = new Date(transaction.fecha);
+
+          const filterStartDate = new Date(startDate);
+          filterStartDate.setHours(0, 0, 0, 0);
+
+          const filterEndDate = new Date(endDate);
+          filterEndDate.setHours(23, 59, 59, 999);
+
+          if (
+            transactionDate < filterStartDate ||
+            transactionDate > filterEndDate
+          ) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+    }
+
+    return baseTransactions;
+  }, [appliedFilters, allFilteredTransactions, activeTab]);
 
   const router = useRouter();
 
@@ -79,7 +87,7 @@ const TransaccionesScreen: React.FC = () => {
             <TransactionsCard
               transactions={filteredTransactions.map((transaction) => ({
                 ...transaction,
-                imageUri: transaction.imageUri || "",
+                imageUri: transaction.imageUri || transaction.imagen || "",
               }))}
             />
           </View>

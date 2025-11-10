@@ -3,6 +3,7 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import CategoriaCardList from "./Categories";
 import InputCalendar from "./inputCalendary";
 import VaucherComponent from "./vaucherComponent";
 
@@ -68,7 +69,7 @@ const FieldComponent: React.FC<FieldComponentProps> = ({ isEditable = false, con
             )}
           />
         </View>
-
+        <CategoriaCardList />
         <VaucherComponent control={control} />
 
       </View>
@@ -97,11 +98,16 @@ const FieldComponent: React.FC<FieldComponentProps> = ({ isEditable = false, con
         <Text style={styles.descriptionText}>{transaction.descripcion || "Sin descripción"}</Text>
       </View>
 
-      {transaction.imagen && transaction.imagen !== "default" ? (
+      <View style={styles.fieldBlock}>
+        <Text style={styles.label}>Categoría</Text>
+        <Text style={styles.descriptionText}>{transaction.categoria || "Sin categoría"}</Text>
+      </View>
+
+      {transaction.imagen || transaction.imageUri ? (
         <View style={styles.fieldBlock}>
           <Text style={styles.label}>Recibo o vaucher</Text>
           <View style={styles.receiptBox}>
-            <Image source={{ uri: transaction.imagen }} style={styles.receiptImage} />
+            <Image source={{ uri: transaction.imagen || transaction.imageUri }} style={styles.receiptImage} />
           </View>
         </View>
       ) : null}

@@ -1,3 +1,4 @@
+import { categories } from "@/app/mockups/categories-filter";
 import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
 import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,6 +26,11 @@ interface TransactionsCardProps {
 
 const formatShortDate = (date: Date) => {
   return formatDistanceToNow(date, { addSuffix: true, locale: es });
+};
+
+const getCategoryIcon = (categoria: string) => {
+  const category = categories.find(cat => cat.title === categoria);
+  return category?.imageUri || "package";
 };
 
 const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
@@ -72,7 +78,7 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
         >
           <View style={styles.iconContainer}>
             <DynamicImage
-              path={item.imageUri ? `${item.imageUri}.webp` : "package.webp"}
+              path={`${getCategoryIcon(item.categoria)}.webp`}
               width={moderateScale(50)}
               height={moderateScale(50)}
               borderRadius={999}
