@@ -24,7 +24,9 @@ interface NewTransaction {
 interface TransactionsContextType {
   transactions: Transaction[];
   addTransaction: (transaction: NewTransaction) => void;
+  setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
 }
+
 
 const TransactionsContext = createContext<TransactionsContextType | null>(null);
 
@@ -39,11 +41,12 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const addTransaction = (transaction: NewTransaction) => {
+    const maxId = transactions.length > 0 ? Math.max(...transactions.map(t => t.id)) : 0;
     setTransactions([
       ...transactions,
       {
         ...transaction,
-        id: transactions.length + 1,
+        id: maxId + 1,
         // Keep both imagen and imageUri in new items to remain compatible
         imagen: (transaction as any).imagen || (transaction as any).imageUri || "default",
         imageUri: (transaction as any).imageUri || (transaction as any).imagen || "default",
@@ -54,7 +57,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <TransactionsContext.Provider value={{ transactions, addTransaction }}>
+    <TransactionsContext.Provider value={{ transactions, addTransaction, setTransactions }}>
       {children}
     </TransactionsContext.Provider>
   );

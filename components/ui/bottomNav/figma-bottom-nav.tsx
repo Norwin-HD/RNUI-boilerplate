@@ -1,7 +1,8 @@
 import { useColorScheme } from "@/src/hooks/use-color-scheme";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { scale, verticalScale } from "react-native-size-matters";
 import ClockIcon from "./BottomBarSvg/ClockIcon";
@@ -32,6 +33,16 @@ export default function FigmaBottomNav({
 }: Props) {
   useColorScheme();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  // Eliminado setVisible, no se usa
+  const fadeAnim = React.useRef(new Animated.Value(0)).current;
+
+  React.useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -43,14 +54,16 @@ export default function FigmaBottomNav({
       router.push("/add-goals" as any);
       return;
     }
-
     if (option === "Agregar gasto") {
       router.push("/new-expense" as any);
       return;
     }
-
     if (option === "Agregar ingresos") {
       router.push("/new-income" as any);
+      return;
+    }
+    if (option === "Nuevo presupuesto") {
+      router.push("/presupuestos" as any);
       return;
     }
     // Otros flujos a futuro
@@ -83,53 +96,63 @@ export default function FigmaBottomNav({
 
   return (
     <>
-      <SafeAreaView
-        edges={["bottom"]}
-        style={[styles.wrapper, { backgroundColor: FIGMA.bg }]}
+      <Animated.View
+        style={{
+          opacity: fadeAnim,
+          width: "100%",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+        }}
       >
-        {/* menu list */}
-        <View style={[styles.menuList, { backgroundColor: "transparent" }]}>
-          {items.map((it, idx) => {
-            const Icon = it.icon;
-            // center fab
-            if (idx === 2 && variant === "center-fab") {
+        <SafeAreaView
+          edges={["bottom"]}
+          style={[styles.wrapper, { backgroundColor: FIGMA.bg }]}
+        >
+          <View style={[styles.menuList, { backgroundColor: "transparent" }]}> 
+            {items.map((it, idx) => {
+              const Icon = it.icon;
+              if (idx === 2 && variant === "center-fab") {
+                return (
+                  <View key={it.key} style={styles.menuCenterContainer}>
+                    <TouchableOpacity
+                      accessibilityRole="button"
+                      onPress={toggleMenu}
+                      style={[ 
+                        styles.fab,
+                        {
+                          backgroundColor: FIGMA.fab,
+                          borderColor: FIGMA.fabBorder,
+                        },
+                      ]}
+                    >
+                      <Icon width={24} height={24} color={FIGMA.fabBorder} />
+                    </TouchableOpacity>
+                  </View>
+                );
+              }
+
+              const sel = idx === selectedIndex;
+              const color = sel ? FIGMA.primary : FIGMA.inactive;
+
               return (
-                <View key={it.key} style={styles.menuCenterContainer}>
-                  <TouchableOpacity
-                    accessibilityRole="button"
-                    onPress={toggleMenu}
-                    style={[
-                      styles.fab,
-                      {
-                        backgroundColor: FIGMA.fab,
-                        borderColor: FIGMA.fabBorder,
-                      },
-                    ]}
-                  >
-                    <Icon width={24} height={24} color={FIGMA.fabBorder} />
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  key={it.key}
+                  style={styles.menuItem}
+                  onPress={() => onSelect?.(idx)}
+                >
+                  <Icon width={24} height={24} color={color} />
+                  {it.label ? (
+                    <Text style={[styles.label, { color }]}>{it.label}</Text>
+                  ) : null}
+                </TouchableOpacity>
               );
-            }
-
-            const sel = idx === selectedIndex;
-            const color = sel ? FIGMA.primary : FIGMA.inactive;
-
-            return (
-              <TouchableOpacity
-                key={it.key}
-                style={styles.menuItem}
-                onPress={() => onSelect?.(idx)}
-              >
-                <Icon width={24} height={24} color={color} />
-                {it.label ? (
-                  <Text style={[styles.label, { color }]}>{it.label}</Text>
-                ) : null}
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      </SafeAreaView>
+            })}
+          </View>
+        </SafeAreaView>
+      </Animated.View>
 
       {isMenuVisible && (
         <View style={styles.menuOverlay}>
@@ -156,6 +179,12 @@ export default function FigmaBottomNav({
               onPress={() => handleMenuOption("Agregar ingresos")}
             >
               <Text style={styles.menuText}>Nuevo ingreso</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.menuItemOption}
+              onPress={() => handleMenuOption("Nuevo presupuesto")}
+            >
+              <Text style={styles.menuText}>Nuevo presupuesto</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -221,6 +250,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "flex-end",
+    zIndex: 200,
   },
   overlayTouchable: {
     flex: 1,

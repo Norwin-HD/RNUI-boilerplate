@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
 import Modal from "react-native-modal";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { useTransactionDetail } from "../TransactionDetailContext";
+import { useTransactionDetail } from "./TransactionDetailContext";
 
 // Componente de solo lectura alineado al diseño Figma (monto, fecha, descripción, recibo)
 const FieldComponent: React.FC = () => {
@@ -40,6 +40,7 @@ const FieldComponent: React.FC = () => {
     <View style={styles.wrapper}>
       <Text style={styles.mainTitle}>{transaction.type === "income" ? "Ingreso" : "Gasto"}</Text>
 
+      {/* Monto */}
       <View style={styles.fieldBlock}>
         <Text style={styles.label}>Monto</Text>
         <View style={styles.inputRowTall}>
@@ -56,6 +57,7 @@ const FieldComponent: React.FC = () => {
         </View>
       </View>
 
+      {/* Descripción */}
       <View style={styles.fieldBlock}>
         <Text style={styles.label}>Descripción</Text>
         <View style={styles.descriptionRow}>
