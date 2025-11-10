@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, TextProps, TextStyle } from "react-native";
 
+
 interface AppTextProps extends TextProps {
   children: React.ReactNode;
   variant?: "regular" | "medium" | "semiBold" | "bold";

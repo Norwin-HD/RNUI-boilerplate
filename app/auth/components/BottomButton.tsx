@@ -9,6 +9,7 @@ import {
 import { scale, verticalScale } from "react-native-size-matters";
 import AppText from "../components/AppText";
 
+
 interface BottomButtonProps {
   onPress: (event: GestureResponderEvent) => void;
   text: string;
