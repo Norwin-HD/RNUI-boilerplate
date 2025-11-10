@@ -1,5 +1,6 @@
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { metasMockup } from "../../../mockups/metas-mockup";
 import { presupuestosMockup } from "../../../mockups/presupuestos-mockup";
@@ -19,13 +20,7 @@ const Goals = () => {
       <View style={styles.arrowContainer}>
         <Text style={styles.headerText}>{"Metas y presupuestos"}</Text>
         <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
-          <Image
-            source={{
-              uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/bfp1jzo4_expires_30_days.png",
-            }}
-            resizeMode={"stretch"}
-            style={styles.iconArrow}
-          />
+          <Ionicons name="chevron-forward" size={moderateScale(24)} color="#000000" />
         </TouchableOpacity>
       </View>
       <MainGoalCard
@@ -62,10 +57,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: moderateScale(18),
     fontFamily: "Montserrat_500Medium",
-  },
-  iconArrow: {
-    width: moderateScale(24),
-    height: moderateScale(24),
   },
   containerCard: {
     paddingVertical: verticalScale(20),

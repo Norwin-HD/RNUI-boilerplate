@@ -1,14 +1,14 @@
 import { categories } from "@/app/mockups/categories-filter";
 import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import {
   FlatList,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
 
@@ -38,13 +38,7 @@ const CategoriesHeader = () => (
       onPress={() => router.push("/(modals)/add-goals/categorie-filter")}
     >
       <Text style={styles.headerText}>Ver todo</Text>
-      <Image
-        source={{
-          uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/bfp1jzo4_expires_30_days.png",
-        }}
-        resizeMode="stretch"
-        style={styles.iconArrow}
-      />
+      <Ionicons name="chevron-forward" size={moderateScale(16)} color="#3476F4" />
     </TouchableOpacity>
   </View>
 );
@@ -101,11 +95,6 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_400Regular",
     fontSize: moderateScale(12),
     color: "#3476F4",
-  },
-  iconArrow: {
-    width: moderateScale(16),
-    height: moderateScale(16),
-    tintColor: "#3476F4",
   },
   card: {
     backgroundColor: "#E1EBFD",

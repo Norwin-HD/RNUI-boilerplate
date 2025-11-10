@@ -1,6 +1,8 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import ArrowDown from "../../../../assets/svg/arrow-down";
+import ArrowUp from "../../../../assets/svg/arrow-up";
 
 interface BalanceCardProps {
   balance: number;
@@ -18,9 +20,6 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
   const decimalPart = formattedAmount[1];
 
   const isPositiveChange = percentageChange >= 0;
-  const iconUri = isPositiveChange
-    ? "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/r4e29u3m_expires_30_days.png" // Green up arrow
-    : "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/hq8sesz7_expires_30_days.png"; // Red down arrow
 
   return (
     <View style={styles.container}>
@@ -31,11 +30,21 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
           <Text style={styles.amountDecimal}>{`.${decimalPart}`}</Text>
         </View>
         <View style={styles.analysisContainer}>
-          <Image
-            source={{ uri: iconUri }}
-            resizeMode={"stretch"}
-            style={styles.icon}
-          />
+          <View style={styles.iconContainer}>
+            {isPositiveChange ? (
+              <ArrowUp
+                width={moderateScale(20)}
+                height={moderateScale(20)}
+                color="#1FC16B"
+              />
+            ) : (
+              <ArrowDown
+                width={moderateScale(20)}
+                height={moderateScale(20)}
+                color="#FB283A"
+              />
+            )}
+          </View>
           <Text
             style={styles.analysisText}
           >{`${isPositiveChange ? "+" : ""}${percentageChange}% ${period}`}</Text>
@@ -78,9 +87,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: scale(5),
   },
-  icon: {
-    width: moderateScale(20),
-    height: moderateScale(20),
+  iconContainer: {
     marginRight: scale(14),
   },
   analysisText: {

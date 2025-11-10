@@ -115,7 +115,7 @@ const transaccionesMockup = [
     monto: -120,
     descripcion: "Compra de ropa",
     fecha: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 21),
-    imageUri: "high-heels",
+    imageUri: "cart-shopping",
     type: "expense",
   },
   {
@@ -151,7 +151,7 @@ const transaccionesMockup = [
     monto: -250,
     descripcion: "Pago de curso online",
     fecha: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
-    imageUri: "mortarbord",
+    imageUri: "mortarboard",
     type: "expense",
   },
   {

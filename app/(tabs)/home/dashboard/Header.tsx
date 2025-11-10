@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { moderateScale, scale } from 'react-native-size-matters';
+import { Ionicons } from '@expo/vector-icons';
 
 interface User {
     name: string;
@@ -22,10 +23,11 @@ const Header: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.userInfoContainer}>
-        <Image
-          source={{ uri: user.avatarUrl }}
-          resizeMode={"stretch"}
-          style={styles.avatar}
+        <Ionicons
+          name="person-circle"
+          size={moderateScale(32)}
+          color="#454A53"
+          style={{ marginRight: scale(12) }}
         />
         <View style={styles.textContainer}>
           <Text style={styles.userName}>{user.name}</Text>
@@ -33,10 +35,10 @@ const Header: React.FC = () => {
         </View>
       </View>
       <TouchableOpacity onPress={onNotificationsPress}>
-        <Image
-          source={{ uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/1z1wxrrc_expires_30_days.png" }}
-          resizeMode={"stretch"}
-          style={styles.notificationIcon}
+        <Ionicons
+          name="notifications"
+          size={moderateScale(24)}
+          color="#454A53"
         />
       </TouchableOpacity>
     </View>
@@ -58,12 +60,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginRight: scale(12),
     },
-    avatar: {
-        width: moderateScale(32),
-        height: moderateScale(32),
-        marginRight: scale(12),
-        borderRadius: moderateScale(16), // To make it a circle
-    },
     textContainer: {
         flex: 1,
     },
@@ -76,10 +72,6 @@ const styles = StyleSheet.create({
         color: "#9EA2AD",
         fontSize: moderateScale(12),
         fontFamily: "Montserrat_600SemiBold",
-    },
-    notificationIcon: {
-        width: moderateScale(24),
-        height: moderateScale(24),
     },
 });
 

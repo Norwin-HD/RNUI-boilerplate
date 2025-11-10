@@ -1,27 +1,25 @@
+import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
+import DynamicImage from "@/types/components/dynamicImage";
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 import React from "react";
 import {
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import transaccionesMockup from "../../../mockups/transactionsMockup";
 import Card from "./Card";
 
-/**
- * Formatea una fecha para mostrar el tiempo relativo transcurrido hasta ahora.
- * @param date La fecha a formatear.
- * @returns Una cadena de texto con el tiempo relativo (ej. "hace 2 dias").
- */
 const formatRelativeDate = (date: Date) => {
   return formatDistanceToNow(date, { addSuffix: true, locale: es });
 }
 
 const RecentTransactions = () => {
+  const { transactions } = useTransactions();
+
   return (
     <View>
       <View style={styles.header}>
@@ -36,23 +34,24 @@ const RecentTransactions = () => {
           />
         </TouchableOpacity>
       </View>
-  {transaccionesMockup.slice(0, 2).map((item, index) => (
+  {transactions.slice(0, 2).map((item, index) => (
         <Card
           key={item.id}
           style={[
             styles.row16,
-            index === transaccionesMockup.length - 1
+            index === transactions.slice(0, 2).length - 1
               ? {}
               : { marginBottom: verticalScale(24) },
           ]}
         >
-          <Image
-            source={{
-              uri: item.imagen,
-            }}
-            resizeMode={"stretch"}
-            style={styles.iconOne}
-          />
+          <View style={styles.iconPlaceholder}>
+            <DynamicImage
+              path={item.imagen ? `${item.imagen}.webp` : "default"}
+              width={moderateScale(50)}
+              height={moderateScale(50)}
+              borderRadius={999}
+            />
+          </View>
           <View style={styles.row3}>
             <View style={styles.column12}>
               <Text style={styles.textHeaderCard}>{item.categoria}</Text>
@@ -64,7 +63,6 @@ const RecentTransactions = () => {
                   resizeMode={"stretch"}
                   style={styles.image10}
                 />
-                {/* Se utiliza la funcion formatRelativeDate para mostrar la fecha de la transaccion */}
                 <Text numberOfLines={1} ellipsizeMode='head' style={styles.textTime}>{formatRelativeDate(item.fecha)}</Text>
               </View>
             </View>
@@ -109,18 +107,25 @@ const styles = StyleSheet.create({
     width: moderateScale(24),
     height: moderateScale(24),
   },
+  iconPlaceholder: {
+    backgroundColor: "#c2caf2",
+    borderWidth: 1,
+    borderColor: "#8590c8",
+    borderRadius: 999,
+    width: moderateScale(60),
+    height: moderateScale(60),
+    marginRight: scale(12),
+    marginLeft: scale(12),
+
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   row16: {
     // IGNORE
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: verticalScale(20),
     marginBottom: verticalScale(24),
-  },
-  iconOne: {
-    borderRadius: moderateScale(18),
-    width: moderateScale(60),
-    height: moderateScale(60),
-    marginHorizontal: scale(16),
   },
   row3: {
     // IGNORE

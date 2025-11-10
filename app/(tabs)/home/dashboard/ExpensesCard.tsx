@@ -11,16 +11,13 @@ interface ExpensesCardProps {
 }
 
 const ExpensesCard: React.FC<ExpensesCardProps> = ({ spent, budget }) => {
-  // Calcula el porcentaje gastado (evita que pase del 100%)
   const percentage = budget > 0 ? Math.min(Math.round((spent / budget) * 100), 100) : 0;
-  // Si el presupuesto es 0, muestra 0% para evitar errores
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>{"Gastos vs. Presupuesto"}</Text>
       <View style={styles.secondContainer}>
         <View style={styles.progressBarContainer}>
-          {/* Muestra una barra verde que crece segun el porcentaje */}
           <View style={[styles.progressBar, { width: `${percentage}%` }]}></View>
         </View>
         <Text style={styles.percentageText}>{`${percentage}%`}</Text>

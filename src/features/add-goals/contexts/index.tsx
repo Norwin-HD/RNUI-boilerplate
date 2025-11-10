@@ -34,7 +34,7 @@ export const GoalsProvider = ({ children }: { children: React.ReactNode }) => {
   const [goals, setGoals] = useState<IGoals[]>(initialGoals);
 
   const addGoal = (goal: IGoals) => {
-    setGoals((prevGoals) => [...prevGoals, goal]);
+    setGoals((prevGoals) => [goal, ...prevGoals]);
   };
 
   return (
