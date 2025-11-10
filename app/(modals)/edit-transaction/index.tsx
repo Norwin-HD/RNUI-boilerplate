@@ -7,10 +7,6 @@ import { useForm } from "react-hook-form";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import { z } from "zod";
-import Container from "./components/container";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-
 
 export default function EditTransactionModal() {
   const { id } = useLocalSearchParams() as { id?: string };
@@ -53,11 +49,7 @@ export default function EditTransactionModal() {
         t.id === tid
           ? {
               ...t,
-              categoria: data.categoria ?? t.categoria,
-              monto: data.monto ?? t.monto,
-              fecha: data.fecha ?? t.fecha,
-              descripcion: data.descripcion ?? t.descripcion,
-              imagen: data.imagen ?? t.imagen,
+              ...data,
             }
           : t
       )
@@ -67,11 +59,7 @@ export default function EditTransactionModal() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
-      <View style={{ flex: 1 }}>
-         <Container control={control} setValue={setValue} watch={watch} />
-      </View>
-      <Footer onSave={handleSave} />
+      
     </SafeAreaView>
   );
 }
