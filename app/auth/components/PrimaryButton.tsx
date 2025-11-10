@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
+import { StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import AppText from "../components/AppText";
 
 interface PrimaryButtonProps {
   title: string;
@@ -10,11 +11,12 @@ interface PrimaryButtonProps {
 export default function PrimaryButton({ title, onPress, style }: PrimaryButtonProps) {
   return (
     <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+      <AppText variant="bold" style={styles.text}>
+        {title}
+      </AppText>
     </TouchableOpacity>
   );
 }
-
 
 const styles = StyleSheet.create({
   button: {
@@ -29,5 +31,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
   },
-  text: { color: "#fff", fontSize: 16, fontWeight: "700" },
+  text: {
+    color: "#fff",
+    fontSize: 16,
+  },
 });

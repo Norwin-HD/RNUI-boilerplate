@@ -1,12 +1,16 @@
-import { router } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { scale, verticalScale } from "react-native-size-matters";
+import { router } from "expo-router";
 
+import AppText from "../auth/components/AppText"; 
 
 export default function WelcomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>¡Bienvenido!</Text>
+      <AppText variant="bold" style={styles.title}>
+        ¡Bienvenido!
+      </AppText>
 
       <Image
         source={{
@@ -16,23 +20,25 @@ export default function WelcomeScreen() {
         resizeMode="contain"
       />
 
-
       <View style={styles.bottomContainer}>
-        <Text style={styles.bottomTitle}>Empieza ahora!</Text>
-        <Text style={styles.bottomSubtitle}>
+        <AppText variant="bold" style={styles.bottomTitle}>
+          Empieza ahora!
+        </AppText>
+        <AppText variant="medium" style={styles.bottomSubtitle}>
           Cada peso cuenta, y tú decides cómo usarlo.
-        </Text>
-        <Text style={styles.bottomSubtitle}>
+        </AppText>
+        <AppText variant="medium" style={styles.bottomSubtitle}>
           Organiza tu dinero, controla tus gastos y haz crecer tus ahorros con
           una app que entiende tus metas.
-        </Text>
-
+        </AppText>
 
         <TouchableOpacity
           style={styles.buttonPrimary}
           onPress={() => router.push("/auth/login")}
         >
-          <Text style={styles.buttonText}>Iniciar sesión</Text>
+          <AppText variant="bold" style={styles.buttonText}>
+            Iniciar sesión
+          </AppText>
         </TouchableOpacity>
       </View>
     </View>
@@ -47,49 +53,46 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   title: {
-    fontSize: 26,
-    fontWeight: "800",
+    fontSize: scale(25),
     color: "#000",
-    marginTop: 80,
-    marginBottom: 20,
+    marginTop: verticalScale(80),
+    marginBottom: verticalScale(30),
   },
   image: {
-    width: 420,
-    height: 270,
-    marginBottom: 20,
+    width: scale(360),
+    height: verticalScale(270),
+    marginBottom: verticalScale(20),
   },
   bottomContainer: {
     backgroundColor: "#3476F4",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: scale(30),
+    borderTopRightRadius: scale(30),
     width: "100%",
-    paddingTop: 25,
-    paddingBottom: 50,
-    paddingHorizontal: 25,
+    paddingTop: verticalScale(15),
+    paddingBottom: verticalScale(20),
+    paddingHorizontal: scale(25),
     position: "absolute",
     bottom: 0,
   },
   bottomTitle: {
     color: "#fff",
-    fontSize: 20,
-    fontWeight: "700",
-    marginBottom: 30,
+    fontSize: scale(20),
+    marginBottom: verticalScale(20),
   },
   bottomSubtitle: {
     color: "#E5E7EB",
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 20,
+    fontSize: scale(14),
+    lineHeight: verticalScale(20),
+    marginBottom: verticalScale(15),
   },
   buttonPrimary: {
     backgroundColor: "#fff",
-    borderRadius: 10,
-    paddingVertical: 14,
+    borderRadius: scale(10),
+    paddingVertical: verticalScale(10),
     alignItems: "center",
   },
   buttonText: {
     color: "#3476F4",
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: scale(14),
   },
 });

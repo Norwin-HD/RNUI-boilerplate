@@ -5,13 +5,14 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from "react-native";
+import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+
 import BottomButton from "../../auth/components/BottomButton";
 import ScreenHeader from "../../auth/components/ScreenHeader";
-
+import AppText from "../../auth/components/AppText"; 
 
 export default function VerifyCodeScreen() {
   const router = useRouter();
@@ -40,10 +41,13 @@ export default function VerifyCodeScreen() {
     <View style={styles.container}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
+          bounces={false}
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.scrollContainer}
         >
           <View style={styles.content}>
@@ -53,13 +57,13 @@ export default function VerifyCodeScreen() {
             />
 
             <View style={styles.textBlock}>
-              <Text style={styles.title}>Ingresa el código</Text>
-              <Text style={styles.subtitle}>
+              <AppText variant="bold" style={styles.title}>
+                Ingresa el código
+              </AppText>
+              <AppText variant="medium" style={styles.subtitle}>
                 Hemos enviado un código de verificación a{"\n"}
-                <Text style={{ fontWeight: "600" }}>
-                  tu correo aaron*****@gmail.com
-                </Text>
-              </Text>
+                <AppText variant="bold">tu correo aaron*****@gmail.com</AppText>
+              </AppText>
             </View>
 
             <View style={styles.codeContainer}>
@@ -79,15 +83,12 @@ export default function VerifyCodeScreen() {
               ))}
             </View>
 
-            <Text style={styles.resendText}>
+            <AppText variant="medium" style={styles.resendText}>
               ¿No lo has recibido?{" "}
-              <Text
-                style={styles.resendLink}
-                onPress={() => alert("Código reenviado")}
-              >
+              <AppText variant="bold" style={styles.resendLink} onPress={() => alert("Código reenviado")}>
                 Enviar de nuevo
-              </Text>
-            </Text>
+              </AppText>
+            </AppText>
           </View>
         </ScrollView>
 
@@ -98,64 +99,50 @@ export default function VerifyCodeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    paddingHorizontal: 24,
-    paddingTop: 50,
-  },
-  content: {
-    flexGrow: 1,
-  },
-  textBlock: {
-    alignItems: "center",
-    marginBottom: 10,
-  },
+  container: { flex: 1, backgroundColor: "#FFFFFF", minHeight: "100%" },
+  scrollContainer: { flexGrow: 1, paddingHorizontal: scale(20), paddingTop: verticalScale(36) },
+  content: { flexGrow: 1 },
+  textBlock: { alignItems: "center", marginBottom: verticalScale(10) },
   title: {
-    fontSize: 18,
-    fontWeight: "800",
+    fontSize: moderateScale(18),
     color: "#111827",
     textAlign: "center",
-    paddingTop: 14,
-    marginBottom: 8,
+    paddingTop: verticalScale(0),
+    marginBottom: verticalScale(8),
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: moderateScale(12),
     color: "#6B7280",
     textAlign: "center",
-    paddingTop: 8,
-    lineHeight: 18,
+    paddingTop: verticalScale(0),
+    lineHeight: verticalScale(18),
   },
   codeContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
-    marginBottom: 25,
-    gap: 14,
+    marginTop: verticalScale(10),
+    marginBottom: verticalScale(25),
+    gap: scale(14),
   },
   codeInput: {
-    width: 55,
-    height: 55,
-    borderRadius: 12,
+    width: scale(55),
+    height: verticalScale(55),
+    borderRadius: moderateScale(12),
     borderWidth: 1,
     borderColor: "#E5E7EB",
     backgroundColor: "#F9FAFB",
-    fontSize: 20,
+    fontSize: moderateScale(20),
     fontWeight: "700",
     color: "#111827",
   },
   resendText: {
     textAlign: "center",
     color: "#6B7280",
-    fontSize: 13,
-    marginBottom: 20,
+    fontSize: moderateScale(12),
+    marginBottom: verticalScale(10),
   },
   resendLink: {
     color: "#3476F4",
-    fontWeight: "700",
   },
 });

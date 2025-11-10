@@ -5,18 +5,18 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-
+import { scale, verticalScale } from "react-native-size-matters";
 
 import FooterLink from "../components/FooterLink";
 import Header from "../components/Header";
 import PrimaryButton from "../components/PrimaryButton";
 import StepDots from "../components/Stepdots";
 import TitleSubtitle from "../components/TittleSubtitle";
+import AppText from "../components/AppText";
 
 const ocupacionesOpciones = [
   "Estudiante",
@@ -39,7 +39,7 @@ export default function RegisterScreen() {
     if (selectedDate) {
       const today = new Date();
       const minDate = new Date();
-      minDate.setFullYear(today.getFullYear() - 10); // mínimo 10 años
+      minDate.setFullYear(today.getFullYear() - 10);
       if (selectedDate > minDate) {
         alert("Debes tener al menos 10 años.");
         return;
@@ -70,87 +70,94 @@ export default function RegisterScreen() {
       <ScrollView
         style={styles.card}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 50 }}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ paddingBottom: verticalScale(60) }}
       >
         <TitleSubtitle
           title="¡Bienvenido a Kovara!"
           subtitle="Completa tus datos personales para continuar con tu registro."
+          titleStyle={{ fontSize: scale(20), marginBottom: verticalScale(12) }}
+          subtitleStyle={{ fontSize: scale(13), lineHeight: verticalScale(18) }}
         />
 
-        <Text style={styles.label}>Nombre</Text>
-        <TextInput
-          value={nombre}
-          onChangeText={(text) => {
-            setNombre(text.replace(/[^A-Za-zÀ-ÿ\s]/g, ""));
-          }}
-          placeholder="Ingresa tu primer nombre"
-          placeholderTextColor="#BDBDBD"
-          style={styles.input}
-        />
-
-        <Text style={[styles.label, { marginTop: 14 }]}>Apellido</Text>
-        <TextInput
-          value={apellido}
-          onChangeText={(text) => {
-            setApellido(text.replace(/[^A-Za-zÀ-ÿ\s]/g, ""));
-          }}
-          placeholder="Ingresa tu primer apellido"
-          placeholderTextColor="#BDBDBD"
-          style={styles.input}
-        />
-
-        <Text style={[styles.label, { marginTop: 14 }]}>Ocupación</Text>
-        <TouchableOpacity
-          style={styles.input}
-          onPress={() => setShowOcupacion(!showOcupacion)}
-        >
-          <Text style={{ color: ocupacion ? "#111827" : "#BDBDBD" }}>
-            {ocupacion || "Selecciona tu ocupación"} ▼
-          </Text>
-        </TouchableOpacity>
-        {showOcupacion && (
-          <View style={styles.dropdown}>
-            {ocupacionesOpciones.map((item) => (
-              <TouchableOpacity
-                key={item}
-                style={styles.dropdownItem}
-                onPress={() => {
-                  setOcupacion(item);
-                  setShowOcupacion(false);
-                }}
-              >
-                <Text>{item}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
-
-        {/* Fecha de nacimiento */}
-        <Text style={[styles.label, { marginTop: 14 }]}>Fecha de nacimiento</Text>
-        <TouchableOpacity
-          style={styles.input}
-          onPress={() => setShowDatePicker(true)}
-        >
-          <Text style={{ color: fechaNacimiento ? "#111827" : "#BDBDBD" }}>
-            {fechaNacimiento
-              ? fechaNacimiento.toLocaleDateString()
-              : "Ingresa tu fecha de nacimiento"}
-          </Text>
-        </TouchableOpacity>
-        {showDatePicker && (
-          <DateTimePicker
-            value={fechaNacimiento || new Date()}
-            mode="date"
-            display={Platform.OS === "ios" ? "spinner" : "default"}
-            onChange={onDateChange}
-            maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 10))} // máximo 10 años atrás
+        <View style={styles.formGroup}>
+          <AppText variant="medium" style={styles.label}>Nombre</AppText>
+          <TextInput
+            value={nombre}
+            onChangeText={(text) => setNombre(text.replace(/[^A-Za-zÀ-ÿ\s]/g, ""))}
+            placeholder="Ingresa tu primer nombre"
+            placeholderTextColor="#BDBDBD"
+            style={styles.input}
           />
-        )}
+        </View>
 
-        {/* Botón siguiente */}
+        <View style={styles.formGroup}>
+          <AppText variant="medium" style={styles.label}>Apellido</AppText>
+          <TextInput
+            value={apellido}
+            onChangeText={(text) => setApellido(text.replace(/[^A-Za-zÀ-ÿ\s]/g, ""))}
+            placeholder="Ingresa tu primer apellido"
+            placeholderTextColor="#BDBDBD"
+            style={styles.input}
+          />
+        </View>
+
+        <View style={styles.formGroup}>
+          <AppText variant="medium" style={styles.label}>Ocupación</AppText>
+          <TouchableOpacity
+            style={styles.input}
+            onPress={() => setShowOcupacion(!showOcupacion)}
+          >
+            <AppText variant="medium" style={{ color: ocupacion ? "#111827" : "#BDBDBD" }}>
+              {ocupacion || "Selecciona tu ocupación"} ▼
+            </AppText>
+          </TouchableOpacity>
+
+          {showOcupacion && (
+            <View style={styles.dropdown}>
+              {ocupacionesOpciones.map((item) => (
+                <TouchableOpacity
+                  key={item}
+                  style={styles.dropdownItem}
+                  onPress={() => {
+                    setOcupacion(item);
+                    setShowOcupacion(false);
+                  }}
+                >
+                  <AppText variant="medium">{item}</AppText>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+        </View>
+
+        <View style={styles.formGroup}>
+          <AppText variant="medium" style={styles.label}>Fecha de nacimiento</AppText>
+          <TouchableOpacity
+            style={styles.input}
+            onPress={() => setShowDatePicker(true)}
+          >
+            <AppText variant="medium" style={{ color: fechaNacimiento ? "#111827" : "#BDBDBD" }}>
+              {fechaNacimiento
+                ? fechaNacimiento.toLocaleDateString()
+                : "Ingresa tu fecha de nacimiento"}
+            </AppText>
+          </TouchableOpacity>
+
+          {showDatePicker && (
+            <DateTimePicker
+              value={fechaNacimiento || new Date()}
+              mode="date"
+              display={Platform.OS === "ios" ? "spinner" : "default"}
+              onChange={onDateChange}
+              maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 10))}
+            />
+          )}
+        </View>
+
         <PrimaryButton
           title="Siguiente"
-          style={{ marginTop: 30 }}
+          style={{ marginTop: verticalScale(0) }}
           onPress={handleNext}
         />
 
@@ -171,42 +178,44 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     backgroundColor: "#fff",
-    marginTop: 10,
-    borderTopLeftRadius: 18,
-    borderTopRightRadius: 18,
-    paddingTop: 48,
-    paddingHorizontal: 24,
+    marginTop: verticalScale(10),
+    borderTopLeftRadius: scale(18),
+    borderTopRightRadius: scale(18),
+    paddingTop: verticalScale(40),
+    paddingHorizontal: scale(24),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.06,
     shadowRadius: 6,
     elevation: 6,
   },
+  formGroup: {
+    marginBottom: verticalScale(14),
+  },
   label: {
-    fontSize: 13,
+    fontSize: scale(13),
     color: "#374151",
-    marginBottom: 10,
-    fontWeight: "600",
+    marginBottom: verticalScale(6),
   },
   input: {
-    height: 42,
-    borderRadius: 10,
+    height: verticalScale(42),
+    borderRadius: scale(10),
     borderWidth: 1,
     borderColor: "#E5E7EB",
     backgroundColor: "#F9FAFB",
-    paddingHorizontal: 14,
+    paddingHorizontal: scale(14),
     justifyContent: "center",
   },
   dropdown: {
     borderWidth: 1,
     borderColor: "#E5E7EB",
-    borderRadius: 10,
+    borderRadius: scale(10),
     backgroundColor: "#F9FAFB",
-    marginTop: 4,
+    marginTop: verticalScale(4),
   },
   dropdownItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 14,
+    paddingVertical: verticalScale(10),
+    paddingHorizontal: scale(14),
     borderBottomWidth: 1,
     borderBottomColor: "#E5E7EB",
   },

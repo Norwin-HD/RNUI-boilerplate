@@ -1,5 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
+import { scale, verticalScale } from "react-native-size-matters";
+import AppText from "../components/AppText";
 
 interface EmailInputProps {
   label?: string;
@@ -8,7 +10,6 @@ interface EmailInputProps {
   placeholder?: string;
   style?: object;
 }
-
 
 export default function EmailInput({
   label = "Correo electrónico",
@@ -19,7 +20,9 @@ export default function EmailInput({
 }: EmailInputProps) {
   return (
     <View style={[styles.inputBlock, style]}>
-      <Text style={styles.label}>{label}</Text>
+      <AppText variant="medium" style={styles.label}>
+        {label}
+      </AppText>
       <TextInput
         value={value}
         onChangeText={onChangeText}
@@ -36,22 +39,22 @@ export default function EmailInput({
 const styles = StyleSheet.create({
   inputBlock: {
     marginTop: 0,
-    marginBottom: 10,
+    marginBottom: verticalScale(20),
   },
   label: {
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: scale(14),
     color: "#111827",
-    marginBottom: 6,
+    marginBottom: verticalScale(10),
   },
   input: {
     backgroundColor: "#F9FAFB",
-    borderRadius: 10,
+    borderRadius: scale(10),
     borderWidth: 1,
     borderColor: "#E5E7EB",
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-    fontSize: 14,
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: scale(14),
+    fontSize: scale(14),
     color: "#111827",
+    fontFamily: "Montserrat_400Regular",
   },
 });
