@@ -1,3 +1,4 @@
+import { TransactionDetailProvider } from "@/shared/TransactionDetailContext";
 import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -5,7 +6,6 @@ import React from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { TransactionDetailProvider } from "./TransactionDetailContext";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import FieldComponent from "./components/fieldComponente";

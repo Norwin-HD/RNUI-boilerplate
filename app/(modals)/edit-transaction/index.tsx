@@ -1,12 +1,23 @@
+import { TransactionDetailProvider } from "@/shared/TransactionDetailContext";
 import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
-import { ExpenseSchema } from "@/src/features/transacciones/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { moderateScale, verticalScale } from "react-native-size-matters";
-import { z } from "zod";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import FieldComponent from "./components/fieldComponente";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+
+type FormData = {
+  monto: number;
+  fecha: Date;
+  descripcion: string;
+  imagen: string;
+  categoria: string;
+};
 
 export default function EditTransactionModal() {
   const { id } = useLocalSearchParams() as { id?: string };
@@ -16,17 +27,41 @@ export default function EditTransactionModal() {
   const tid = Number(id);
   const transaction = transactions.find((t) => t.id === tid);
 
-  type FormData = z.infer<typeof ExpenseSchema>;
-  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
-    resolver: zodResolver(ExpenseSchema),
+  const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
-      categoria: transaction?.categoria || "",
-      monto: transaction?.monto || 0,
+      monto: transaction ? Math.abs(transaction.monto || 0) : 0,
       fecha: transaction?.fecha ? new Date(transaction.fecha) : new Date(),
       descripcion: transaction?.descripcion || "",
       imagen: transaction?.imagen || "",
+      categoria: transaction?.categoria || "",
     },
   });
+
+  const handleSave = (data: FormData) => {
+    console.log('handleSave called with data:', data);
+    if (!transaction) {
+      console.log('No transaction found');
+      return;
+    }
+    
+    const signedAmount = transaction.type === "income" ? data.monto : -data.monto;
+    console.log('Signed amount:', signedAmount);
+    
+    const updatedTransactions = transactions.map((t) =>
+      t.id === transaction.id
+        ? {
+            ...t,
+            ...data,
+            monto: signedAmount,
+            fecha: new Date(data.fecha),
+          }
+        : t
+    );
+    
+    console.log('Updated transactions:', updatedTransactions);
+    setTransactions(updatedTransactions);
+    router.dismiss();
+  };
 
   if (!transaction) {
     return (
@@ -43,23 +78,24 @@ export default function EditTransactionModal() {
     );
   }
 
-  const handleSave = handleSubmit((data) => {
-    setTransactions(
-      transactions.map((t) =>
-        t.id === tid
-          ? {
-              ...t,
-              ...data,
-            }
-          : t
-      )
-    );
-    router.dismiss();
-  });
-
   return (
-    <SafeAreaView style={styles.container}>
-      
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      <StatusBar style="light" backgroundColor="#3476F4" translucent={false} />
+      <Header title="Editar transacción" />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: verticalScale(40) }}
+      >
+        <View style={styles.panel}>
+          <TransactionDetailProvider transaction={transaction}>
+            <FieldComponent isEditable={true} control={control} />
+          </TransactionDetailProvider>
+        </View>
+      </ScrollView>
+      <Footer onSave={() => {
+        console.log('Footer onSave called');
+        handleSubmit(handleSave)();
+      }} />
     </SafeAreaView>
   );
 }
@@ -67,8 +103,17 @@ export default function EditTransactionModal() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: verticalScale(10),
     backgroundColor: "#3476F4",
-    justifyContent: "center",
+  },
+  panel: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: moderateScale(18),
+    borderTopRightRadius: moderateScale(18),
+    paddingHorizontal: scale(20),
+    paddingTop: verticalScale(24),
+    gap: verticalScale(16),
   },
   title: {
     fontFamily: "Montserrat_700Bold",
