@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
-import Card from './Card'; // Assuming Card component is in the same directory
+import Card from './Card';
 
 export interface Transaction {
     id: number;

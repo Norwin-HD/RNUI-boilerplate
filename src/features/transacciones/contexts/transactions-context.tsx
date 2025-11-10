@@ -43,7 +43,6 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const addTransaction = (transaction: NewTransaction) => {
     const maxId = transactions.length > 0 ? Math.max(...transactions.map(t => t.id)) : 0;
     setTransactions([
-      ...transactions,
       {
         ...transaction,
         id: maxId + 1,
@@ -53,6 +52,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         categoria: transaction.categoria || "Otros",
         descripcion: transaction.descripcion || "",
       },
+      ...transactions,
     ]);
   };
 

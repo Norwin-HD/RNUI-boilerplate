@@ -9,19 +9,16 @@ import {
     View,
 } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import transaccionesMockup from "../../../mockups/transactionsMockup";
+import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
 import Card from "./Card";
 
-/**
- * Formatea una fecha para mostrar el tiempo relativo transcurrido hasta ahora.
- * @param date La fecha a formatear.
- * @returns Una cadena de texto con el tiempo relativo (ej. "hace 2 dias").
- */
 const formatRelativeDate = (date: Date) => {
   return formatDistanceToNow(date, { addSuffix: true, locale: es });
 }
 
 const RecentTransactions = () => {
+  const { transactions } = useTransactions();
+
   return (
     <View>
       <View style={styles.header}>
@@ -36,12 +33,12 @@ const RecentTransactions = () => {
           />
         </TouchableOpacity>
       </View>
-  {transaccionesMockup.slice(0, 2).map((item, index) => (
+  {transactions.slice(0, 2).map((item, index) => (
         <Card
           key={item.id}
           style={[
             styles.row16,
-            index === transaccionesMockup.length - 1
+            index === transactions.slice(0, 2).length - 1
               ? {}
               : { marginBottom: verticalScale(24) },
           ]}

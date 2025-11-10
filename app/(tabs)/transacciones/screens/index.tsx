@@ -1,4 +1,4 @@
-import { useTransactions } from "@/app/(tabs)/transacciones/hooks/use-transactions";
+import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
 import { useFilter } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
@@ -18,8 +18,8 @@ import TransactionsCard from "../components/transactions/TrasaccionsCard";
 const TransaccionesScreen: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("Todas");
   const { appliedFilters } = useFilter();
-  const { filteredTransactions: allFilteredTransactions } =
-    useTransactions(activeTab as Parameters<typeof useTransactions>[0]);
+  const { transactions: allFilteredTransactions } =
+    useTransactions();
 
   const filteredTransactions = useMemo(() => {
     if (appliedFilters.type === "all" && !appliedFilters.dates) {
@@ -76,7 +76,12 @@ const TransaccionesScreen: React.FC = () => {
               onFilterPress={handleFilterPress}
             />
             <Expenses />
-            <TransactionsCard transactions={filteredTransactions} />
+            <TransactionsCard
+              transactions={filteredTransactions.map((transaction) => ({
+                ...transaction,
+                imageUri: transaction.imageUri || "",
+              }))}
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

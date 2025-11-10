@@ -11,15 +11,12 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = ({ savingAll, allGoal }: ProgressBarProps) => {
-  // Calcula el porcentaje gastado (evita que pase del 100%)
   const percentage = allGoal > 0 ? Math.min(Math.round((savingAll / allGoal) * 100), 100) : 0;
-  // Si el presupuesto es 0, muestra 0% para evitar errores
 
   return (
     <View style={styles.container}>
       <View style={styles.secondContainer}>
         <View style={styles.progressBarContainer}>
-          {/* Muestra una barra verde que crece segun el porcentaje */}
           <View style={[styles.progressBar, { width: `${percentage}%` }]}></View>
         </View>
         <Text style={styles.percentageText}>{`${percentage}%`}</Text>

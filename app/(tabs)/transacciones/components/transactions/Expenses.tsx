@@ -3,11 +3,18 @@ import ArrowCircleUp from "@/app/(tabs)/transacciones/svg/arrow-circle-up";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import transaccionesMackup from "../../../../mockups/transactionsMockup";
-import { useTransactionTotals } from "../../hooks/useTransactionTotals";
+import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
 
 const IncomeExpenses = () => {
-  const { totalIncome, totalExpenses } = useTransactionTotals(transaccionesMackup);
+  const { transactions } = useTransactions();
+
+  const totalIncome = transactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.monto, 0);
+
+  const totalExpenses = transactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + Math.abs(t.monto), 0);
 
   return (
     <View style={styles.container}>

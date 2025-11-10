@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Card from "./card";
 
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { GoalsContext } from "@/src/features/add-goals/contexts";
+import { GoalsContext, useGoalsContext } from "@/src/features/add-goals/contexts";
 
 const formatShortDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -13,7 +13,14 @@ const formatShortDate = (dateString: string) => {
 };
 
 const Goals = () => {
-  const { goals } = useContext(GoalsContext);
+  const goalsContext = useContext(GoalsContext);
+
+  if (!goalsContext) {
+    throw new Error("GoalsContext must be used within a GoalsProvider");
+  }
+
+  const { goals } = goalsContext;
+
 
   return (
     <View style={styles.container}>
@@ -158,6 +165,20 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_500Medium",
     fontSize: moderateScale(12),
     lineHeight: verticalScale(18),
+  },
+  addButton: {
+    backgroundColor: "#0b4fd0",
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: scale(20),
+    borderRadius: moderateScale(10),
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: verticalScale(10),
+  },
+  addButtonText: {
+    color: "#FFFFFF",
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: moderateScale(16),
   },
 });
 

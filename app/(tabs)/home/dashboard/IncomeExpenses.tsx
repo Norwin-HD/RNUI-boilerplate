@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { useTransactions } from '@/src/features/transacciones/contexts/transactions-context';
 
 interface InfoCardProps {
     type: 'income' | 'expense';
@@ -31,18 +31,23 @@ const InfoCard = ({ type, amount }: InfoCardProps) => {
 };
 
 
-interface IncomeExpensesProps {
-    income: number;
-    expenses: number;
-}
+const IncomeExpenses: React.FC = () => {
+  const { transactions } = useTransactions();
 
-const IncomeExpenses: React.FC<IncomeExpensesProps> = ({ income, expenses }) => {
+  const totalIncome = transactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.monto, 0);
+
+  const totalExpenses = transactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + Math.abs(t.monto), 0);
+
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>{"Gastos e Ingresos"}</Text>
       <View style={styles.cardsWrapper}>
-        <InfoCard type="expense" amount={expenses} />
-        <InfoCard type="income" amount={income} />
+        <InfoCard type="expense" amount={totalExpenses} />
+        <InfoCard type="income" amount={totalIncome} />
       </View>
     </View>
   );

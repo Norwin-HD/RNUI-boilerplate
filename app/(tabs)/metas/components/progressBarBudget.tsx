@@ -20,7 +20,6 @@ const ProgressBarBudget = ({ BudgetAll, ExpensesGoal }: ProgressBarProps) => {
     <View style={styles.container}>
       <View style={styles.secondContainer}>
         <View style={styles.progressBarContainer}>
-          {/* Muestra una barra verde que crece segun el porcentaje */}
           <View
             style={[styles.progressBar, { width: `${percentage}%` }]}
           ></View>
