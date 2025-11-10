@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
+import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import PrimaryButton from "../components/PrimaryButton";
 import StepDots from "../components/Stepdots";
 import TitleSubtitle from "../components/TittleSubtitle";
@@ -8,12 +9,11 @@ import TitleSubtitle from "../components/TittleSubtitle";
 export default function SuccessScreen() {
   const router = useRouter();
 
-  
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: "https://drive.google.com/uc?export=download&id=14oeh668L2feTEB6GGRwB32V4piMwtJyF",
+          uri: "https://ik.imagekit.io/nwogrqfzj/Personal-finance.png?updatedAt=1762809050340",
         }}
         style={styles.image}
       />
@@ -27,7 +27,7 @@ Organiza tus finanzas, ahorra con propósito y alcanza tus metas personales."
       <PrimaryButton
         title="Empezar Ahora"
         onPress={() => router.push("/auth/login")}
-        style={{ width: "100%", marginBottom: 20 }}
+        style={{ width: "100%", marginBottom: verticalScale(20) }}
       />
 
       <StepDots activeIndex={2} total={3} />
@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 30,
+    paddingHorizontal: scale(30),
   },
   image: {
-    width: 240,
-    height: 240,
+    width: scale(240),
+    height: verticalScale(240),
     resizeMode: "contain",
-    marginBottom: 40,
+    marginBottom: verticalScale(10),
   },
 });

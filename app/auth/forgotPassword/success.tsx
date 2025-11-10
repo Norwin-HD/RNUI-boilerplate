@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
+import { scale, verticalScale } from "react-native-size-matters";
 
 import TitleSubtitle from "../components/TittleSubtitle";
-
+import BottomButton from "../components/BottomButton";
 
 export default function SuccessResetScreen() {
   const router = useRouter();
@@ -11,14 +12,13 @@ export default function SuccessResetScreen() {
   const handleContinue = () => {
     router.push("/auth/login");
   };
-  
 
   return (
     <View style={styles.screen}>
       <View style={styles.content}>
         <Image
           source={{
-            uri: "https://drive.google.com/uc?export=download&id=1UIVwhtkh9su4BgfAwAh9QTlWml0K7Scd",
+            uri: "https://ik.imagekit.io/nwogrqfzj/Confirmed.png?updatedAt=1762808915461",
           }}
           style={styles.image}
         />
@@ -26,13 +26,17 @@ export default function SuccessResetScreen() {
         <TitleSubtitle
           title="¡Felicidades!"
           subtitle="Tu contraseña ha sido reestablecida con éxito"
+          titleStyle={{ fontSize: scale(22), marginBottom: verticalScale(8) }}
+          subtitleStyle={{
+            fontSize: scale(14),
+            lineHeight: verticalScale(20),
+            textAlign: "center",
+          }}
         />
-        <TouchableOpacity style={styles.button} onPress={handleContinue}>
-          <View style={styles.buttonContent}>
-            <Text style={styles.buttonArrow}>→</Text>
-            <Text style={styles.buttonText}>Iniciar Sesión</Text>
-          </View>
-        </TouchableOpacity>
+
+        <View style={styles.buttonWrapper}>
+          <BottomButton text="Iniciar Sesión" onPress={handleContinue} />
+        </View>
       </View>
     </View>
   );
@@ -41,51 +45,24 @@ export default function SuccessResetScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: scale(20),
   },
   content: {
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 30,
+    width: "100%",
   },
   image: {
-    width: 270,
-    height: 270,
+    width: scale(240),
+    height: verticalScale(240),
     resizeMode: "contain",
-    marginBottom: 20,
+    marginBottom: verticalScale(24),
   },
-  button: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#3476F4",
-    borderRadius: 12,
-    paddingVertical: 14,
-    paddingRight: 50,
+  buttonWrapper: {
+    marginTop: verticalScale(40),
     width: "100%",
-    shadowColor: "#2B79FF",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 4,
-    marginBottom: 40,
-  },
-  buttonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "700",
-  },
-  buttonArrow: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontWeight: "700",
-    marginRight: 6,
   },
 });
