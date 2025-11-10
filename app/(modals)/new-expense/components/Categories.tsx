@@ -2,9 +2,10 @@ import { categories } from "@/app/mockups/categories-filter";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
 import { useCategoryContext } from "../../../../src/features/transacciones/contexts/contexts-category/CategoryContext";
+import DynamicImage from "../../../../types/components/dynamicImage";
 
 type Categoria = {
   title: string;
@@ -16,15 +17,14 @@ type Categoria = {
 const CategoriaCard = ({ title, transactions, active, imageUri }: Categoria) => (
   <View style={[styles.card, !active && styles.inactive]}>
     <View style={styles.cardContent}>
-      {imageUri ? (
-        <Image
-          source={{ uri: imageUri }}
-          style={styles.categoryIcon}
-          resizeMode="contain"
+      <View style={styles.iconContainer}>
+        <DynamicImage
+          path={imageUri ? `${imageUri}.webp` : "package.webp"}
+          width={scale(42)}
+          height={scale(42)}
+          borderRadius={999}
         />
-      ) : (
-        <View style={styles.iconPlaceholder} />
-      )}
+      </View>
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.transactions}>{transactions}</Text>
@@ -116,13 +116,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: moderateScale(12),
   },
-  iconPlaceholder: {
+  iconContainer: {
+    borderRadius: 999,
+    width: scale(50),
+    height: scale(50),
     backgroundColor: "#c2caf2",
     borderWidth: 1,
     borderColor: "#8590c8",
-    borderRadius: 999,
-    width: scale(42),
-    height: scale(42),
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: moderateScale(8),
   },
   categoryIcon: {
     width: scale(42),

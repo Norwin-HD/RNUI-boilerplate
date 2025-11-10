@@ -1,12 +1,10 @@
 import { useTransactionDetail } from "@/shared/TransactionDetailContext";
-import { Image } from "expo-image";
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import TarjetasDeCategoria from "./Categories";
 
-// Componente de solo lectura para mostrar detalles de la transacción
 const FieldComponent: React.FC = () => {
   const transaction = useTransactionDetail();
   const [showVoucher, setShowVoucher] = useState(false);
@@ -23,6 +21,14 @@ const FieldComponent: React.FC = () => {
   });
 
   const voucherUri = transaction.imagen;
+
+  const displayUri = voucherUri && voucherUri.startsWith('/') ? `file://${voucherUri}` : voucherUri;
+
+ const shouldShowImage = displayUri && (displayUri.startsWith('data:') || displayUri.startsWith('http') || displayUri.startsWith('file:'));
+
+  console.log('FieldComponent - voucherUri:', voucherUri);
+  console.log('FieldComponent - displayUri:', displayUri);
+  console.log('FieldComponent - shouldShowImage:', shouldShowImage);
 
   return (
     <View style={styles.wrapper}>
@@ -60,27 +66,54 @@ const FieldComponent: React.FC = () => {
         <TouchableOpacity
           style={styles.receiptBox}
           onPress={() => {
-            if (voucherUri) setShowVoucher(true);
+            console.log('FieldComponent - TouchableOpacity onPress called');
+            console.log('FieldComponent - Pressed receipt box, displayUri:', displayUri, 'shouldShowImage:', shouldShowImage);
+            if (displayUri && shouldShowImage) {
+              console.log('FieldComponent - Opening modal');
+              setShowVoucher(true);
+              console.log('FieldComponent - setShowVoucher called with true');
+            }
           }}
         >
-          {voucherUri ? (
-            <Image source={{ uri: voucherUri }} style={styles.receiptImage} resizeMode="cover" />
+          {shouldShowImage ? (
+            <Image 
+              source={{ uri: displayUri }} 
+              style={styles.receiptImage} 
+              resizeMode="cover"
+              onError={(e) => console.log('FieldComponent - Image load error:', e)}
+              onLoad={() => console.log('FieldComponent - Image loaded successfully')}
+            />
           ) : (
-            <View style={styles.receiptPlaceholder} />
+            <View style={styles.receiptPlaceholder}>
+              <Text style={styles.placeholderText}>
+                {voucherUri ? "Sin imagen" : "Imagen guardada localmente"}
+              </Text>
+            </View>
           )}
         </TouchableOpacity>
       </View>
 
       <Modal
         isVisible={showVoucher}
-        onBackdropPress={() => setShowVoucher(false)}
+        onBackdropPress={() => {
+          console.log('FieldComponent - Backdrop pressed, closing modal');
+          setShowVoucher(false);
+        }}
         style={styles.modal}
       >
         <View style={styles.modalContent}>
-          {voucherUri ? (
-            <Image source={{ uri: voucherUri }} style={styles.fullImage} contentFit="contain" />
-          ) : null}
-          <TouchableOpacity onPress={() => setShowVoucher(false)} style={styles.closeButton}>
+          {displayUri ? (
+            <Image source={{ uri: displayUri }} style={styles.fullImage} resizeMode="contain" 
+              onError={(e) => console.log('FieldComponent - Modal image load error:', e)}
+              onLoad={() => console.log('FieldComponent - Modal image loaded successfully')}
+            />
+          ) : (
+            <Text>No URI to display</Text>
+          )}
+          <TouchableOpacity onPress={() => {
+            console.log('FieldComponent - Close button pressed');
+            setShowVoucher(false);
+          }} style={styles.closeButton}>
             <Text style={styles.closeText}>Cerrar</Text>
           </TouchableOpacity>
         </View>
@@ -182,6 +215,14 @@ const styles = StyleSheet.create({
   receiptPlaceholder: {
     flex: 1,
     backgroundColor: "#E1EBFD",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placeholderText: {
+    fontFamily: "Montserrat_400Regular",
+    fontSize: moderateScale(14),
+    color: "#6C75AD",
+    textAlign: "center",
   },
   expandIcon: {
     position: "absolute",
@@ -199,16 +240,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
-    flex: 1,
+    width: "90%",
+    height: "80%",
+    backgroundColor: 'white',
+    borderRadius: moderateScale(12),
     justifyContent: "center",
     alignItems: "center",
+    padding: scale(10),
   },
   fullImage: {
     width: "100%",
-    height: "80%",
+    height: "70%",
   },
   closeButton: {
-    marginTop: verticalScale(20),
+    position: 'absolute',
+    bottom: verticalScale(20),
     backgroundColor: "#3476F4",
     paddingHorizontal: scale(20),
     paddingVertical: verticalScale(10),

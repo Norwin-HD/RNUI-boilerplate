@@ -1,6 +1,5 @@
 import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
 import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
-import DynamicImage from "@/types/components/dynamicImage";
 import { Ionicons } from "@expo/vector-icons";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
@@ -8,6 +7,7 @@ import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import DynamicImage from "../../../../../types/components/dynamicImage";
 import Card from "./Card";
 
 interface Transaction {
@@ -72,7 +72,7 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
         >
           <View style={styles.iconContainer}>
             <DynamicImage
-              path={`${item.imageUri}.webp`}
+              path={item.imageUri ? `${item.imageUri}.webp` : "package.webp"}
               width={moderateScale(50)}
               height={moderateScale(50)}
               borderRadius={999}

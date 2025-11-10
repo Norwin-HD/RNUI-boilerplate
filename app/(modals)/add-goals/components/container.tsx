@@ -1,16 +1,16 @@
 import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
 import React from "react";
 import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormSetValue,
+    Control,
+    Controller,
+    FieldErrors,
+    UseFormSetValue,
 } from "react-hook-form";
 import {
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
 } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import CategoriaCard from "./Categories";
@@ -109,8 +109,9 @@ export default function AddGoalContainer({
           name="deadline"
           render={({ field: { onChange, value } }) => (
             <InputCalendar
-              date={value ? new Date(value) : null}
-              setDate={(date) => onChange(date?.toISOString())}
+              date={value && value !== "" ? new Date(value) : null}
+              setDate={(date) => onChange(date ? date.toISOString() : "")}
+              error={errors.deadline?.message}
             />
           )}
         />

@@ -1,9 +1,9 @@
 import { IncomeSchema } from "@/src/features/transacciones/schemas/index";
 import React from "react";
 import {
-  Control,
-  Controller,
-  FieldErrors,
+    Control,
+    Controller,
+    FieldErrors,
 } from "react-hook-form";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
@@ -55,12 +55,10 @@ const FieldComponent = ({ control, errors }: FieldComponentProps) => {
             <InputCalendar
               date={value || null}
               setDate={(date) => onChange(date)}
+              error={errors.fecha?.message}
             />
           )}
         />
-        {errors.fecha && (
-          <Text style={styles.errorText}>{errors.fecha.message as string}</Text>
-        )}
 
         <Controller
           control={control}

@@ -1,3 +1,4 @@
+import { categories } from "@/app/mockups/categories-filter";
 import transaccionesMockup from "@/app/mockups/transactionsMockup";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
@@ -18,6 +19,7 @@ interface NewTransaction {
   fecha: Date;
   descripcion?: string;
   imagen?: string;
+  imageUri?: string;
   type: string;
 }
 
@@ -42,13 +44,18 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   const addTransaction = (transaction: NewTransaction) => {
     const maxId = transactions.length > 0 ? Math.max(...transactions.map(t => t.id)) : 0;
+    
+    // Find the imageUri for the selected category
+    const categoryData = categories.find(cat => cat.title === transaction.categoria);
+    const categoryImageUri = categoryData?.imageUri || "package";
+    
     setTransactions([
       {
         ...transaction,
         id: maxId + 1,
-        // Keep both imagen and imageUri in new items to remain compatible
-        imagen: (transaction as any).imagen || (transaction as any).imageUri || "default",
-        imageUri: (transaction as any).imageUri || (transaction as any).imagen || "default",
+        // Preserve the user-selected image, or use category imageUri if no image was selected
+        imagen: transaction.imagen || categoryImageUri,
+        imageUri: transaction.imageUri || categoryImageUri,
         categoria: transaction.categoria || "Otros",
         descripcion: transaction.descripcion || "",
       },

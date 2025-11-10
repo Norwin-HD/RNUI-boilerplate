@@ -12,9 +12,10 @@ type DateValue = Date | null;
 interface InputCalendarProps {
   date: DateValue;
   setDate: (date: DateValue) => void;
+  error?: string;
 }
 
-const InputCalendar = ({ date, setDate }: InputCalendarProps) => {
+const InputCalendar = ({ date, setDate, error }: InputCalendarProps) => {
   const { visible, setVisible, displayText, applyDate, syncDisplay } =
     useCalendarModal(setDate);
   const [ready, setReady] = useState(false);
@@ -69,6 +70,7 @@ const InputCalendar = ({ date, setDate }: InputCalendarProps) => {
             color="#3476F4"
           />
         </Pressable>
+        {error && <Text style={styles.errorText}>{error}</Text>}
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -132,6 +134,12 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: "#6C75AD",
     fontFamily: "Montserrat_400Regular",
+  },
+  errorText: {
+    color: "red",
+    fontFamily: "Montserrat_400Regular",
+    fontSize: moderateScale(12),
+    marginTop: verticalScale(4),
   },
 });
 

@@ -17,7 +17,7 @@ const DynamicImage: React.FC<DynamicImageProps> = ({ path, width, height, border
     <Image
       style={{ width, height, borderRadius }}
       source={{ uri: imageUrl }}
-      contentFit="cover"
+      contentFit="contain"
     />
   );
 };

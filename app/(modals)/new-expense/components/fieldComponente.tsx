@@ -55,12 +55,10 @@ const FieldComponent = ({ control, errors }: FieldComponentProps) => {
             <InputCalendar
               date={value || null}
               setDate={(date) => onChange(date)}
+              error={errors.fecha?.message}
             />
           )}
         />
-        {errors.fecha && (
-          <Text style={styles.errorText}>{errors.fecha.message as string}</Text>
-        )}
 
         <Controller
           control={control}

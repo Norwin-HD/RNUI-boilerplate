@@ -1,10 +1,12 @@
 import { categories } from "@/app/mockups/categories-filter";
-import { useCategoryContext } from "@/src/features/shared/categories/CategoryContext";
+import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
+import DynamicImage from "../../../../types/components/dynamicImage";
+
 
 type Categoria = {
   title: string;
@@ -16,15 +18,14 @@ type Categoria = {
 const CategoriaCard = ({ title, transactions, active, imageUri }: Categoria) => (
   <View style={[styles.card, !active && styles.inactive]}>
     <View style={styles.cardContent}>
-      {imageUri ? (
-        <Image
-          source={{ uri: imageUri }}
-          style={styles.categoryIcon}
-          resizeMode="contain"
+      <View style={styles.iconContainer}>
+        <DynamicImage
+          path={imageUri ? `${imageUri}.webp` : "package.webp"}
+          width={scale(42)}
+          height={scale(42)}
+          borderRadius={999}
         />
-      ) : (
-        <View style={styles.iconPlaceholder} />
-      )}
+      </View>
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.transactions}>{transactions}</Text>
@@ -39,7 +40,7 @@ const CategoriesHeader = () => (
     <TouchableOpacity
       style={styles.headerAction}
       onPress={() =>
-        router.push("/(modals)/add-goals/categorie-filter")
+        router.push("/(modals)/new-income/categorie-filter")
       }
     >
       <Text style={styles.headerText}>Ver todo</Text>
@@ -117,6 +118,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     padding: moderateScale(12),
+  },
+  iconContainer: {
+    borderRadius: 999,
+    width: scale(50),
+    height: scale(50),
+    backgroundColor: "#c2caf2",
+    borderWidth: 1,
+    borderColor: "#8590c8",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: moderateScale(8),
   },
   iconPlaceholder: {
     backgroundColor: "#c2caf2",

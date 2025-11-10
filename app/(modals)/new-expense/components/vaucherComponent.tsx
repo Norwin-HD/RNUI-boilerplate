@@ -1,8 +1,9 @@
 import { ExpenseSchema } from "@/src/features/transacciones/schemas";
 import { Ionicons } from "@expo/vector-icons";
+import * as FileSystem from "expo-file-system/legacy";
 import * as ImagePicker from "expo-image-picker";
-import { Control, Controller } from "react-hook-form";
 import React, { useEffect, useState } from "react";
+import { Control, Controller } from "react-hook-form";
 import {
   Alert,
   Image,
@@ -79,10 +80,24 @@ const VaucherComponent = ({ control }: VaucherComponentProps) => {
       });
 
       if (!result.canceled) {
-        onChange(result.assets[0].uri);
+        // Guardar la URI de la imagen: copiamos al cache de la app para mayor fiabilidad
+        const sourceUri = result.assets[0].uri;
+        try {
+          const maybeExt = sourceUri.split('.').pop()?.split('?')[0] || 'jpg';
+          const filename = `img_${Date.now()}.${maybeExt}`;
+          const dest = `${(FileSystem as any).cacheDirectory}${filename}`;
+          console.log('Copiando imagen a:', dest);
+          await FileSystem.copyAsync({ from: sourceUri, to: dest });
+          console.log('Imagen copiada exitosamente');
+          onChange(dest);
+        } catch (e) {
+          console.log('Error copiando imagen al cache, usando URI original', e);
+          onChange(sourceUri);
+        }
       }
     } catch (error) {
-      console.log("Error al abrir la galería:", error);
+      console.log("Error al procesar la imagen:", error);
+      Alert.alert("Error", "No se pudo procesar la imagen seleccionada.");
     }
   };
 
