@@ -16,6 +16,9 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import "./global.css";
 
+import { FilterProvider } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
+import { RangeProvider } from "@/src/features/transacciones/contexts/context-range/RangeContext";
+import { CategoryProvider } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
 import { useColorScheme } from "@/src/hooks/use-color-scheme";
 import { useFonts } from "expo-font";
 import { TransactionsProvider } from "../src/features/transacciones/contexts/transactions-context";
@@ -35,19 +38,25 @@ export default function RootLayout() {
 
   return (
     <GoalsProvider>
-      <TransactionsProvider>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="auth/index" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(modals)"
-              options={{ headerShown: false, presentation: "fullScreenModal" }}
-            />
-          </Stack>
-          <StatusBar style="inverted" />
-        </ThemeProvider>
-      </TransactionsProvider>
+      <CategoryProvider>
+        <RangeProvider>
+          <FilterProvider>
+            <TransactionsProvider>
+              <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+                <Stack screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="auth/index" options={{ headerShown: false }} />
+                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="(modals)"
+                    options={{ headerShown: false, presentation: "fullScreenModal" }}
+                  />
+                </Stack>
+                <StatusBar style="inverted" />
+              </ThemeProvider>
+            </TransactionsProvider>
+          </FilterProvider>
+        </RangeProvider>
+      </CategoryProvider>
     </GoalsProvider>
   );
 }

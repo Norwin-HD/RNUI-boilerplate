@@ -1,7 +1,9 @@
+import { useCategoryContext } from "@/src/features/shared/categories/CategoryContext";
 import {
   FilterType,
   useFilter,
 } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
+import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { getRangeTime } from "./use-range-time";
@@ -10,6 +12,8 @@ import { getRangeTime } from "./use-range-time";
 export const useFilterScreen = () => {
   const router = useRouter();
   const { appliedFilters, applyFilters } = useFilter();
+  const { clear: clearCategories } = useCategoryContext();
+  const { clearRange } = useRangeContext();
 
   // Estado local inicial desde filtros aplicados
   const [activeTypeTab, setActiveTypeTab] = useState<FilterType>(
@@ -43,8 +47,10 @@ export const useFilterScreen = () => {
   const handleClearFilters = useCallback(() => {
     setActiveTypeTab("all");
     setActiveRangeTimeTab("all");
+    clearCategories();
+    clearRange();
     applyFilters({ type: "all", range: "all", dates: null });
-  }, [applyFilters]);
+  }, [applyFilters, clearCategories, clearRange]);
 
   return {
     activeTypeTab,

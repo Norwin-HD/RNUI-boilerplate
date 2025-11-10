@@ -8,9 +8,10 @@ interface TabsProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   onFilterPress: () => void;
+  isLocked?: boolean;
 }
 
-const Tabs = ({ activeTab, onFilterPress, setActiveTab }: TabsProps) => {
+const Tabs = ({ activeTab, onFilterPress, setActiveTab, isLocked = false }: TabsProps) => {
   
   const tabs = ["Todas", "Ingresos", "Gastos"];
 
@@ -20,11 +21,18 @@ const Tabs = ({ activeTab, onFilterPress, setActiveTab }: TabsProps) => {
         {tabs.map((tab) => (
           <TouchableOpacity
             key={tab}
-            style={activeTab === tab ? styles.buttonMain : styles.buttonSecond}
-            onPress={() => setActiveTab(tab)}
+            style={[
+              activeTab === tab ? styles.buttonMain : styles.buttonSecond,
+              isLocked && tab !== activeTab && styles.buttonDisabled
+            ]}
+            onPress={() => !isLocked && setActiveTab(tab)}
+            disabled={isLocked && tab !== activeTab}
           >
             <Text
-              style={activeTab === tab ? styles.textMain : styles.textSecond}
+              style={[
+                activeTab === tab ? styles.textMain : styles.textSecond,
+                isLocked && tab !== activeTab && styles.textDisabled
+              ]}
             >
               {tab}
             </Text>
@@ -79,6 +87,12 @@ const styles = StyleSheet.create({
     color: "#3476F4",
     fontSize: moderateScale(14),
     fontFamily: "Montserrat_500Medium",
+  },
+  buttonDisabled: {
+    opacity: 0.5,
+  },
+  textDisabled: {
+    opacity: 0.5,
   },
 });
 

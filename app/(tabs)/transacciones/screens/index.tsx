@@ -1,5 +1,5 @@
-import { useFilter } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
 import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
+import { useHasActiveFilters } from "@/src/hooks/use-has-active-filters";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import {
@@ -16,55 +16,28 @@ import Tabs from "../components/transactions/Tabs";
 import TransactionsCard from "../components/transactions/TrasaccionsCard";
 
 const TransaccionesScreen: React.FC = () => {
+  const hasActiveFilters = useHasActiveFilters();
   const [activeTab, setActiveTab] = React.useState("Todas");
-  const { appliedFilters } = useFilter();
-  const { transactions: allFilteredTransactions } =
-    useTransactions();
+  const { filteredTransactions: allContextFilteredTransactions } = useTransactions();
+
+  // Cuando hay filtros activos, forzar el tab a "Todas"
+  const effectiveActiveTab = hasActiveFilters ? "Todas" : activeTab;
 
   const filteredTransactions = useMemo(() => {
-    let baseTransactions = allFilteredTransactions;
-
-    if (activeTab === "Ingresos") {
-      baseTransactions = baseTransactions.filter(transaction => transaction.type === "income");
-    } else if (activeTab === "Gastos") {
-      baseTransactions = baseTransactions.filter(transaction => transaction.type === "expense");
+    if (effectiveActiveTab === "Ingresos") {
+      return allContextFilteredTransactions.filter(transaction => transaction.type === "income");
+    } else if (effectiveActiveTab === "Gastos") {
+      return allContextFilteredTransactions.filter(transaction => transaction.type === "expense");
     }
+    return allContextFilteredTransactions;
+  }, [allContextFilteredTransactions, effectiveActiveTab]);
 
-    if (appliedFilters.type !== "all" || appliedFilters.dates) {
-      return baseTransactions.filter((transaction) => {
-
-        if (appliedFilters.type === "income" && transaction.type !== "income") {
-          return false;
-        }
-        if (appliedFilters.type === "expense" && transaction.type !== "expense") {
-          return false;
-        }
-
-        // Filter by date
-        if (appliedFilters.dates) {
-          const [startDate, endDate] = appliedFilters.dates;
-          const transactionDate = new Date(transaction.fecha);
-
-          const filterStartDate = new Date(startDate);
-          filterStartDate.setHours(0, 0, 0, 0);
-
-          const filterEndDate = new Date(endDate);
-          filterEndDate.setHours(23, 59, 59, 999);
-
-          if (
-            transactionDate < filterStartDate ||
-            transactionDate > filterEndDate
-          ) {
-            return false;
-          }
-        }
-
-        return true;
-      });
+  const handleTabChange = (tab: string) => {
+    // Solo permitir cambiar el tab si no hay filtros activos
+    if (!hasActiveFilters) {
+      setActiveTab(tab);
     }
-
-    return baseTransactions;
-  }, [appliedFilters, allFilteredTransactions, activeTab]);
+  };
 
   const router = useRouter();
 
@@ -79,9 +52,10 @@ const TransaccionesScreen: React.FC = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.column3}>
             <Tabs
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
+              activeTab={effectiveActiveTab}
+              setActiveTab={handleTabChange}
               onFilterPress={handleFilterPress}
+              isLocked={hasActiveFilters}
             />
             <Expenses />
             <TransactionsCard

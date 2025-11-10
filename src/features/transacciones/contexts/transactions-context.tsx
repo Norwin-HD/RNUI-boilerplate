@@ -1,6 +1,9 @@
 import { categories } from "@/app/mockups/categories-filter";
 import transaccionesMockup from "@/app/mockups/transactionsMockup";
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import React, { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { useFilter } from "./context-filter-transaction/FilterContext";
+import { useRangeContext } from "./context-range/RangeContext";
+import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
 
 interface Transaction {
   id: number;
@@ -27,6 +30,7 @@ interface TransactionsContextType {
   transactions: Transaction[];
   addTransaction: (transaction: NewTransaction) => void;
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
+  filteredTransactions: Transaction[]; // Add filteredTransactions to the context type
 }
 
 
@@ -63,8 +67,53 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     ]);
   };
 
+  // Filtering logic
+  const { appliedFilters } = useFilter();
+  const { minValue, maxValue } = useRangeContext();
+  const { selectedCategories } = useCategoryContext();
+
+  const filteredTransactions = useMemo(() => {
+    return transactions.filter((transaction) => {
+      // Filter by type
+      if (appliedFilters.type !== "all" && transaction.type !== appliedFilters.type) {
+        return false;
+      }
+
+      // Filter by date range
+      if (appliedFilters.dates) {
+        const [startDate, endDate] = appliedFilters.dates;
+        const transactionDate = new Date(transaction.fecha);
+
+        const filterStartDate = new Date(startDate);
+        filterStartDate.setHours(0, 0, 0, 0);
+
+        const filterEndDate = new Date(endDate);
+        filterEndDate.setHours(23, 59, 59, 999);
+
+        if (transactionDate < filterStartDate || transactionDate > filterEndDate) {
+          return false;
+        }
+      }
+
+      // Filter by min/max value
+      if (minValue !== null && transaction.monto < minValue) {
+        return false;
+      }
+      if (maxValue !== null && transaction.monto > maxValue) {
+        return false;
+      }
+
+      // Filter by categories
+      if (selectedCategories.length > 0 && !selectedCategories.includes(transaction.categoria)) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [transactions, appliedFilters, minValue, maxValue, selectedCategories]);
+
   return (
-    <TransactionsContext.Provider value={{ transactions, addTransaction, setTransactions }}>
+    <TransactionsContext.Provider value={{ transactions, addTransaction, setTransactions, filteredTransactions }}>
       {children}
     </TransactionsContext.Provider>
   );
