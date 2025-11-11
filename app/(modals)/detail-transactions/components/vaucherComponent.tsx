@@ -78,7 +78,6 @@ const VaucherDetailComponent = () => {
         )}
       </TouchableOpacity>
 
-      {/* Minimal info: show only error text if image fails */}
       {imageLoadError ? (
         <View style={{ paddingVertical: 8 }}>
           <Text style={{ fontSize: 12, color: 'red' }}>{String(imageLoadError)}</Text>

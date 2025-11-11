@@ -53,8 +53,7 @@ export default function EditTransactionModal() {
       console.log('No transaction found');
       return;
     }
-    
-    // Find the category icon
+
     const categoryData = categories.find((cat: any) => cat.title === data.categoria);
     const categoryImageUri = categoryData?.imageUri || "package";
     

@@ -10,12 +10,12 @@ export const useGoalsCalculations = () => {
 
   const { goals } = goalsContext;
 
-  // Calcula el progreso total (suma de todos los currentAmount)
+  // Calcula el progreso total 
   const totalProgress = useMemo(() => {
     return goals.reduce((sum, goal) => sum + goal.currentAmount, 0);
   }, [goals]);
 
-  // Calcula el objetivo total (suma de todos los totalAmount)
+  // Calcula el objetivo total
   const totalGoals = useMemo(() => {
     return goals.reduce((sum, goal) => sum + goal.totalAmount, 0);
   }, [goals]);

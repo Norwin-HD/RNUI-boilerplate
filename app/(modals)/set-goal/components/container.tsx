@@ -23,7 +23,6 @@ export default function PanelContainer({ children }: Props) {
         showsVerticalScrollIndicator={false}
       >
         {children}
-        {/* filler is implicit by container's background and paddingBottom */}
         <View style={{ height: insets.bottom }} />
       </ScrollView>
     </KeyboardAvoidingView>

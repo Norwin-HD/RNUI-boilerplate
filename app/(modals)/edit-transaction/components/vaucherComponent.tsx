@@ -56,7 +56,6 @@ const VaucherComponent = ({ control }: VaucherComponentProps) => {
             );
           }
         } else {
-          // Ya estaba otorgado
           setPermissionGranted(true);
         }
       }

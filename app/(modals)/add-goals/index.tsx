@@ -29,7 +29,7 @@ export default function AddGoalModal() {
       title: "",
       totalAmount: 0,
       currentAmount: 0,
-      deadline: "", // Cambiado de new Date().toISOString() a cadena vacía
+      deadline: "", 
       category: {
         name: "Otros",
         icon: "package",
@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: moderateScale(1),
     backgroundColor: '#fff',
-    paddingBottom: moderateScale(100), // Espacio adicional al final para evitar que se oculte detrás del footer
+    paddingBottom: moderateScale(100), 
   },
 });

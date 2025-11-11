@@ -28,7 +28,7 @@ const DeadlineSection = ({ deadline }: DeadlineSectionProps) => {
         <Ionicons name="calendar" size={moderateScale(20)} color="#3476f4" />
       </View>
 
-      {/* Días restantes */}
+      {/* Dias restantes */}
       <View style={styles.daysRemaining}>
         <Ionicons name="information-circle" size={moderateScale(16)} color="#181a2a" />
         <Text style={styles.daysText}>

@@ -14,7 +14,7 @@ const ProgressBar = ({ savingAll, allGoal }: ProgressBarProps) => {
   const percentage = allGoal > 0 ? Math.min(Math.round((savingAll / allGoal) * 100), 100) : 0;
 
   const { width } = Dimensions.get('window');
-  const scaleFactor = Math.min(Math.max(width / 375, 0.8), 1.4); // clamp for very small/large screens
+  const scaleFactor = Math.min(Math.max(width / 375, 0.8), 1.4); 
   const percentageFont = moderateScale(12 * scaleFactor);
 
   return (

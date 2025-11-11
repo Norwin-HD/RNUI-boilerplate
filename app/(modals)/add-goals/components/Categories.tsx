@@ -54,7 +54,7 @@ const CategoriesHeader = () => (
 export default function CategoriaCardList() {
   const { selectedCategories } = useCategoryContext();
 
-  // Muestra categorías seleccionadas, o las dos primeras por defecto
+  // Muestra categorias seleccionadas, o las dos primeras por defecto
   const preview =
     selectedCategories.length > 0
       ? categories.filter((c) => selectedCategories.includes(c.title))
