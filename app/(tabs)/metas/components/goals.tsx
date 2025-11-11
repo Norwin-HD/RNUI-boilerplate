@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Card from "./card";
 
+import { GoalsContext } from "@/src/features/add-goals/contexts";
+import { Ionicons } from "@expo/vector-icons";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { GoalsContext } from "@/src/features/add-goals/contexts";
+import { useRouter } from "expo-router";
 
 const formatShortDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -14,12 +16,17 @@ const formatShortDate = (dateString: string) => {
 
 const Goals = () => {
   const goalsContext = useContext(GoalsContext);
+  const router = useRouter();
 
   if (!goalsContext) {
     throw new Error("GoalsContext must be used within a GoalsProvider");
   }
 
   const { goals } = goalsContext;
+
+  const handleGoalPress = (goalId: string) => {
+    router.push(`/detail-goals?id=${goalId}` as any);
+  };
 
 
   return (
@@ -43,7 +50,15 @@ const Goals = () => {
                   {goal.title}
                 </Text>
               </View>
-              <Text style={styles.deadlineText}>{formatShortDate(goal.deadline)}</Text>
+              <View style={styles.dateContainer}>
+                <Text style={styles.deadlineText}>{formatShortDate(goal.deadline)}</Text>
+                <TouchableOpacity 
+                  style={styles.arrowButton}
+                  onPress={() => handleGoalPress(goal.id)}
+                >
+                  <Ionicons name="chevron-forward" size={moderateScale(16)} color="#181a2a" />
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={styles.progressSection}>
               <View style={styles.progressBarContainer}>
@@ -129,6 +144,14 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_400Regular",
     fontSize: moderateScale(12),
     lineHeight: verticalScale(18),
+  },
+  dateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: scale(4),
+  },
+  arrowButton: {
+    padding: scale(2),
   },
   progressSection: {
     gap: verticalScale(10),
