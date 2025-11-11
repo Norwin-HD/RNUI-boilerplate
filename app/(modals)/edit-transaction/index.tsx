@@ -59,21 +59,23 @@ export default function EditTransactionModal() {
     
     const signedAmount = transaction.type === "income" ? data.monto : -data.monto;
     console.log('Signed amount:', signedAmount);
-    
-    const updatedTransactions = transactions.map((t) =>
-      t.id === transaction.id
-        ? {
-            ...t,
-            ...data,
-            monto: signedAmount,
-            fecha: new Date(data.fecha),
-            imageUri: categoryImageUri,
-          }
-        : t
-    );
-    
-    console.log('Updated transactions:', updatedTransactions);
-    setTransactions(updatedTransactions);
+
+    const updatedTransaction = {
+      ...transaction,
+      ...data,
+      monto: signedAmount,
+      fecha: new Date(data.fecha),
+      imagen: categoryImageUri,
+      imageUri: categoryImageUri,
+    };
+
+    const newTransactions = [
+      updatedTransaction,
+      ...transactions.filter((t) => t.id !== transaction.id),
+    ];
+
+    console.log('Updated transactions (moved to top):', newTransactions);
+    setTransactions(newTransactions);
     router.dismiss();
   };
 
