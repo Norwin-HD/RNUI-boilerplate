@@ -2,8 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { metasMockup } from "../../../mockups/metas-mockup";
-import { presupuestosMockup } from "../../../mockups/presupuestos-mockup";
+import { metasMockup } from "../../../../src/mockups/metas-mockup";
+import { presupuestosMockup } from "../../../../src/mockups/presupuestos-mockup";
 import MainGoalCard from "./MainGoalCard";
 import SecondaryGoalCard from "./SecondaryGoalCard";
 

@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { formatDateRange } from "../../utils/format-date-range";
+import { formatDateRange } from "../../../../../src/utils/format-date-range";
 
 export const useCalendarModal = (
   // cargar el rango de fechas seleccionado

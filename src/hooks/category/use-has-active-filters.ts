@@ -1,6 +1,6 @@
-import { useCategoryContext } from "@/src/features/shared/categories/CategoryContext";
-import { useFilter } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
-import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
+import { useFilter } from "@/src/stores/categories/FilterContext";
+import { useRangeContext } from "@/src/stores/transactions/RangeContext";
 
 export const useHasActiveFilters = () => {
   const { appliedFilters } = useFilter();

@@ -1,9 +1,9 @@
-import { useCategoryContext } from "@/src/features/shared/categories/CategoryContext";
+import { useCategoryContext } from "@/src/shared/CategoryContext";
 import {
   FilterType,
   useFilter,
-} from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
-import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
+} from "@/src/stores/categories/FilterContext";
+import { useRangeContext } from "@/src/stores/transactions/RangeContext";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { getRangeTime } from "./use-range-time";

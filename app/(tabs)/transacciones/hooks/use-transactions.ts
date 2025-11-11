@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useTransactions as useGlobalTransactions } from "../../../../src/features/transacciones/contexts/transactions-context";
+import { useTransactions as useGlobalTransactions } from "../../../../src/stores/transactions/transactions-context";
 
 export type TabKind = "Todas" | "Ingresos" | "Gastos";
 

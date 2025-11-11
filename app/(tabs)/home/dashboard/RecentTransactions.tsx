@@ -1,5 +1,5 @@
-import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
-import DynamicImage from "@/types/components/dynamicImage";
+import { useTransactions } from "@/src/stores/transactions/transactions-context";
+import DynamicImage from "@/src/utils/dynamicImage";
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 import React from "react";

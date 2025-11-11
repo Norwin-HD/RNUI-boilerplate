@@ -1,4 +1,4 @@
-import { IncomeSchema } from "@/src/features/transacciones/schemas";
+import { IncomeSchema } from "@/src/schema/IncomeSchema";
 import { Ionicons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system/legacy";
 import * as ImagePicker from "expo-image-picker";

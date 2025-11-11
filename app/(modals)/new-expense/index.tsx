@@ -7,8 +7,8 @@ import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale } from "react-native-size-matters";
 import { z } from "zod";
-import { useTransactions } from "../../../src/features/transacciones/contexts/transactions-context";
-import { ExpenseSchema } from "../../../src/features/transacciones/schemas";
+import { ExpenseSchema } from "@/src/schema/expenseSchema";
+import { useTransactions } from "../../../src/stores/transactions/transactions-context";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";

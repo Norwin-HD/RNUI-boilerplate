@@ -1,6 +1,6 @@
 import ArrowCircleDown from '@/assets/svg/arrow-down';
 import ArrowCircleUp from '@/assets/svg/arrow-up';
-import { useTransactions } from '@/src/features/transacciones/contexts/transactions-context';
+import { useTransactions } from '@/src/stores/transactions/transactions-context';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';

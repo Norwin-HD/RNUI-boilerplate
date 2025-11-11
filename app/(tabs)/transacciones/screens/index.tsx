@@ -1,5 +1,5 @@
-import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
-import { useHasActiveFilters } from "@/src/hooks/use-has-active-filters";
+import { useHasActiveFilters } from "@/src/hooks/category/use-has-active-filters";
+import { useTransactions } from "@/src/stores/transactions/transactions-context";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import {

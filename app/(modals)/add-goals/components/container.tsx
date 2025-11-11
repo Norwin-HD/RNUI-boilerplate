@@ -1,16 +1,16 @@
-import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
 import React from "react";
 import {
-    Control,
-    Controller,
-    FieldErrors,
-    UseFormSetValue,
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormSetValue,
 } from "react-hook-form";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
 } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import CategoriaCard from "./Categories";

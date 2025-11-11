@@ -1,11 +1,11 @@
-import { categories } from "@/app/mockups/categories-filter";
-import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
+import { categories } from "@/src/mockups/categories-filter";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
-import DynamicImage from "../../../../types/components/dynamicImage";
+import DynamicImage from "@/src/utils/dynamicImage";
 
 
 type Categoria = {

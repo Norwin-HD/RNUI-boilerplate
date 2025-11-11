@@ -1,4 +1,4 @@
-import { useColorScheme } from "@/src/hooks/use-color-scheme";
+import { useColorScheme } from "@/src/constants/use-color-scheme";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";

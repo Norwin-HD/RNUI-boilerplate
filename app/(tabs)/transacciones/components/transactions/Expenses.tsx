@@ -1,9 +1,9 @@
 import ArrowCircleDown from "@/app/(tabs)/transacciones/svg/arrow-circle-down";
 import ArrowCircleUp from "@/app/(tabs)/transacciones/svg/arrow-circle-up";
+import { useTransactions } from "@/src/stores/transactions/transactions-context";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
 
 const IncomeExpenses = () => {
   const { transactions } = useTransactions();

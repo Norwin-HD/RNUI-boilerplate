@@ -1,4 +1,4 @@
-import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
+import { useRangeContext } from "@/src/stores/transactions/RangeContext";
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";

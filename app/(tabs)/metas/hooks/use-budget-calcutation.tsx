@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { presupuestosMockup } from '../../../mockups/presupuestos-mockup';
+import { presupuestosMockup } from '../../../../src/mockups/presupuestos-mockup';
 
 export const useBudgetCalculations = () => {
   const { budgets } = presupuestosMockup;

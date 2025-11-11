@@ -7,12 +7,12 @@ import { HapticTab } from "@/components/haptic-tab";
 import FigmaBottomNav from "@/components/ui/bottomNav/figma-bottom-nav";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/src/constants/theme";
-import { useColorScheme } from "@/src/hooks/use-color-scheme";
-import { useHasActiveFilters } from "@/src/hooks/use-has-active-filters";
+import { useColorScheme } from "@/src/constants/use-color-scheme";
+import { useHasActiveFilters } from "@/src/hooks/category/use-has-active-filters";
 
-import { useCategoryContext } from "@/src/features/shared/categories/CategoryContext";
-import { useFilter } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
-import { useRangeContext } from "@/src/features/transacciones/contexts/context-range/RangeContext";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
+import { useFilter } from "@/src/stores/categories/FilterContext";
+import { useRangeContext } from "@/src/stores/transactions/RangeContext";
 
 function FigmaNavAdapter(props: any) {
   const { state, navigation } = props;

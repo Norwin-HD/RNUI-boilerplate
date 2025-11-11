@@ -1,4 +1,4 @@
-import { IIcon } from '@/types/components/ui/IImage';
+import { IIcon } from '@/src/types/components/ui/IImage';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 

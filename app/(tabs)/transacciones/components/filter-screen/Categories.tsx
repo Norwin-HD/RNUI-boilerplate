@@ -1,6 +1,6 @@
-import { categories } from "@/app/mockups/categories-filter";
-import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
-import DynamicImage from "@/types/components/dynamicImage";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
+import { categories } from "@/src/mockups/categories-filter";
+import DynamicImage from "@/src/utils/dynamicImage";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";

@@ -1,4 +1,4 @@
-import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
 import React from "react";
 import {
   Control,

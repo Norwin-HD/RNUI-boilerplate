@@ -1,4 +1,4 @@
-import { categories } from "@/app/mockups/categories-filter";
+import { categories } from "@/src/mockups/categories-filter";
 import { useCallback, useState } from "react";
 
 export interface UseSelectCategorieOptions {

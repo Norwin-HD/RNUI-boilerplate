@@ -1,4 +1,4 @@
-import { useTransactionDetail } from "@/shared/TransactionDetailContext";
+import { useTransactionDetail } from "@/src/shared/TransactionDetailContext";
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";

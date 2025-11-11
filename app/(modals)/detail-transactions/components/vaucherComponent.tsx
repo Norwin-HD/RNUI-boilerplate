@@ -1,5 +1,5 @@
 
-import { useTransactionDetail } from "@/shared/TransactionDetailContext";
+import { useTransactionDetail } from "@/src/shared/TransactionDetailContext";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import React, { useEffect, useState } from "react";

@@ -1,5 +1,5 @@
-import { TransactionDetailProvider } from "@/shared/TransactionDetailContext";
-import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
+import { TransactionDetailProvider } from "@/src/shared/TransactionDetailContext";
+import { useTransactions } from "@/src/stores/transactions/transactions-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";

@@ -1,8 +1,8 @@
-import { categories } from "@/app/mockups/categories-filter";
-import { useTransactionDetail } from "@/shared/TransactionDetailContext";
-import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
+import { categories } from "@/src/mockups/categories-filter";
+import { useTransactionDetail } from "@/src/shared/TransactionDetailContext";
 
-import DynamicImage from "@/types/components/dynamicImage";
+import DynamicImage from "@/src/utils/dynamicImage";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";

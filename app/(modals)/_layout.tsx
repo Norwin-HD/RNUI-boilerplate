@@ -1,4 +1,4 @@
-import { CategoryProvider } from "@/src/features/add-goals/contexts/CategoryContext";
+import { CategoryProvider } from "@/src/shared/CategoryContext";
 import { Stack } from "expo-router";
 import React from "react";
 

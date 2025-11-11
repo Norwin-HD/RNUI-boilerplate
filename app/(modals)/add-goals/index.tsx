@@ -1,5 +1,5 @@
-import { useGoalsContext } from "@/src/features/add-goals/contexts";
-import { GoalSchema } from "@/src/features/add-goals/schemas";
+import { useGoalsContext } from "@/src/stores/goals/index";
+import { GoalSchema } from "@/src/schema/goalSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";

@@ -1,4 +1,4 @@
-import { GoalsContext } from "@/src/features/add-goals/contexts";
+import { GoalsContext } from "@/src/stores/goals/index";
 import { useContext, useMemo } from "react";
 
 export const useGoalsCalculations = () => {

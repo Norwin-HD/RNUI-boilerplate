@@ -1,7 +1,7 @@
-import { categories } from "@/app/mockups/categories-filter";
-import { TransactionDetailProvider } from "@/shared/TransactionDetailContext";
-import { useCategoryContext } from "@/src/features/add-goals/contexts/CategoryContext";
-import { useTransactions } from "@/src/features/transacciones/contexts/transactions-context";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
+import { categories } from "@/src/mockups/categories-filter";
+import { TransactionDetailProvider } from "@/src/shared/TransactionDetailContext";
+import { useTransactions } from "@/src/stores/transactions/transactions-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+
+//Components
 import FieldComponent from "./components/fieldComponente";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -40,25 +42,27 @@ export default function EditTransactionModal() {
     },
   });
 
-  // Update categoria when selectedCategories changes
   React.useEffect(() => {
     if (selectedCategories.length > 0) {
-      setValue('categoria', selectedCategories[0]);
+      setValue("categoria", selectedCategories[0]);
     }
   }, [selectedCategories, setValue]);
 
   const handleSave = (data: FormData) => {
-    console.log('handleSave called with data:', data);
+    console.log("handleSave called with data:", data);
     if (!transaction) {
-      console.log('No transaction found');
+      console.log("No transaction found");
       return;
     }
 
-    const categoryData = categories.find((cat: any) => cat.title === data.categoria);
+    const categoryData = categories.find(
+      (cat: any) => cat.title === data.categoria
+    );
     const categoryImageUri = categoryData?.imageUri || "package";
-    
-    const signedAmount = transaction.type === "income" ? data.monto : -data.monto;
-    console.log('Signed amount:', signedAmount);
+
+    const signedAmount =
+      transaction.type === "income" ? data.monto : -data.monto;
+    console.log("Signed amount:", signedAmount);
 
     const updatedTransaction = {
       ...transaction,
@@ -74,7 +78,7 @@ export default function EditTransactionModal() {
       ...transactions.filter((t) => t.id !== transaction.id),
     ];
 
-    console.log('Updated transactions (moved to top):', newTransactions);
+    console.log("Updated transactions (moved to top):", newTransactions);
     setTransactions(newTransactions);
     router.dismiss();
   };
@@ -107,11 +111,13 @@ export default function EditTransactionModal() {
             <FieldComponent isEditable={true} control={control} />
           </TransactionDetailProvider>
         </View>
+        <Footer
+          onSave={() => {
+            console.log("Footer onSave called");
+            handleSubmit(handleSave)();
+          }}
+        />
       </ScrollView>
-      <Footer onSave={() => {
-        console.log('Footer onSave called');
-        handleSubmit(handleSave)();
-      }} />
     </SafeAreaView>
   );
 }

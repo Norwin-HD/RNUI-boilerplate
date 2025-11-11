@@ -1,6 +1,6 @@
+import { IIcon } from '@/src/types/components/ui/IImage';
 import React from 'react';
-import { Svg, Path, G, ClipPath, Rect, Defs } from 'react-native-svg';
-import { IIcon } from '@/types/components/ui/IImage';
+import { ClipPath, Defs, G, Path, Rect, Svg } from 'react-native-svg';
 
 const usdCircle = ({ width, height, color }: IIcon) => (
   <Svg

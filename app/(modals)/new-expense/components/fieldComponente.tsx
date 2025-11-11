@@ -1,4 +1,4 @@
-import { ExpenseSchema } from "@/src/features/transacciones/schemas/index";
+import { ExpenseSchema } from "@/src/schema/expenseSchema";
 import React from "react";
 import {
   Control,

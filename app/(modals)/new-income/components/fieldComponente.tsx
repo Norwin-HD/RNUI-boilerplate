@@ -1,4 +1,4 @@
-import { IncomeSchema } from "@/src/features/transacciones/schemas/index";
+import { IncomeSchema } from "@/src/schema/IncomeSchema";
 import React from "react";
 import {
     Control,

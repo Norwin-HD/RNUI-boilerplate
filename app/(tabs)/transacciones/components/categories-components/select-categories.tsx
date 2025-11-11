@@ -1,5 +1,5 @@
-import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
-import DynamicImage from "@/types/components/dynamicImage";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
+import DynamicImage from "@/src/utils/dynamicImage";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";

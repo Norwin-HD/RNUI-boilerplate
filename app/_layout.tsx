@@ -1,4 +1,4 @@
-import { GoalsProvider } from "@/src/features/add-goals/contexts";
+import { GoalsProvider } from "@/src/stores/goals/index";
 import {
   Montserrat_400Regular,
   Montserrat_500Medium,
@@ -16,12 +16,12 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import "./global.css";
 
-import { FilterProvider } from "@/src/features/transacciones/contexts/context-filter-transaction/FilterContext";
-import { RangeProvider } from "@/src/features/transacciones/contexts/context-range/RangeContext";
-import { CategoryProvider } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
-import { useColorScheme } from "@/src/hooks/use-color-scheme";
+import { useColorScheme } from "@/src/constants/use-color-scheme";
+import { CategoryProvider } from "@/src/shared/CategoryContext";
+import { FilterProvider } from "@/src/stores/categories/FilterContext";
+import { RangeProvider } from "@/src/stores/transactions/RangeContext";
 import { useFonts } from "expo-font";
-import { TransactionsProvider } from "../src/features/transacciones/contexts/transactions-context";
+import { TransactionsProvider } from "../src/stores/transactions/transactions-context";
 
 const FONT_MAP = {
   Montserrat_500Medium,

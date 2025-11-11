@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import React from "react";
-import { CategoryProvider } from "../../../src/features/transacciones/contexts/contexts-category/CategoryContext";
+import { CategoryProvider } from "@/src/stores/categories/CategoryContext";
 
 export default function AddExpenseLayout() {
   return (

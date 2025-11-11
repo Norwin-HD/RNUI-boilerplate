@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { useSelectCategorie } from "./use-select-categorie";
+import { useSelectCategorie } from "@/src/hooks/category/use-select-categorie";
 
 export interface SharedCategoryContextValue {
   categories: any[];

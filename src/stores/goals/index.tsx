@@ -1,6 +1,6 @@
+import { metasMockup } from "@/src/mockups/metas-mockup";
 import React, { createContext, useContext, useState } from "react";
-import { metasMockup } from "../../../../app/mockups/metas-mockup";
-import { IGoals } from "../types";
+import { IGoals } from "@/src/types/index";
 
 interface GoalsContextType {
   goals: IGoals[];

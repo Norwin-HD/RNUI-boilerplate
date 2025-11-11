@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
-import { presupuestosMockup } from '../../../mockups/presupuestos-mockup';
+import { presupuestosMockup } from '../../../../src/mockups/presupuestos-mockup';
 import Card from './card';
 
 interface SecondaryGoalCardProps {

@@ -1,4 +1,4 @@
-import { ExpenseSchema } from "@/src/features/transacciones/schemas";
+import { ExpenseSchema } from "@/src/schema/expenseSchema";
 import React from "react";
 import { Control, FieldErrors, UseFormSetValue } from "react-hook-form";
 import {
@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import { z } from "zod";
-import { useCategoryContext } from "../../../../src/features/transacciones/contexts/contexts-category/CategoryContext";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
 import FieldComponent from "./fieldComponente";
 import VaucherComponent from "./vaucherComponent";
 

@@ -1,4 +1,4 @@
-import { GoalsContext } from "@/src/features/add-goals/contexts";
+import { GoalsContext } from "@/src/stores/goals/index";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useContext } from "react";

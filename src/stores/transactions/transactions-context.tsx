@@ -1,9 +1,9 @@
-import { categories } from "@/app/mockups/categories-filter";
-import transaccionesMockup from "@/app/mockups/transactionsMockup";
+import { categories } from "@/src/mockups/categories-filter";
+import transaccionesMockup from "@/src/mockups/transactionsMockup";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
 import React, { createContext, ReactNode, useContext, useMemo, useState } from "react";
-import { useFilter } from "./context-filter-transaction/FilterContext";
-import { useRangeContext } from "./context-range/RangeContext";
-import { useCategoryContext } from "@/src/features/transacciones/contexts/contexts-category/CategoryContext";
+import { useFilter } from "../categories/FilterContext";
+import { useRangeContext } from "./RangeContext";
 
 interface Transaction {
   id: number;
@@ -95,11 +95,11 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         }
       }
 
-      // Filter by min/max value
-      if (minValue !== null && transaction.monto < minValue) {
+     const absAmount = Math.abs(transaction.monto);
+      if (minValue !== null && absAmount < minValue) {
         return false;
       }
-      if (maxValue !== null && transaction.monto > maxValue) {
+      if (maxValue !== null && absAmount > maxValue) {
         return false;
       }
 

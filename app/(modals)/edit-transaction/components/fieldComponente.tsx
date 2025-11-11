@@ -1,4 +1,4 @@
-import { useTransactionDetail } from "@/shared/TransactionDetailContext";
+import { useTransactionDetail } from "@/src/shared/TransactionDetailContext";
 import React from "react";
 import { Controller } from "react-hook-form";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
