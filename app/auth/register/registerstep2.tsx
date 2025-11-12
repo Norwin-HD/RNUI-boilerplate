@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import React, { useState, useEffect } from "react";
 import {
   ScrollView,
@@ -9,6 +9,8 @@ import {
   KeyboardEvent,
 } from "react-native";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+import { ID } from "appwrite";
+import { account, databases } from "@/src/lib/appwrite";
 
 import EmailInput from "../components/EmailInput";
 import FooterLink from "../components/FooterLink";
@@ -18,21 +20,32 @@ import PrimaryButton from "../components/PrimaryButton";
 import SocialLogin from "../components/SocialLogin";
 import StepDots from "../components/Stepdots";
 import TitleSubtitle from "../components/TittleSubtitle";
+import AlertModal from "../components/AlertModal";
 
 export default function RegisterEmailScreen() {
   const router = useRouter();
+  const { nombre, apellido, ocupacion, fechaNacimiento } =
+    useLocalSearchParams();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const showSub = Keyboard.addListener("keyboardDidShow", (e: KeyboardEvent) => {
-      setKeyboardHeight(e.endCoordinates.height - (Platform.OS === "ios" ? 20 : 0));
-    });
-    const hideSub = Keyboard.addListener("keyboardDidHide", () => {
-      setKeyboardHeight(0);
-    });
+    const showSub = Keyboard.addListener(
+      "keyboardDidShow",
+      (e: KeyboardEvent) => {
+        setKeyboardHeight(
+          e.endCoordinates.height - (Platform.OS === "ios" ? 20 : 0)
+        );
+      }
+    );
+    const hideSub = Keyboard.addListener("keyboardDidHide", () =>
+      setKeyboardHeight(0)
+    );
 
     return () => {
       showSub.remove();
@@ -40,31 +53,85 @@ export default function RegisterEmailScreen() {
     };
   }, []);
 
-  const handleRegister = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  useEffect(() => {
+    console.log("Datos recibidos del paso anterior:", {
+      nombre,
+      apellido,
+      ocupacion,
+      fechaNacimiento,
+    });
+  }, [nombre, apellido, ocupacion, fechaNacimiento]);
 
-    if (!email || !password || !confirmPassword) {
-      alert("Por favor completa todos los campos.");
-      return;
+  const handleRegister = async () => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
+  const invalidDomains = ["gnail.com", "gamil.com", "gmaill.com", "hotmial.com", "yaho.com"];
+  const domain = email.split("@")[1];
+
+  if (!email || !password || !confirmPassword) {
+    setModalMessage("Por favor completa todos los campos.");
+    return;
+  }
+  if (!emailRegex.test(email) || invalidDomains.includes(domain)) {
+    setModalMessage("Por favor ingresa un correo válido.");
+    return;
+  }
+  if (password.length < 6) {
+    setModalMessage("La contraseña debe tener al menos 6 caracteres.");
+    return;
+  }
+  if (password !== confirmPassword) {
+    setModalMessage("Las contraseñas no coinciden.");
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    // Cerrar sesión activa si la hubiera
+    try {
+      await account.deleteSession("current");
+    } catch {
+      console.log("No había sesión activa, continuando...");
     }
 
-    if (!emailRegex.test(email)) {
-      alert("Por favor ingresa un correo válido.");
-      return;
-    }
+    // Crear usuario
+    const newUser = await account.create(ID.unique(), email, password);
 
-    if (password.length < 6) {
-      alert("La contraseña debe tener al menos 6 caracteres.");
-      return;
-    }
+    // Iniciar sesión automáticamente
+    await account.createEmailPasswordSession(email, password);
 
-    if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden.");
-      return;
-    }
+    // Guardar datos personales en la base de datos
+    await databases.createDocument(
+      process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
+      process.env.EXPO_PUBLIC_APPWRITE_PROFILES_COLLECTION_ID!,
+      ID.unique(),
+      {
+        name: nombre || "",
+        last_name: apellido || "",
+        occupation: ocupacion || "",
+        dateBirth: fechaNacimiento || "",
+        email,
+        userId: newUser.$id,
+      }
+    );
 
+    console.log("Usuario y perfil guardados correctamente.");
     router.push("/auth/register/registersucces");
-  };
+  } catch (error: any) {
+    console.error("Error al registrar:", error);
+
+    if (error.code === 409) {
+      setModalMessage("Ya existe una cuenta con este correo electrónico.");
+    } else if (error.code === 401) {
+      setModalMessage("No puedes crear una sesión mientras ya hay una activa.");
+    } else {
+      setModalMessage(error.message || "Error al crear la cuenta.");
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <View style={styles.container}>
@@ -102,18 +169,24 @@ export default function RegisterEmailScreen() {
 
         <View style={{ height: verticalScale(4) }} />
 
-        <PrimaryButton title="Crear cuenta" onPress={handleRegister} />
+        <PrimaryButton
+          title={loading ? "Creando cuenta..." : "Crear cuenta"}
+          onPress={handleRegister}
+        />
 
         <StepDots activeIndex={1} total={3} />
 
-        <SocialLogin />
+        <SocialLogin
+          onLoginSuccess={(provider) =>
+            setModalMessage(`¡Has iniciado sesión con ${provider}!`)
+          }
+        />
+
         <FooterLink
           question="¿Ya tienes una cuenta?"
           actionText="Iniciar sesión"
           linkTo="/auth/login"
         />
-
-        <View style={{ height: verticalScale(10) }} />
       </ScrollView>
 
       <View
@@ -121,16 +194,19 @@ export default function RegisterEmailScreen() {
           styles.bottomButtonWrapper,
           { marginBottom: Platform.OS === "android" ? keyboardHeight : 0 },
         ]}
-      ></View>
+      />
+
+      <AlertModal
+        visible={!!modalMessage}
+        message={modalMessage}
+        onClose={() => setModalMessage(null)}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#3476F4",
-  },
+  container: { flex: 1, backgroundColor: "#3476F4" },
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: "#FFFFFF",
@@ -145,8 +221,5 @@ const styles = StyleSheet.create({
     shadowRadius: scale(6),
     elevation: 6,
   },
-  bottomButtonWrapper: {
-    width: "100%",
-    backgroundColor: "#FFFFFF",
-  },
+  bottomButtonWrapper: { width: "100%", backgroundColor: "#FFFFFF" },
 });

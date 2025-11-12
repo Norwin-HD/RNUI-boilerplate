@@ -3,13 +3,11 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-native",
+    "module": "ESNext",
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@features/*": [
-        "./src/features/*"
-      ]
+      "@/*": ["./*"],
+      "@features/*": ["./src/features/*"]
     }
   },
   "include": [
@@ -18,6 +16,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts"
-  ],
-  
+  ]
 }
