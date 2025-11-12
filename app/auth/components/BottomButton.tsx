@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     paddingHorizontal: scale(24),
-    paddingBottom: verticalScale(30),
+    paddingBottom: verticalScale(15),
     backgroundColor: "transparent",
   },
   button: {
     backgroundColor: "#3476F4",
     borderRadius: scale(12),
-    paddingVertical: verticalScale(14),
+    paddingVertical: verticalScale(12),
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#2B79FF",

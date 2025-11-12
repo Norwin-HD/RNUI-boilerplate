@@ -24,7 +24,7 @@ export default function SocialLogin({ onLoginSuccess }: SocialLoginProps) {
 
   const handleCloseModal = () => {
     setModalUser(null);
-    router.push("/home");
+    router.push("./login");
   };
 
   return (
