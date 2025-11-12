@@ -1,39 +1,69 @@
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
+import { account } from "@/src/lib/appwrite";
+import { traducirErrorAppwrite } from "@/src/lib/appwriteErrors";
 
 import FooterLink from "../auth/components/FooterLink";
 import Header from "../auth/components/Header";
 import PasswordInput from "../auth/components/PasswordInput";
 import SocialLogin from "../auth/components/SocialLogin";
 import EmailInput from "./components/EmailInput";
-import AppText from "../auth/components/AppText"; 
+import AppText from "../auth/components/AppText";
+import AlertModal from "../auth/components/AlertModal";
 
 export default function LoginScreen() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const handleLogin = async () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
+    const invalidDomains = [
+      "gnail.com",
+      "gamil.com",
+      "gmaill.com",
+      "hotmial.com",
+      "yaho.com",
+    ];
+    const domain = email.split("@")[1];
 
     if (!email || !password) {
-      alert("Por favor ingresa correo y contraseña.");
+      setModalMessage("Por favor ingresa correo y contraseña.");
       return;
     }
 
-    if (!emailRegex.test(email)) {
-      alert("Por favor ingresa un correo válido.");
+    if (!emailRegex.test(email) || invalidDomains.includes(domain)) {
+      setModalMessage("Por favor ingresa un correo válido.");
       return;
     }
 
-    router.push("/(tabs)/home");
+    try {
+      setLoading(true);
+
+      // Cierra sesión previa si existe
+      try {
+        await account.deleteSession("current");
+      } catch {
+        console.log("No había sesión activa, continuando...");
+      }
+
+      if (loading) return;
+      setLoading(true);
+
+      // Inicia sesión
+      await account.createEmailPasswordSession(email, password);
+
+      router.push("/(tabs)/home");
+    } catch (error) {
+      const mensaje = traducirErrorAppwrite(error);
+      setModalMessage(mensaje);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -53,7 +83,6 @@ export default function LoginScreen() {
         </AppText>
 
         <EmailInput value={email} onChangeText={setEmail} />
-
         <PasswordInput
           label="Contraseña"
           value={password}
@@ -69,19 +98,30 @@ export default function LoginScreen() {
           </AppText>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.primaryButton} onPress={handleLogin}>
+        <TouchableOpacity
+          style={styles.primaryButton}
+          onPress={handleLogin}
+          disabled={loading}
+        >
           <AppText variant="bold" style={styles.primaryButtonText}>
-            Iniciar sesión
+            {loading ? "Iniciando..." : "Iniciar sesión"}
           </AppText>
         </TouchableOpacity>
 
         <SocialLogin />
+
         <FooterLink
           question="¿No tienes una cuenta?"
           actionText="Registrarse"
           linkTo="/auth/register/registerstep1"
         />
       </ScrollView>
+
+      <AlertModal
+        visible={!!modalMessage}
+        message={modalMessage}
+        onClose={() => setModalMessage(null)}
+      />
     </View>
   );
 }
@@ -134,8 +174,5 @@ const styles = StyleSheet.create({
     elevation: 4,
     marginBottom: verticalScale(10),
   },
-  primaryButtonText: {
-    fontSize: scale(16),
-    color: "#fff",
-  },
+  primaryButtonText: { fontSize: scale(16), color: "#fff" },
 });

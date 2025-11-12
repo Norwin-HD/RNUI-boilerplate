@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   scrollView: {
-    flex: 1,
+    flex: 1 ,
     backgroundColor: "#FFFFFF",
   },
   staticFooter: {

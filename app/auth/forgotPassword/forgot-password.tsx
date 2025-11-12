@@ -1,13 +1,11 @@
 import { useRouter } from "expo-router";
 import React, { useState, useEffect } from "react";
 import {
-  Alert,
   Keyboard,
   Platform,
   ScrollView,
   StyleSheet,
   View,
-  TextInput,
   KeyboardEvent,
 } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
@@ -17,22 +15,22 @@ import ScreenHeader from "../../auth/components/ScreenHeader";
 import EmailInput from "../components/EmailInput";
 import FooterLink from "../components/FooterLink";
 import TitleSubtitle from "../components/TittleSubtitle";
+import AlertModal from "../../auth/components/AlertModal";
 
 export default function ForgotPasswordScreen() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [modalMessage, setModalMessage] = useState<string | null>(null); // mensaje del modal
 
   useEffect(() => {
     const showSub = Keyboard.addListener(
       "keyboardDidShow",
-      (e: KeyboardEvent) => {
-        setKeyboardHeight(e.endCoordinates.height);
-      }
+      (e: KeyboardEvent) => setKeyboardHeight(e.endCoordinates.height)
     );
-    const hideSub = Keyboard.addListener("keyboardDidHide", () => {
-      setKeyboardHeight(0);
-    });
+    const hideSub = Keyboard.addListener("keyboardDidHide", () =>
+      setKeyboardHeight(0)
+    );
 
     return () => {
       showSub.remove();
@@ -41,16 +39,28 @@ export default function ForgotPasswordScreen() {
   }, []);
 
   const handleContinue = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
+    const invalidDomains = [
+      "gnail.com",
+      "gamil.com",
+      "gmaill.com",
+      "hotmial.com",
+      "yaho.com",
+    ];
+    const domain = email.split("@")[1];
+
     if (!email) {
-      Alert.alert("Error", "Por favor, ingresa tu correo electrónico.");
+      setModalMessage("Por favor, ingresa tu correo electrónico.");
       return;
     }
-    if (!emailRegex.test(email)) {
-      Alert.alert("Error", "Por favor, ingresa un correo válido.");
+    if (!emailRegex.test(email) || invalidDomains.includes(domain)) {
+      setModalMessage("Por favor ingresa un correo válido.");
       return;
     }
-    router.push("/auth/forgotPassword/verify-code");
+    router.push({
+      pathname: "/auth/forgotPassword/verify-code",
+      params: { email },
+    });
   };
 
   return (
@@ -94,15 +104,18 @@ export default function ForgotPasswordScreen() {
       >
         <BottomButton onPress={handleContinue} text="Continuar" />
       </View>
+
+      <AlertModal
+        visible={!!modalMessage}
+        message={modalMessage}
+        onClose={() => setModalMessage(null)}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-  },
+  container: { flex: 1, backgroundColor: "#FFFFFF" },
   scrollContainer: {
     paddingHorizontal: scale(20),
     paddingTop: verticalScale(36),
