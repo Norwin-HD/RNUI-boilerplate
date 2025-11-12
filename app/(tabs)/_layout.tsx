@@ -22,8 +22,6 @@ function FigmaNavAdapter(props: any) {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   const name = routeName ?? "";
-
-  // Hooks must run unconditionally at the top of the component
   const hasActiveFilters = useHasActiveFilters();
   const { clearFilters: clearMainFilters } = useFilter();
   const { clearRange } = useRangeContext();
@@ -46,7 +44,6 @@ function FigmaNavAdapter(props: any) {
 
     const isFocused = state.index === routeIndex;
 
-    // Check if the "Transacciones" tab is being pressed (index 1)
     if (route.name === "transacciones" && hasActiveFilters) {
       Alert.alert(
         "Filtros Activos",
@@ -137,9 +134,9 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="reportes/index"
+          name="perfil/index"
           options={{
-            title: "Reportes",
+            title: "Perfil",
             tabBarIcon: ({ color }) => (
               <IconSymbol size={28} name="chart.bar.fill" color={color} />
             ),

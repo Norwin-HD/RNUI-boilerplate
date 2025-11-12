@@ -21,7 +21,9 @@ import { CategoryProvider } from "@/src/shared/CategoryContext";
 import { FilterProvider } from "@/src/stores/categories/FilterContext";
 import { RangeProvider } from "@/src/stores/transactions/RangeContext";
 import { useFonts } from "expo-font";
+import { useState } from "react";
 import { TransactionsProvider } from "../src/stores/transactions/transactions-context";
+import { CustomSplash } from "../src/utils/splash";
 
 const FONT_MAP = {
   Montserrat_500Medium,
@@ -33,8 +35,11 @@ const FONT_MAP = {
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [fontsLoaded] = useFonts(FONT_MAP as any);
+  const [appReady, setAppReady] = useState(false);
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded || !appReady) {
+    return <CustomSplash onFinish={() => setAppReady(true)} />;
+  }
 
   return (
     <GoalsProvider>

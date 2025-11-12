@@ -6,8 +6,6 @@ import {
   TextInput,
   StyleSheet,
   FlatList,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import Modal from "react-native-modal";
 import { scale, moderateScale, verticalScale } from "react-native-size-matters";

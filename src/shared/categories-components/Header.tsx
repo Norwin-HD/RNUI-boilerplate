@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import AddCategoryModal from "../categories-components/AddCategory";
+import AddCategoryModal from "./AddCategory";
 
 const Header = () => {
   const router = useRouter();

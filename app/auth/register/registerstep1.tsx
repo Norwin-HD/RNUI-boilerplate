@@ -87,7 +87,10 @@ export default function RegisterScreen() {
         <TitleSubtitle
           title="¡Bienvenido a Kovara!"
           subtitle="Completa tus datos personales para continuar con tu registro."
-          titleStyle={{ fontSize: scale(20), marginBottom: verticalScale(12) }}
+          titleStyle={{
+            fontSize: scale(20),
+            marginBottom: verticalScale(12),
+          }}
           subtitleStyle={{
             fontSize: scale(13),
             lineHeight: verticalScale(18),

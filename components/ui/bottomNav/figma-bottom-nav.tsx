@@ -1,14 +1,21 @@
 import { useColorScheme } from "@/src/constants/use-color-scheme";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Animated,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { scale, verticalScale } from "react-native-size-matters";
-import ClockIcon from "./BottomBarSvg/ClockIcon";
+
+import ClockIcon from "./BottomBarSvg/goalsIcon";
 import HomeIcon from "./BottomBarSvg/HomeIcon";
 import PlusIcon from "./BottomBarSvg/PlusIcon";
-import SearchIcon from "./BottomBarSvg/SearchIcon";
+import TransactionIcon from "./BottomBarSvg/transactionIcon";
 import UserIcon from "./BottomBarSvg/UserIcon";
 
 const FIGMA = {
@@ -33,7 +40,6 @@ export default function FigmaBottomNav({
 }: Props) {
   useColorScheme();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  // Eliminado setVisible, no se usa
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
   React.useEffect(() => {
@@ -79,7 +85,7 @@ export default function FigmaBottomNav({
     {
       key: "(transacciones)",
       label: "Transacciones",
-      icon: SearchIcon,
+      icon: TransactionIcon,
     },
     { key: "(agregar)", label: "Agregar", icon: PlusIcon },
     {
@@ -88,8 +94,8 @@ export default function FigmaBottomNav({
       icon: ClockIcon,
     },
     {
-      key: "(reportes)",
-      label: "Reportes",
+      key: "(Perfil)",
+      label: "Perfil",
       icon: UserIcon,
     },
   ];
@@ -111,7 +117,7 @@ export default function FigmaBottomNav({
           edges={["bottom"]}
           style={[styles.wrapper, { backgroundColor: FIGMA.bg }]}
         >
-          <View style={[styles.menuList, { backgroundColor: "transparent" }]}> 
+          <View style={[styles.menuList, { backgroundColor: "transparent" }]}>
             {items.map((it, idx) => {
               const Icon = it.icon;
               if (idx === 2 && variant === "center-fab") {
@@ -120,7 +126,7 @@ export default function FigmaBottomNav({
                     <TouchableOpacity
                       accessibilityRole="button"
                       onPress={toggleMenu}
-                      style={[ 
+                      style={[
                         styles.fab,
                         {
                           backgroundColor: FIGMA.fab,
@@ -145,7 +151,9 @@ export default function FigmaBottomNav({
                 >
                   <Icon width={24} height={24} color={color} />
                   {it.label ? (
-                    <Text style={[styles.label, { color }]}>{it.label}</Text>
+                    <Text style={[styles.label, { color }]} numberOfLines={1}>
+                      {it.label}
+                    </Text>
                   ) : null}
                 </TouchableOpacity>
               );
@@ -226,11 +234,10 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   label: {
-    marginTop: scale(4),
-    fontSize: 10,
-    fontWeight: "500",
-    lineHeight: 15,
-    fontFamily: "Poppins",
+    marginTop: verticalScale(3),
+    fontSize: scale(9),
+    lineHeight: scale(12),
+    fontFamily: "Montserrat_600SemiBold",
   },
   fab: {
     width: scale(70),
@@ -275,13 +282,13 @@ const styles = StyleSheet.create({
     borderBottomColor: FIGMA.indicator,
   },
   menuText: {
-    fontSize: 15,
+    fontSize: scale(15),
     color: "#000",
     textAlign: "center",
     fontFamily: "Montserrat_700Bold",
   },
   menuTitle: {
-    fontSize: 16,
+    fontSize: scale(16),
     color: FIGMA.primary,
     textAlign: "center",
     fontFamily: "Montserrat_700Bold",
