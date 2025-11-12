@@ -2,12 +2,12 @@ import { GoalsContext } from "@/src/stores/goals/index";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useContext } from "react";
-import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import Header from "./components/Header";
-
+import DetailGoalsContainer from "./components/detailContainer";
 
 import ActionButtons from "./components/actionButtons";
 import BalanceProgressSection from "./components/balanceProgressSection";
@@ -85,21 +85,16 @@ const DetailGoals = () => {
     <SafeAreaView style={styles.container} edges={["top"]}>
       <StatusBar style="light" backgroundColor="#3476F4" translucent={false} />
       <Header />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: verticalScale(40) }}
-      >
-        <View style={styles.panel}>
-          <BalanceProgressSection goal={goal} />
+      <DetailGoalsContainer>
+        <BalanceProgressSection goal={goal} />
 
-          <ContributeButton onPress={handleContribute} />
+        <ContributeButton onPress={handleContribute} />
 
-          <View style={styles.separator} />
-          <DeadlineSection deadline={goal.deadline} />
+        <View style={styles.separator} />
+        <DeadlineSection deadline={goal.deadline} />
 
-          <RemainingAmountSection remainingAmount={remainingAmount} />
-        </View>
-      </ScrollView>
+        <RemainingAmountSection remainingAmount={remainingAmount} />
+      </DetailGoalsContainer>
       <ActionButtons onEdit={handleEdit} onDelete={handleDelete} />
     </SafeAreaView>
   );

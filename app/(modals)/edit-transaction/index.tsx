@@ -1,6 +1,6 @@
-import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
 import { categories } from "@/src/mockups/categories-filter";
 import { TransactionDetailProvider } from "@/src/shared/TransactionDetailContext";
+import { useCategoryContext } from "@/src/stores/categories/CategoryContext";
 import { useTransactions } from "@/src/stores/transactions/transactions-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+
+import KeyboardAvoiding from "@/src/utils/keyboardAvoidingView";
 
 //Components
 import FieldComponent from "./components/fieldComponente";
@@ -49,9 +51,7 @@ export default function EditTransactionModal() {
   }, [selectedCategories, setValue]);
 
   const handleSave = (data: FormData) => {
-    console.log("handleSave called with data:", data);
     if (!transaction) {
-      console.log("No transaction found");
       return;
     }
 
@@ -62,15 +62,14 @@ export default function EditTransactionModal() {
 
     const signedAmount =
       transaction.type === "income" ? data.monto : -data.monto;
-    console.log("Signed amount:", signedAmount);
 
     const updatedTransaction = {
       ...transaction,
       ...data,
       monto: signedAmount,
       fecha: new Date(data.fecha),
-      imagen: categoryImageUri,
-      imageUri: categoryImageUri,
+      imagen: data.imagen || categoryImageUri,
+      imageUri: data.imagen || categoryImageUri,
     };
 
     const newTransactions = [
@@ -99,26 +98,32 @@ export default function EditTransactionModal() {
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
-      <StatusBar style="light" backgroundColor="#3476F4" translucent={false} />
-      <Header title="Editar transacción" />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: verticalScale(40) }}
-      >
-        <View style={styles.panel}>
-          <TransactionDetailProvider transaction={transaction}>
-            <FieldComponent isEditable={true} control={control} />
-          </TransactionDetailProvider>
-        </View>
-        <Footer
-          onSave={() => {
-            console.log("Footer onSave called");
-            handleSubmit(handleSave)();
-          }}
+    <KeyboardAvoiding>
+      <SafeAreaView style={styles.container} edges={["top"]}>
+        <StatusBar
+          style="light"
+          backgroundColor="#3476F4"
+          translucent={false}
         />
-      </ScrollView>
-    </SafeAreaView>
+        <Header title="Editar transacción" />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: verticalScale(40) }}
+        >
+          <View style={styles.panel}>
+            <TransactionDetailProvider transaction={transaction}>
+              <FieldComponent isEditable={true} control={control} />
+            </TransactionDetailProvider>
+          </View>
+          <Footer
+            onSave={() => {
+              console.log("Footer onSave called");
+              handleSubmit(handleSave)();
+            }}
+          />
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardAvoiding>
   );
 }
 

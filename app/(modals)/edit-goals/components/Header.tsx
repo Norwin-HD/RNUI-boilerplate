@@ -12,7 +12,7 @@ const Header = () => {
       <TouchableOpacity onPress={() => router.back()} style={styles.button}>
         <ArrowSmallLeft width={24} height={24} color="#FFFFFF" />
       </TouchableOpacity>
-      <Text style={styles.title}>Nueva Meta</Text>
+      <Text style={styles.title}>Editar Meta</Text>
     </View>
   );
 };

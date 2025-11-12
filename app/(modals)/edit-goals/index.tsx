@@ -14,6 +14,8 @@ import AddGoalContainer from "./components/container";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
+import KeyboardAvoiding from "@/src/utils/keyboardAvoidingView";
+
 type GoalFormData = z.infer<typeof GoalSchema>;
 
 export default function AddGoalModal() {
@@ -32,7 +34,7 @@ export default function AddGoalModal() {
       title: "",
       totalAmount: 0,
       currentAmount: 0,
-      deadline: "", // Cambiado de new Date().toISOString() a cadena vacía
+      deadline: "",
       category: {
         name: "Otros",
         icon: "package",
@@ -75,26 +77,32 @@ export default function AddGoalModal() {
   }, [id, goals, setValue]);
 
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
-      <StatusBar style="light" backgroundColor="#3476F4" translucent={false} />
-      <Header />
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.content}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={true}
-        bounces={false}
-        alwaysBounceVertical={false}
-        overScrollMode="never"
-      >
-        <AddGoalContainer
-          control={control}
-          errors={errors}
-          setValue={setValue}
+    <KeyboardAvoiding>
+      <SafeAreaView style={styles.container} edges={["top"]}>
+        <StatusBar
+          style="light"
+          backgroundColor="#3476F4"
+          translucent={false}
         />
-      </ScrollView>
-      <Footer onPress={handleSubmit(onSubmit)} />
-    </SafeAreaView>
+        <Header />
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={true}
+          bounces={false}
+          alwaysBounceVertical={false}
+          overScrollMode="never"
+        >
+          <AddGoalContainer
+            control={control}
+            errors={errors}
+            setValue={setValue}
+          />
+        </ScrollView>
+        <Footer onPress={handleSubmit(onSubmit)} />
+      </SafeAreaView>
+    </KeyboardAvoiding>
   );
 }
 
@@ -109,7 +117,7 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     paddingHorizontal: moderateScale(1),
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingBottom: moderateScale(100), // Espacio adicional al final para evitar que se oculte detrás del footer
   },
 });
