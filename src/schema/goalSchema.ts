@@ -1,17 +1,30 @@
 import { z } from "zod";
 
+const DateRangeSchema = z.object({
+  start: z.date().nullable(),
+  end: z.date().nullable(),
+}).refine((range) => {
+  if (range.start && range.end) {
+    return range.start <= range.end;
+  }
+  return true;
+}, {
+  message: "La fecha de inicio debe ser anterior a la fecha de fin",
+});
+
 export const GoalSchema = z.object({
   title: z.string().min(3, "El título debe tener al menos 3 caracteres"),
   totalAmount: z.number().positive("El monto debe ser un número positivo"),
   currentAmount: z.number().nonnegative("El monto actual no puede ser negativo").optional(),
-  deadline: z.string()
-    .min(1, "La fecha es requerida")
-    .refine((date) => {
-      const parsedDate = new Date(date);
-      return !isNaN(parsedDate.getTime()) && parsedDate > new Date();
-    }, {
-      message: "La fecha debe ser en el futuro",
-    }),
+  deadline: DateRangeSchema.refine((range) => {
+    if (range.start && range.end) {
+      const now = new Date();
+      return range.end > now;
+    }
+    return true;
+  }, {
+    message: "La fecha límite debe ser en el futuro",
+  }),
   category: z.object({
     name: z.string(),
     icon: z.string(),

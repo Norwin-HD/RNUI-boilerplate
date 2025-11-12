@@ -9,11 +9,16 @@ export default function ModalsLayout() {
         <Stack.Screen name="add-goals/index" options={{ headerShown: false }} />
         <Stack.Screen name="add-goals/categorie-filter" options={{ headerShown: false }} />
 
+        <Stack.Screen name="add-budget/index" options={{ headerShown: false }} />
+        <Stack.Screen name="add-budget/categories-filter" options={{ headerShown: false }} />
+
         <Stack.Screen name="new-income/index" options={{ headerShown: false }} />
         <Stack.Screen name="new-income/categories-filter" options={{ headerShown: false }} />
 
         <Stack.Screen name="new-expense/index" options={{ headerShown: false }} />
         <Stack.Screen name="new-expense/categories-filter" options={{ headerShown: false }} />
+
+
       </Stack>
     </CategoryProvider>
   );

@@ -1,18 +1,28 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
-import { presupuestosMockup } from '../../../../src/mockups/presupuestos-mockup';
+import { useBudgetsContext } from '../../../../src/stores/budgets/index';
 import Card from './card';
 
 interface SecondaryGoalCardProps {
   title: string;
   currentAmount: number;
-  totalAmount: number;
+  period: {
+    start: Date | null;
+    end: Date | null;
+  };
   iconUri: string;
 }
 
-const BudgetCard = ({ title, currentAmount, totalAmount, iconUri }: SecondaryGoalCardProps) => {
-  const remainingAmount = totalAmount - currentAmount;
+const BudgetCard = ({ title, currentAmount, period, iconUri }: SecondaryGoalCardProps) => {
+  const formatDate = (date: Date | null) => {
+    if (!date) return '';
+    return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' });
+  };
+
+  const periodText = period.start && period.end
+    ? `${formatDate(period.start)} - ${formatDate(period.end)}`
+    : 'Sin período definido';
 
   return (
     <Card style={styles.container}>
@@ -24,7 +34,8 @@ const BudgetCard = ({ title, currentAmount, totalAmount, iconUri }: SecondaryGoa
       <View style={styles.detailsContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.title} >{title}</Text>
-          <Text style={styles.amountText}>{`$${currentAmount} de $${totalAmount}`}</Text>
+          <Text style={styles.amountText}>{`$${currentAmount} gastado`}</Text>
+          <Text style={styles.periodText}>{periodText}</Text>
         </View>
         <View style={styles.remainingContainer}>
           <Image
@@ -32,7 +43,7 @@ const BudgetCard = ({ title, currentAmount, totalAmount, iconUri }: SecondaryGoa
             resizeMode={"stretch"}
             style={styles.remainingIcon}
           />
-          <Text style={styles.remainingText} numberOfLines={2} ellipsizeMode="tail">{`$${remainingAmount} restante`}</Text>
+          <Text style={styles.remainingText} numberOfLines={2} ellipsizeMode="tail">Presupuesto</Text>
         </View>
       </View>
     </Card>
@@ -40,7 +51,7 @@ const BudgetCard = ({ title, currentAmount, totalAmount, iconUri }: SecondaryGoa
 };
 
 const BudgetsList = () => {
-  const { budgets } = presupuestosMockup;
+  const { budgets } = useBudgetsContext();
 
   return (
     <View style={styles.listContainer}>
@@ -50,9 +61,9 @@ const BudgetsList = () => {
       {budgets.map((budget) => (
         <BudgetCard
           key={budget.id}
-          title={budget.title}
+          title={budget.category.name}
           currentAmount={budget.currentAmount}
-          totalAmount={budget.totalAmount}
+          period={budget.period}
           iconUri="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/gk7orci1_expires_30_days.png"
         />
       ))}
@@ -93,6 +104,12 @@ const styles = StyleSheet.create({
         color: "#000000",
         fontSize: moderateScale(11),
         fontFamily: "Montserrat_500Medium",
+    },
+    periodText: {
+        color: "#666666",
+        fontSize: moderateScale(10),
+        fontFamily: "Montserrat_400Regular",
+        marginTop: verticalScale(2),
     },
     remainingContainer: {
         gap: verticalScale(4),

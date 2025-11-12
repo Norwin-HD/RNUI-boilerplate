@@ -11,6 +11,8 @@ import {
   View,
 } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import { router } from "expo-router";
+
 import Card from "./Card";
 
 const formatRelativeDate = (date: Date) => {
@@ -24,7 +26,7 @@ const RecentTransactions = () => {
     <View>
       <View style={styles.header}>
         <Text style={styles.headerText}>{"Transacciones recientes"}</Text>
-        <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
+        <TouchableOpacity onPress={() => {router.push("/(tabs)/transacciones/screens");}}>
           <Image
             source={{
               uri: "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/krSnDOWpDM/s0v15xdo_expires_30_days.png",
@@ -67,7 +69,7 @@ const RecentTransactions = () => {
               </View>
             </View>
             <View>
-              <TouchableOpacity onPress={() => alert("Arrow pressed!")}>
+              <TouchableOpacity onPress={() => {router.push("/(tabs)/transacciones/screens");}}>
                 <View style={styles.view4}>
                   <Image
                     source={{

@@ -3,23 +3,25 @@ import { StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import ArrowDown from "../../../../assets/svg/arrow-down";
 import ArrowUp from "../../../../assets/svg/arrow-up";
+import { useBudgetCalculations } from "../../metas/hooks/use-budget-calcutation";
 
 interface BalanceCardProps {
-  balance: number;
-  percentageChange: number;
   period: string;
 }
 
 const BalanceCard: React.FC<BalanceCardProps> = ({
-  balance,
-  percentageChange,
   period,
 }) => {
+  const { totalBudget, totalExpenses, overallProgress } = useBudgetCalculations();
+
+  const balance = totalBudget - totalExpenses;
+  const percentageChange = overallProgress;
+
   const formattedAmount = balance.toFixed(2).split(".");
   const integerPart = formattedAmount[0];
   const decimalPart = formattedAmount[1];
 
-  const isPositiveChange = percentageChange >= 0;
+  const isPositiveChange = percentageChange < 100; // Positive if under budget
 
   return (
     <View style={styles.container}>
@@ -47,7 +49,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
           </View>
           <Text
             style={styles.analysisText}
-          >{`${isPositiveChange ? "+" : ""}${percentageChange}% ${period}`}</Text>
+          >{`${percentageChange.toFixed(1)}% ${period}`}</Text>
         </View>
       </View>
     </View>

@@ -69,7 +69,7 @@ export default function FigmaBottomNav({
       return;
     }
     if (option === "Nuevo presupuesto") {
-      router.push("/presupuestos" as any);
+      router.push("/add-budget" as any);
       return;
     }
     // Otros flujos a futuro

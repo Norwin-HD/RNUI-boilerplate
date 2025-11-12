@@ -1,3 +1,4 @@
+import { BudgetsProvider } from "@/src/stores/budgets/index";
 import { GoalsProvider } from "@/src/stores/goals/index";
 import {
   Montserrat_400Regular,
@@ -43,25 +44,27 @@ export default function RootLayout() {
 
   return (
     <GoalsProvider>
-      <CategoryProvider>
-        <RangeProvider>
-          <FilterProvider>
-            <TransactionsProvider>
-              <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-                <Stack screenOptions={{ headerShown: false }}>
-                  <Stack.Screen name="auth/index" options={{ headerShown: false }} />
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                  <Stack.Screen
-                    name="(modals)"
-                    options={{ headerShown: false, presentation: "fullScreenModal" }}
-                  />
-                </Stack>
-                <StatusBar style="inverted" />
-              </ThemeProvider>
-            </TransactionsProvider>
-          </FilterProvider>
-        </RangeProvider>
-      </CategoryProvider>
+      <BudgetsProvider>
+        <CategoryProvider>
+          <RangeProvider>
+            <FilterProvider>
+              <TransactionsProvider>
+                <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+                  <Stack screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="auth/index" options={{ headerShown: false }} />
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen
+                      name="(modals)"
+                      options={{ headerShown: false, presentation: "fullScreenModal" }}
+                    />
+                  </Stack>
+                  <StatusBar style="inverted" />
+                </ThemeProvider>
+              </TransactionsProvider>
+            </FilterProvider>
+          </RangeProvider>
+        </CategoryProvider>
+      </BudgetsProvider>
     </GoalsProvider>
   );
 }

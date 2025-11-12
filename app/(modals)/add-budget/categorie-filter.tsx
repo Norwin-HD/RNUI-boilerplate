@@ -1,0 +1,62 @@
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { moderateScale, verticalScale } from "react-native-size-matters";
+import Footer from "../../../src/shared/categories-components/Footer";
+import Header from "../../../src/shared/categories-components/Header";
+import InputSearch from "../../../src/shared/categories-components/input-search";
+import SelectCategories from "../../../src/shared/categories-components/select-categories";
+import { useCategories } from "../../../src/shared/hooks/use-search";
+
+const CategoriaFilterScreen = () => {
+  const { filteredCategories, setQuery } = useCategories();
+
+  return (
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={{ paddingBottom: verticalScale(90) }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.column3}>
+            <Header />
+            <InputSearch onChangeText={setQuery} />
+            <SelectCategories categories={filteredCategories} />
+          </View>
+        </ScrollView>
+        <View style={styles.staticFooter}>
+          <Footer />
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default CategoriaFilterScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: verticalScale(10),
+    backgroundColor: "#FFFFFF",
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+  staticFooter: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: verticalScale(12),
+    paddingTop: verticalScale(8),
+    backgroundColor: "#FFFFFF",
+  },
+  column3: {
+    marginBottom: verticalScale(29),
+    marginHorizontal: moderateScale(20),
+  },
+});
