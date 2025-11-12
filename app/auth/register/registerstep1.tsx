@@ -17,6 +17,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import StepDots from "../components/Stepdots";
 import TitleSubtitle from "../components/TittleSubtitle";
 import AppText from "../components/AppText";
+import AlertModal from "../components/AlertModal";
 
 const ocupacionesOpciones = [
   "Estudiante",
@@ -33,7 +34,9 @@ export default function RegisterScreen() {
   const [showOcupacion, setShowOcupacion] = useState(false);
   const [fechaNacimiento, setFechaNacimiento] = useState<Date | undefined>();
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
 
+  // Validación de fecha
   const onDateChange = (event: any, selectedDate?: Date) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -41,7 +44,7 @@ export default function RegisterScreen() {
       const minDate = new Date();
       minDate.setFullYear(today.getFullYear() - 10);
       if (selectedDate > minDate) {
-        alert("Debes tener al menos 10 años.");
+        setModalMessage("Debes tener al menos 10 años.");
         return;
       }
       setFechaNacimiento(selectedDate);
@@ -52,15 +55,23 @@ export default function RegisterScreen() {
     const soloLetras = /^[A-Za-zÀ-ÿ\s]+$/;
 
     if (!nombre || !apellido || !ocupacion || !fechaNacimiento) {
-      alert("Por favor completa todos los campos.");
+      setModalMessage("Por favor completa todos los campos.");
       return;
     }
     if (!soloLetras.test(nombre) || !soloLetras.test(apellido)) {
-      alert("Nombre y apellido solo deben contener letras.");
+      setModalMessage("Nombre y apellido solo deben contener letras.");
       return;
     }
 
-    router.push("/auth/register/registerstep2");
+    router.push({
+      pathname: "/auth/register/registerstep2",
+      params: {
+        nombre,
+        apellido,
+        ocupacion,
+        fechaNacimiento: fechaNacimiento.toISOString(),
+      },
+    });
   };
 
   return (
@@ -77,7 +88,10 @@ export default function RegisterScreen() {
           title="¡Bienvenido a Kovara!"
           subtitle="Completa tus datos personales para continuar con tu registro."
           titleStyle={{ fontSize: scale(20), marginBottom: verticalScale(12) }}
-          subtitleStyle={{ fontSize: scale(13), lineHeight: verticalScale(18) }}
+          subtitleStyle={{
+            fontSize: scale(13),
+            lineHeight: verticalScale(18),
+          }}
         />
 
         <View style={styles.formGroup}>
@@ -177,7 +191,7 @@ export default function RegisterScreen() {
 
         <PrimaryButton
           title="Siguiente"
-          style={{ marginTop: verticalScale(0) }}
+          style={{ marginTop: verticalScale(10) }}
           onPress={handleNext}
         />
 
@@ -189,6 +203,11 @@ export default function RegisterScreen() {
           linkTo="/auth/login"
         />
       </ScrollView>
+      <AlertModal
+        visible={!!modalMessage}
+        message={modalMessage}
+        onClose={() => setModalMessage(null)}
+      />
     </View>
   );
 }
@@ -201,7 +220,7 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(10),
     borderTopLeftRadius: scale(18),
     borderTopRightRadius: scale(18),
-    paddingTop: verticalScale(40),
+    paddingTop: verticalScale(30),
     paddingHorizontal: scale(24),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
@@ -209,9 +228,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 6,
   },
-  formGroup: {
-    marginBottom: verticalScale(14),
-  },
+  formGroup: { marginBottom: verticalScale(14) },
   label: {
     fontSize: scale(13),
     color: "#374151",

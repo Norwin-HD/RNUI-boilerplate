@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -7,17 +7,31 @@ import {
   StyleSheet,
   TextInput,
   View,
+  Text,
+  TouchableOpacity,
+  Modal,
 } from "react-native";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 
 import BottomButton from "../../auth/components/BottomButton";
 import ScreenHeader from "../../auth/components/ScreenHeader";
 import AppText from "../../auth/components/AppText";
+import AlertModal from "../../auth/components/AlertModal";
 
 export default function VerifyCodeScreen() {
   const router = useRouter();
   const [code, setCode] = useState(["", "", "", ""]);
   const inputs = useRef<(TextInput | null)[]>([]);
+  const [modalMessage, setModalMessage] = useState<string | null>(null); // mensaje del modal
+  const { email } = useLocalSearchParams();
+
+  const maskEmail = (email: string) => {
+    if (!email || !email.includes("@")) return email;
+    const [user, domain] = email.split("@");
+    const maskedUser =
+      user.length > 3 ? user.slice(0, 5) + "*".repeat(user.length - 8) : user;
+    return `${maskedUser}@${domain}`;
+  };
 
   const handleChange = (text: string, index: number) => {
     if (text.length > 1) return;
@@ -31,7 +45,7 @@ export default function VerifyCodeScreen() {
   const handleContinue = () => {
     const enteredCode = code.join("");
     if (enteredCode.length < 4) {
-      alert("Por favor ingresa el código completo");
+      setModalMessage("Por favor ingresa el código completo");
       return;
     }
     router.push("/auth/forgotPassword/reset-password");
@@ -62,7 +76,9 @@ export default function VerifyCodeScreen() {
               </AppText>
               <AppText variant="medium" style={styles.subtitle}>
                 Hemos enviado un código de verificación a{"\n"}
-                <AppText variant="bold">tu correo aaron*****@gmail.com</AppText>
+                <AppText variant="bold">
+                  tu correo {maskEmail(email as string)}
+                </AppText>
               </AppText>
             </View>
 
@@ -88,7 +104,7 @@ export default function VerifyCodeScreen() {
               <AppText
                 variant="bold"
                 style={styles.resendLink}
-                onPress={() => alert("Código reenviado")}
+                onPress={() => setModalMessage("Código reenviado")}
               >
                 Enviar de nuevo
               </AppText>
@@ -98,6 +114,12 @@ export default function VerifyCodeScreen() {
 
         <BottomButton onPress={handleContinue} text="Continuar" />
       </KeyboardAvoidingView>
+
+      <AlertModal
+        visible={!!modalMessage}
+        message={modalMessage}
+        onClose={() => setModalMessage(null)}
+      />
     </View>
   );
 }
@@ -115,14 +137,12 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(18),
     color: "#111827",
     textAlign: "center",
-    paddingTop: verticalScale(0),
     marginBottom: verticalScale(8),
   },
   subtitle: {
     fontSize: moderateScale(12),
     color: "#6B7280",
     textAlign: "center",
-    paddingTop: verticalScale(0),
     lineHeight: verticalScale(18),
   },
   codeContainer: {
@@ -150,7 +170,5 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(12),
     marginBottom: verticalScale(10),
   },
-  resendLink: {
-    color: "#3476F4",
-  },
+  resendLink: { color: "#3476F4" },
 });
