@@ -1,5 +1,5 @@
-import { useGoalsContext } from "@/src/stores/goals/index";
 import { GoalSchema } from "@/src/schema/goalSchema";
+import { useGoalsContext } from "@/src/stores/goals/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -42,6 +42,7 @@ export default function AddGoalModal() {
       ...data,
       id: Math.random().toString(),
       currentAmount: data.currentAmount || 0,
+      deadline: data.deadline, // Ya es un string, no necesita conversión
     };
     addGoal(newGoal);
     router.back();
