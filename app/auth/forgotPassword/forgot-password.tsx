@@ -1,12 +1,11 @@
 import { useRouter } from "expo-router";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  Keyboard,
+  KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   View,
-  KeyboardEvent,
 } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 
@@ -20,33 +19,12 @@ import AlertModal from "../../auth/components/AlertModal";
 export default function ForgotPasswordScreen() {
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [modalMessage, setModalMessage] = useState<string | null>(null); // mensaje del modal
-
-  useEffect(() => {
-    const showSub = Keyboard.addListener(
-      "keyboardDidShow",
-      (e: KeyboardEvent) => setKeyboardHeight(e.endCoordinates.height)
-    );
-    const hideSub = Keyboard.addListener("keyboardDidHide", () =>
-      setKeyboardHeight(0)
-    );
-
-    return () => {
-      showSub.remove();
-      hideSub.remove();
-    };
-  }, []);
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
 
   const handleContinue = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
-    const invalidDomains = [
-      "gnail.com",
-      "gamil.com",
-      "gmaill.com",
-      "hotmial.com",
-      "yaho.com",
-    ];
+    const invalidDomains = ["gnail.com","gamil.com","gmaill.com","gmail.co","gmail.con","gmail.cmo","gmal.com","gmial.com","gimail.com","gmaol.com","hotmial.com","hotmil.com","hotmai.com","hotmaill.com","hotmal.com","hotmalil.com","hotmali.com","homtail.com","hotmaol.com","hormail.com","outlok.com","outllok.com","outllok.es","outloo.com","outlook.co","outloook.com","outlok.es","outlok.con","yaho.com","yhoo.com","yahho.com","yaho.co","yahool.com","yahool.con","yaoo.com","yahoom.com","liv.com","live.co","live.con","live.cm","lve.com","gemail.com","hotnail.com","gmalil.com","gmil.com","gmil.co","gmial.co","gmaik.com"];
+
     const domain = email.split("@")[1];
 
     if (!email) {
@@ -57,6 +35,7 @@ export default function ForgotPasswordScreen() {
       setModalMessage("Por favor ingresa un correo válido.");
       return;
     }
+
     router.push({
       pathname: "/auth/forgotPassword/verify-code",
       params: { email },
@@ -65,45 +44,52 @@ export default function ForgotPasswordScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
       >
-        <ScreenHeader
-          title="Recuperar contraseña"
-          imageUri="https://ik.imagekit.io/nwogrqfzj/new-message.png?updatedAt=1762808561522"
-          onBack={() => router.push("/auth/login")}
-        />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={styles.scrollContainer}
+        >
+          <View style={styles.content}>
+            <ScreenHeader
+              title="Recuperar contraseña"
+              imageUri="https://ik.imagekit.io/nwogrqfzj/new-message.png?updatedAt=1762808561522"
+              onBack={() => router.push("/auth/login")}
+            />
 
-        <TitleSubtitle
-          title="¿Olvidaste tu contraseña?"
-          subtitle="¡No pasa nada! Ingresa tu correo electrónico para restablecer la contraseña"
-          titleStyle={{ fontSize: scale(20), marginBottom: verticalScale(8) }}
-          subtitleStyle={{ fontSize: scale(14), lineHeight: verticalScale(20) }}
-        />
+            <TitleSubtitle
+              title="¿Olvidaste tu contraseña?"
+              subtitle="¡No pasa nada! Ingresa tu correo electrónico para restablecer la contraseña"
+              titleStyle={{ fontSize: scale(20), marginBottom: verticalScale(8) }}
+              subtitleStyle={{
+                fontSize: scale(14),
+                lineHeight: verticalScale(20),
+              }}
+            />
 
-        <EmailInput
-          value={email}
-          onChangeText={setEmail}
-          style={{
-            marginTop: verticalScale(10),
-            marginBottom: verticalScale(20),
-          }}
-        />
+            <EmailInput
+              value={email}
+              onChangeText={setEmail}
+              style={{
+                marginTop: verticalScale(10),
+                marginBottom: verticalScale(20),
+              }}
+            />
 
-        <FooterLink
-          question="¿No tienes una cuenta?"
-          actionText="Registrarse"
-          linkTo="/auth/register/registerstep1"
-        />
-      </ScrollView>
+            <FooterLink
+              question="¿No tienes una cuenta?"
+              actionText="Registrarse"
+              linkTo="/auth/register/registerstep1"
+            />
+          </View>
+        </ScrollView>
 
-      <View
-        style={[styles.bottomButtonWrapper, { marginBottom: keyboardHeight }]}
-      >
         <BottomButton onPress={handleContinue} text="Continuar" />
-      </View>
+      </KeyboardAvoidingView>
 
       <AlertModal
         visible={!!modalMessage}
@@ -115,15 +101,12 @@ export default function ForgotPasswordScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#FFFFFF" },
+  container: { flex: 1, backgroundColor: "#FFFFFF", minHeight: "100%" },
   scrollContainer: {
+    flexGrow: 1,
     paddingHorizontal: scale(20),
     paddingTop: verticalScale(36),
-    paddingBottom: verticalScale(20),
+    paddingBottom: verticalScale(0), 
   },
-  bottomButtonWrapper: {
-    paddingHorizontal: scale(10),
-    paddingVertical: verticalScale(0),
-    backgroundColor: "#FFFFFF",
-  },
+  content: { flexGrow: 1 },
 });

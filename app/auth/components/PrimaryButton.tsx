@@ -1,5 +1,10 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+  Keyboard,
+} from "react-native";
 import AppText from "../components/AppText";
 
 interface PrimaryButtonProps {
@@ -13,8 +18,17 @@ export default function PrimaryButton({
   onPress,
   style,
 }: PrimaryButtonProps) {
+  const handlePress = () => {
+    Keyboard.dismiss();
+    onPress();
+  };
+
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={0.9}
+      style={[styles.button, style]}
+      onPress={handlePress}
+    >
       <AppText variant="bold" style={styles.text}>
         {title}
       </AppText>

@@ -64,7 +64,7 @@ export default function RegisterEmailScreen() {
 
   const handleRegister = async () => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
-  const invalidDomains = ["gnail.com", "gamil.com", "gmaill.com", "hotmial.com", "yaho.com"];
+  const invalidDomains = ["gnail.com","gamil.com","gmaill.com","gmail.co","gmail.con","gmail.cmo","gmal.com","gmial.com","gimail.com","gmaol.com","hotmial.com","hotmil.com","hotmai.com","hotmaill.com","hotmal.com","hotmalil.com","hotmali.com","homtail.com","hotmaol.com","hormail.com","outlok.com","outllok.com","outllok.es","outloo.com","outlook.co","outloook.com","outlok.es","outlok.con","yaho.com","yhoo.com","yahho.com","yaho.co","yahool.com","yahool.con","yaoo.com","yahoom.com","liv.com","live.co","live.con","live.cm","lve.com","gemail.com","hotnail.com","gmalil.com","gmil.com","gmil.co","gmial.co","gmaik.com"];
   const domain = email.split("@")[1];
 
   if (!email || !password || !confirmPassword) {
